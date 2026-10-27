@@ -25,6 +25,23 @@ jobs:
       - name: Generate topic diagrams
         working-directory: 'Domestic data entry operator-10th'
         run: python make_diagrams.py
+      - name: Verify required diagrams exist
+        working-directory: 'Domestic data entry operator-10th'
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          required = [
+              'book_illustrations/spreadsheet_formula.png',
+              'book_illustrations/macro_safety.png',
+              'book_illustrations/query_process.png',
+              'book_illustrations/data_quality_check.png',
+              'book_illustrations/emergency_preparedness.png',
+          ]
+          missing = [name for name in required if not Path(name).is_file()]
+          if missing:
+              raise SystemExit('Missing generated diagrams: ' + ', '.join(missing))
+          print('All required Class X diagrams are present.')
+          PY
       - name: Compile LaTeX book
         uses: xu-cheng/latex-action@v3
         with:
