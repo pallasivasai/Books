@@ -93,6 +93,19 @@ print("Total:", total)
 \end{lstlisting}
 The program adds the integers from 1 through 5. The \texttt{range(1, 6)} expression stops before 6, so the values are 1, 2, 3, 4 and 5. A nested loop is a loop placed inside another loop and is useful for tables, patterns and two-dimensional data.
 
+\subsection{Loop control and common errors}
+The \texttt{break} statement stops the nearest loop, while \texttt{continue} skips the remaining statements in the current iteration and moves to the next one. These statements should be used only when they make the program easier to follow. A common error is an off-by-one mistake, in which a loop repeats one time too many or too few. Carefully check the starting value, stopping condition and update step.
+
+\begin{lstlisting}[style=pythonstyle]
+for number in range(1, 8):
+    if number == 5:
+        continue
+    print(number)
+\end{lstlisting}
+This example prints 1, 2, 3, 4, 6 and 7. The value 5 is skipped, but the loop continues. Testing a loop with a small set of known values is a useful way to confirm that it behaves as intended.
+
+When a program receives data from a user, it should also consider invalid input. For example, converting a word to an integer with \texttt{int()} raises an error. A more robust program can validate input or handle a conversion error instead of terminating unexpectedly.
+
 \begin{center}
 \begin{tikzpicture}[node distance=8mm,every node/.style={font=\small\sffamily,align=center},process/.style={rounded corners=2mm,draw=Teal,fill=Pale,minimum width=35mm,minimum height=9mm},decision/.style={diamond,aspect=2,draw=Gold,fill=LightGold,text width=23mm,inner sep=1pt}]
 \node[process] (start) {Start / read input};
@@ -136,6 +149,19 @@ The function accepts a list as an argument and returns its arithmetic mean. The 
 
 \subsection{Parameters, return values and scope}
 Functions may accept zero or more parameters. A function that returns a value can be used in an expression, while a function that only performs an action may return \texttt{None}. Variables defined inside a function have local scope. Clear names, short functions and appropriate validation improve readability and reliability.
+
+\subsection{Designing a useful function}
+A well-designed function usually has one clear responsibility. Its name should describe the task, its parameters should represent the information needed, and its return value should be predictable. Repeating the same calculation in several places makes later changes harder; placing that calculation in one function helps keep results consistent.
+
+\begin{lstlisting}[style=pythonstyle]
+def percentage(score, maximum):
+    if maximum <= 0:
+        raise ValueError("Maximum must be positive")
+    return (score / maximum) * 100
+
+print(percentage(45, 50))
+\end{lstlisting}
+The function checks that the maximum possible score is positive before performing the calculation. This is an example of input validation. In larger programs, functions can be tested with normal values, boundary values and invalid values. A function should also be documented when its purpose or expected inputs are not obvious.
 
 \section*{Review Questions}
 \begin{enumerate}
@@ -192,6 +218,21 @@ print(matrix[:, 1])
 \end{lstlisting}
 The expression \texttt{matrix[:, 1]} selects the second column. In a slice, a colon represents a range along an axis. Understanding array shape is essential when combining data from multiple sources.
 
+\subsection{Indexing and slicing}
+NumPy uses zero-based indexing, which means the first element has index 0. Negative indices count from the end of an array. Slicing selects a range using the form \texttt{start:stop:step}; the stop position is excluded. For a two-dimensional array, separate index expressions identify the row and column.
+
+\begin{lstlisting}[style=pythonstyle]
+scores = np.array([55, 68, 72, 89, 94])
+print(scores[0])       # first value
+print(scores[-1])      # last value
+print(scores[1:4])     # values at positions 1, 2, 3
+print(scores[scores >= 70])
+\end{lstlisting}
+The last line uses a Boolean condition to select values that are at least 70. Such filtering is useful when exploring measurements, marks or other numerical records. The original data should be preserved when an analysis requires a record of the unmodified values.
+
+\subsection{Broadcasting and practical cautions}
+Broadcasting allows NumPy to combine arrays of compatible shapes. For example, adding a single number to an array adds that number to every element. More complex broadcasting follows shape rules, so dimensions should be checked when an operation produces an unexpected result. Arrays should also use appropriate numeric types: converting a decimal measurement to an integer can discard its fractional part.
+
 \subsection{Joining, splitting and copying}
 Functions such as \texttt{np.concatenate()} join arrays along a compatible axis. Splitting functions divide arrays into smaller arrays. A view can share underlying data with another array, whereas \texttt{copy()} creates independent data. Changing a shared view may therefore affect the original array.
 
@@ -205,6 +246,11 @@ print(a + 10)      # [11 12 13]
 print(np.sqrt(a))  # square roots
 \end{lstlisting}
 Common statistical functions include \texttt{sum()}, \texttt{mean()}, \texttt{median()}, \texttt{min()} and \texttt{max()}. Mathematical utilities include trigonometric functions and conversions between degrees and radians. The result type depends on the operation and input types.
+
+\subsection{Why vectorised operations are useful}
+A vectorised operation expresses a calculation for an entire array instead of describing each element with a Python loop. This often makes numerical code shorter and can improve performance. The expression should still be chosen for clarity: a compact calculation is not helpful if its meaning is difficult to understand.
+
+For example, if a set of temperatures is stored in an array in degrees Celsius, the conversion to Fahrenheit can be applied to every value using \texttt{temperatures * 9 / 5 + 32}. The formula is applied element by element. Before interpreting a result, check the units, the range of values and whether any missing or unusual measurements need attention.
 
 \begin{center}
 \begin{tikzpicture}[node distance=7mm,every node/.style={font=\small\sffamily,align=center},arr/.style={rounded corners=2mm,draw=Navy,fill=Sky,minimum width=29mm,minimum height=12mm}]
@@ -268,8 +314,23 @@ print(marks[marks >= 80])
 \end{lstlisting}
 Boolean filtering produces the values that satisfy a condition. In a DataFrame, a similar condition can be used to select records. Labels and positions should not be confused: label-based selection and integer-position selection have different purposes.
 
+\subsection{Selecting, sorting and grouping records}
+Pandas makes it possible to select a subset of rows using a condition, sort records by a column and calculate summaries for groups. These operations help turn a large table into information that answers a particular question. A filter should be linked to a clear question, such as identifying records above a chosen threshold.
+
+\begin{lstlisting}[style=pythonstyle]
+high_scores = students[students["Marks"] >= 80]
+sorted_students = students.sort_values("Marks", ascending=False)
+print(high_scores)
+print(sorted_students)
+\end{lstlisting}
+The first expression selects students whose marks are at least 80; the second orders the records from highest marks to lowest. In real projects, the meaning of each column and the unit of measurement should be recorded so that the output is interpreted correctly.
+
 \subsection{Cleaning and summarising data}
 Data cleaning may include handling missing values, correcting data types, removing duplicates and standardising text. The correct treatment depends on what a missing or unusual value means in the real context. Deleting records without review can distort the analysis.
+
+A missing value can mean that information was not collected, was not applicable or was accidentally omitted. These situations do not always have the same meaning. Depending on the task, a missing value may be left as missing, investigated with the data owner, or handled using a documented method. Replacing all missing values with zero is not always appropriate because zero may be a valid measurement.
+
+Duplicate records also need careful review. Some duplicates are accidental copies, while others represent legitimate repeated events. Before removing them, check which fields define a unique record. Cleaning decisions should be documented so that another person can understand how the original data was transformed.
 
 \begin{lstlisting}[style=pythonstyle]
 print(students.head())
@@ -294,6 +355,11 @@ plt.tight_layout()
 plt.show()
 \end{lstlisting}
 A clear chart needs a meaningful title, labelled axes and a scale that does not mislead. Colours and decorative effects should support interpretation rather than distract from the data. Charts should be checked against the source values before conclusions are drawn.
+
+\subsection{Choosing a chart for the question}
+A bar chart is suitable for comparing a small number of categories. A line chart is often appropriate for a measurement recorded over time, such as monthly rainfall. A scatter plot can help reveal whether two numerical variables appear to be related. A histogram shows the distribution of a numerical variable by grouping values into intervals. No chart proves a cause-and-effect relationship by itself.
+
+A chart should include a title that states what is being shown, labels that explain the axes, and units where relevant. The scale should not exaggerate small differences. When comparing groups, use consistent scales and explain any filtering or exclusions. A well-labelled chart helps readers understand both the result and its limits.
 
 \begin{center}
 \begin{tikzpicture}[node distance=7mm,every node/.style={font=\small\sffamily,align=center},vbox/.style={rounded corners=2mm,draw=Teal,fill=Pale,minimum width=30mm,minimum height=10mm,inner sep=2mm}]
@@ -350,11 +416,24 @@ An Artificial Neural Network (ANN) is a computational model inspired in a broad 
 \subsection{Training and prediction}
 During training, a network processes examples and compares its output with the expected target. A loss function measures the difference, and an optimisation method adjusts model parameters to reduce that loss. After training, the model can make predictions on new inputs. Performance on training examples alone is not enough; evaluation on separate data helps estimate how well the model generalises.
 
+\subsection{Weights, activation functions and loss}
+A weight controls how strongly an input contributes to a unit's calculation. A bias shifts the calculation, and an activation function transforms the result. Common activation functions include ReLU for many hidden layers and sigmoid for some binary-output tasks. The choice depends on the model design and the problem being solved.
+
+A loss function measures how far a model's predictions are from the expected targets during training. The training process adjusts weights and biases to reduce the loss. A lower training loss does not automatically mean that a model will perform well on unfamiliar examples, so evaluation must use data that was not used to fit the model.
+
+\subsection{Overfitting and generalisation}
+Overfitting occurs when a model learns details or noise specific to its training examples and performs poorly on new data. A model that is too simple may also fail to capture useful patterns; this is often described as underfitting. Careful data splitting, suitable model complexity and evaluation on representative examples help assess generalisation. The test set should not be repeatedly used to tune every decision, because that can make the final estimate overly optimistic.
+
 \section{Applications of neural networks}
 Neural networks are used in image and speech recognition, handwriting recognition, language processing, recommendation systems, forecasting and selected healthcare applications. Face recognition can support device authentication; speech-to-text systems convert spoken language into text; recommendation systems rank items that may interest a user. Such applications can make errors, so human review and suitable safeguards remain important, especially in high-impact settings.
 
 \subsection{Responsible use}
 Data quality, privacy, fairness and transparency affect the reliability of an AI application. A model trained on unrepresentative examples may perform poorly for some groups. Sensitive personal data should be handled carefully, and a prediction should not automatically be treated as a fact. The system's purpose, limitations and evaluation results should be documented.
+
+\subsection{Privacy, fairness and human oversight}
+Responsible AI development begins with asking whether the data is needed and whether it may be used for the intended purpose. Personal details should not be collected simply because they are available. Access should be limited, files should be protected, and information should not be shared without appropriate permission.
+
+Fairness requires checking whether the examples represent the people and situations in which the system will be used. An error can affect groups differently, especially when the training data is incomplete or unbalanced. A responsible project explains known limitations and provides a way for a person to review important decisions. AI outputs should be treated as information to assess, not as unquestionable truth.
 
 \section{Machine learning tools}
 Python's data-science ecosystem includes tools for different stages of an AI workflow. NumPy supports numerical arrays; Pandas supports tabular data handling; Matplotlib supports visualisation; Scikit-learn provides common machine-learning algorithms and evaluation utilities; TensorFlow and Keras support the development of neural-network models; XGBoost provides optimised gradient-boosting methods.
@@ -447,6 +526,11 @@ plt.tight_layout()
 plt.show()
 \end{lstlisting}
 The values are illustrative, not real student records. A report should describe the data, explain each step, include the chart, note limitations and avoid identifying real learners without a valid reason and appropriate permission.
+
+\subsection{Planning the work and presenting results}
+Before writing code, prepare a short plan with the project objective, required inputs, expected outputs and a list of tasks. Divide the work into manageable steps, such as preparing a data file, checking its quality, performing calculations, creating a chart and writing a conclusion. A small prototype should be tested early so that major problems are discovered before the final report is prepared.
+
+The final presentation should explain the original question, the approach used and the evidence that supports the conclusion. Screenshots or diagrams can help readers follow the process, but they should be relevant and clearly labelled. If the result is uncertain or the dataset is small, state that limitation rather than making a broader claim than the evidence supports. Keep a copy of the code and note the software libraries required to run it.
 
 \section*{Review Questions}
 \begin{enumerate}
