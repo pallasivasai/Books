@@ -16,6 +16,15 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+      - name: Set up Python for diagrams
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install diagram dependency
+        run: python -m pip install --upgrade Pillow
+      - name: Generate topic diagrams
+        working-directory: 'Domestic data entry operator-10th'
+        run: python make_diagrams.py
       - name: Compile LaTeX book
         uses: xu-cheng/latex-action@v3
         with:
