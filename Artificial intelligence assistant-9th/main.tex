@@ -280,12 +280,12 @@ Data may come from surveys, forms, sensors, observations, transactions or existi
 
 \section{A basic data workflow}
 \begin{center}
-\begin{tikzpicture}[node distance=5mm,every node/.style={font=\small\sffamily,align=center},flowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowstep/.style={draw=Teal,fill=Pale,rounded corners=2mm,minimum width=27mm,minimum height=13mm}]
+\begin{tikzpicture}[node distance=5mm,every node/.style={font=\small\sffamily,align=center},flowstep/.style={draw=Teal,fill=Pale,rounded corners=2mm,minimum width=27mm,minimum height=13mm}]
 \node[flowstep] (collect) {Collect};
-\node[step,right=of collect] (organise) {Organise};
-\node[step,right=of organise] (check) {Check quality};
-\node[step,right=of check] (analyse) {Analyse};
-\node[step,right=of analyse] (share) {Communicate};
+\node[flowstep,right=of collect] (organise) {Organise};
+\node[flowstep,right=of organise] (check) {Check quality};
+\node[flowstep,right=of check] (analyse) {Analyse};
+\node[flowstep,right=of analyse] (share) {Communicate};
 \draw[-{Latex},thick] (collect)--(organise);
 \draw[-{Latex},thick] (organise)--(check);
 \draw[-{Latex},thick] (check)--(analyse);
@@ -405,12 +405,12 @@ Machine Learning (ML) is a part of AI in which a system uses data to learn patte
 
 \section{A typical machine-learning workflow}
 \begin{center}
-\begin{tikzpicture}[node distance=4mm,every node/.style={font=\small\sffamily,align=center},flowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowflowstep/.style={draw=Navy,fill=Sky,rounded corners=2mm,minimum width=25mm,minimum height=14mm}]
-\node[step] (data) {Collect and\\prepare data};
-\node[step,right=of data] (split) {Split data};
-\node[step,right=of split] (train) {Train model};
-\node[step,right=of train] (test) {Evaluate};
-\node[step,right=of test] (use) {Use with\\monitoring};
+\begin{tikzpicture}[node distance=4mm,every node/.style={font=\small\sffamily,align=center},flowstep/.style={draw=Navy,fill=Sky,rounded corners=2mm,minimum width=25mm,minimum height=14mm}]
+\node[flowstep] (data) {Collect and\\prepare data};
+\node[flowstep,right=of data] (split) {Split data};
+\node[flowstep,right=of split] (train) {Train model};
+\node[flowstep,right=of train] (test) {Evaluate};
+\node[flowstep,right=of test] (use) {Use with\\monitoring};
 \draw[-{Latex},thick] (data)--(split);
 \draw[-{Latex},thick] (split)--(train);
 \draw[-{Latex},thick] (train)--(test);
