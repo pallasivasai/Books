@@ -293,9 +293,9 @@ Python's data-science ecosystem includes tools for different stages of an AI wor
 \begin{center}
 \begin{tikzpicture}[node distance=6mm,every node/.style={font=\small\sffamily,align=center},mlstage/.style={rounded corners=2mm,draw=Teal,fill=Pale,text width=25mm,minimum height=13mm,inner sep=2mm}]
 \node[mlstage] (data) {Collect and inspect data};
-\node[step,right=of data,draw=Navy,fill=Sky] (clean) {Clean and prepare};
-\node[step,right=of clean,draw=Gold,fill=LightGold] (train) {Train a model};
-\node[step,right=of train,draw=Coral,fill=Rose] (eval) {Evaluate results};
+\node[mlstage,right=of data,draw=Navy,fill=Sky] (clean) {Clean and prepare};
+\node[mlstage,right=of clean,draw=Gold,fill=LightGold] (train) {Train a model};
+\node[mlstage,right=of train,draw=Coral,fill=Rose] (eval) {Evaluate results};
 \draw[-{Latex},thick] (data)--(clean);
 \draw[-{Latex},thick] (clean)--(train);
 \draw[-{Latex},thick] (train)--(eval);
