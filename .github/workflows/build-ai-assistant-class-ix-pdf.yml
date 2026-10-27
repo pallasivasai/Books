@@ -1,0 +1,31 @@
+name: Build AI Assistant Grade IX PDF
+
+on:
+  push:
+    paths:
+      - 'Artificial intelligence assistant-9th/**'
+      - '.github/workflows/build-ai-assistant-class-ix-pdf.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Compile AI Assistant Grade IX textbook
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: 'Artificial intelligence assistant-9th'
+          latexmk_use_xelatex: true
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Artificial-Intelligence-Assistant-Grade-IX-PDF
+          path: 'Artificial intelligence assistant-9th/main.pdf'
+          if-no-files-found: error
+          retention-days: 30
