@@ -68,7 +68,7 @@ Artificial Intelligence (AI) is a field of computing concerned with building sys
 The word \keyterm{artificial} means made by people, while \keyterm{intelligence} includes abilities such as learning, reasoning, understanding information and solving problems. A spam filter, a voice assistant, a translation service and a system that recognises objects in photographs are everyday examples of AI-supported applications.
 
 \begin{center}
-\begin{tikzpicture}[node distance=7mm, every node/.style={font=\small\sffamily,align=center}, box/.style={rounded corners=2mm,draw=#1,fill=#1!10,minimum width=29mm,minimum height=13mm}]
+\begin{tikzpicture}[node distance=7mm, every node/.style={font=\small\sffamily,align=center}, box/.style args={#1}{rounded corners=2mm,draw=#1,fill=#1!10,minimum width=29mm,minimum height=13mm}]
 \node[box=Teal] (input) {Input\\text, sound, image};
 \node[box=Navy,right=of input] (process) {AI system\\rules or model};
 \node[box=Gold,right=of process] (output) {Output\\prediction or action};
