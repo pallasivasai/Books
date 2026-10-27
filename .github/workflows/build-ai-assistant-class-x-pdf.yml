@@ -10,9 +10,15 @@ on:
 permissions:
   contents: read
 
+# Keep only the newest pending build for this textbook.
+concurrency:
+  group: ai-assistant-grade-x-pdf
+  cancel-in-progress: true
+
 jobs:
   build-pdf:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
