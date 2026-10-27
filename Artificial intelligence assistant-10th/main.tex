@@ -291,8 +291,8 @@ Data quality, privacy, fairness and transparency affect the reliability of an AI
 Python's data-science ecosystem includes tools for different stages of an AI workflow. NumPy supports numerical arrays; Pandas supports tabular data handling; Matplotlib supports visualisation; Scikit-learn provides common machine-learning algorithms and evaluation utilities; TensorFlow and Keras support the development of neural-network models; XGBoost provides optimised gradient-boosting methods.
 
 \begin{center}
-\begin{tikzpicture}[node distance=6mm,every node/.style={font=\small\sffamily,align=center},step/.style={rounded corners=2mm,draw=Teal,fill=Pale,text width=25mm,minimum height=13mm,inner sep=2mm}]
-\node[step] (data) {Collect and inspect data};
+\begin{tikzpicture}[node distance=6mm,every node/.style={font=\small\sffamily,align=center},mlstage/.style={rounded corners=2mm,draw=Teal,fill=Pale,text width=25mm,minimum height=13mm,inner sep=2mm}]
+\node[mlstage] (data) {Collect and inspect data};
 \node[step,right=of data,draw=Navy,fill=Sky] (clean) {Clean and prepare};
 \node[step,right=of clean,draw=Gold,fill=LightGold] (train) {Train a model};
 \node[step,right=of train,draw=Coral,fill=Rose] (eval) {Evaluate results};
