@@ -91,6 +91,15 @@ Not every AI application uses all these abilities. A simple rule-based system ma
 \section{AI in everyday life}
 AI-supported features can appear in email spam detection, maps and route suggestions, speech recognition, translation, accessibility tools, shopping recommendations, fraud alerts and image search. In each case, the system uses input data and a designed method to produce a result. The result may be helpful, but it can still be incomplete or incorrect.
 
+\begin{center}
+\begin{tikzpicture}[every node/.style={font=\small\sffamily,align=center},aiUseCard/.style={draw=Navy!65,rounded corners=2mm,minimum width=43mm,minimum height=24mm,text width=39mm,inner sep=2mm}]
+\node[aiUseCard,fill=Pale] (voice) at (0,0) {\textcolor{Teal}{\Large\textbf{Aa}}\\\textbf{Voice and language}\\Speech recognition and translation};
+\node[aiUseCard,fill=LightGold,draw=Gold] (vision) at (5.0,0) {\textcolor{Coral}{\Large\textbf{◎}}\\\textbf{Images and vision}\\Finding objects in photographs};
+\node[aiUseCard,fill=Sky,draw=Navy] (suggest) at (10.0,0) {\textcolor{Violet}{\Large\textbf{↗}}\\\textbf{Predictions}\\Route suggestions and spam alerts};
+\end{tikzpicture}
+\end{center}
+\textit{Figure 1.4.} Examples of everyday tasks where AI-supported features may be used.
+
 \section{Why learn AI at school?}
 Learning AI helps students understand digital services they already use and develop the vocabulary needed to discuss them. It also builds habits of logical thinking, careful observation, data interpretation and responsible technology use. Students can begin with visual programming and gradually move towards text-based programming and data projects.
 
@@ -223,6 +232,17 @@ Control blocks repeat actions, wait for a period or run instructions only when a
 \section{Planning a simple project}
 For a simple catching game, define the goal first: the player moves a sprite to catch a falling object. Decide which keys control movement, how a catch is detected, how the score changes and when the game ends. Build one feature at a time and test it before adding sound or extra levels. Keep the rules clear so another learner can understand the game.
 
+\begin{center}
+\begin{tikzpicture}[every node/.style={font=\small\sffamily,align=left},scratchEvent/.style={draw=Violet,fill=Violet!10,rounded corners=2mm,minimum width=65mm,minimum height=8mm,inner sep=2mm},scratchMotion/.style={draw=Teal,fill=Pale,rounded corners=2mm,minimum width=65mm,minimum height=8mm,inner sep=2mm},scratchControl/.style={draw=Gold,fill=LightGold,rounded corners=2mm,minimum width=65mm,minimum height=8mm,inner sep=2mm}]
+\node[scratchEvent] (event) at (0,0) {\textbf{When green flag clicked}};
+\node[scratchMotion] (move) at (0,-.95) {\textbf{Move 10 steps}};
+\node[scratchControl] (repeat) at (0,-1.9) {\textbf{Repeat movement}};
+\draw[-{Latex[length=2mm]},thick,Navy] (event)--(move);
+\draw[-{Latex[length=2mm]},thick,Navy] (move)--(repeat);
+\end{tikzpicture}
+\end{center}
+\textit{Figure 3.1.} A simplified Scratch script: an event starts the action, then motion instructions run. Real Scratch blocks have their own shapes and colours.
+
 \section{Common errors}
 Disconnected blocks do not run as part of the intended script. A script may begin with the wrong event, repeat forever or check a condition before the sprite reaches the target. Test with slow movement first, then adjust speed and timing. Give sprites and variables meaningful names.
 
@@ -245,6 +265,17 @@ The statement below displays a message:
 \texttt{print("Hello, AI!")}
 \end{tcolorbox}
 The function \texttt{print()} sends information to the output. Text placed inside quotation marks is a string. Parentheses group the value passed to the function.
+
+\begin{center}
+\begin{tikzpicture}[node distance=7mm,every node/.style={font=\small\sffamily,align=center},pyStage/.style={draw=Navy,rounded corners=2mm,minimum width=36mm,minimum height=15mm,inner sep=2mm}]
+\node[pyStage,fill=LightGold,draw=Gold] (source) {\textbf{Source code}\\\texttt{print("Hello, AI!")}};
+\node[pyStage,fill=Pale,draw=Teal,right=of source] (run) {\textbf{Python interpreter}\\Runs the instruction};
+\node[pyStage,fill=Sky] (result) at (10.2,0) {\textbf{Output}\\\texttt{Hello, AI!}};
+\draw[-{Latex[length=2mm]},thick,Teal] (source)--(run);
+\draw[-{Latex[length=2mm]},thick,Teal] (run)--(result);
+\end{tikzpicture}
+\end{center}
+\textit{Figure 4.1.} A short Python statement is interpreted and produces visible output.
 
 \section{Comments and indentation}
 A comment begins with the \texttt{\#} symbol and is ignored when the program runs. Comments explain why a step is needed. Indentation marks the body of many Python structures, such as conditional statements and loops. Inconsistent indentation can cause an error, so use a consistent style.
