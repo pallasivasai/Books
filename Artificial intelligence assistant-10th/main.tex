@@ -266,11 +266,11 @@ An Artificial Neural Network (ANN) is a computational model inspired in a broad 
 
 \begin{center}
 \begin{tikzpicture}[x=1cm,y=1cm,every node/.style={circle,draw=Navy,fill=Sky,minimum size=8mm,inner sep=0pt},>=Latex]
-\foreach \y in {0,1,2,3}{\node (i\y) at (0,\y) {};}
-\foreach \y in {0,0.75,1.5,2.25,3}{\node[fill=Pale,draw=Teal] (h\y) at (2.4,\y) {};}
-\foreach \y in {0.5,1.5,2.5}{\node[fill=LightGold,draw=Gold] (o\y) at (4.8,\y) {};}
-\foreach \i in {0,1,2,3}{\foreach \h in {0,0.75,1.5,2.25,3}{\draw[Ink!45] (i\i)--(h\h);}}
-\foreach \h in {0,0.75,1.5,2.25,3}{\foreach \o in {0.5,1.5,2.5}{\draw[Ink!45] (h\h)--(o\o);}}
+\foreach \y/\id in {0/A,1/B,2/C,3/D}{\node (i\id) at (0,\y) {};}
+\foreach \y/\id in {0/A,0.75/B,1.5/C,2.25/D,3/E}{\node[fill=Pale,draw=Teal] (h\id) at (2.4,\y) {};}
+\foreach \y/\id in {0.5/A,1.5/B,2.5/C}{\node[fill=LightGold,draw=Gold] (o\id) at (4.8,\y) {};}
+\foreach \i in {A,B,C,D}{\foreach \h in {A,B,C,D,E}{\draw[Ink!45] (i\i)--(h\h);}}
+\foreach \h in {A,B,C,D,E}{\foreach \o in {A,B,C}{\draw[Ink!45] (h\h)--(o\o);}}
 \node[draw=none,fill=none,rectangle] at (0,-.65) {Input layer};
 \node[draw=none,fill=none,rectangle] at (2.4,-.65) {Hidden layer};
 \node[draw=none,fill=none,rectangle] at (4.8,-.65) {Output layer};
