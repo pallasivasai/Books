@@ -94,6 +94,46 @@ AI-supported features can appear in email spam detection, maps and route suggest
 \section{Why learn AI at school?}
 Learning AI helps students understand digital services they already use and develop the vocabulary needed to discuss them. It also builds habits of logical thinking, careful observation, data interpretation and responsible technology use. Students can begin with visual programming and gradually move towards text-based programming and data projects.
 
+\section{Types of Artificial Intelligence}
+AI can be grouped in more than one way. One common classroom explanation groups it by the range of tasks it could perform. Another describes how a system behaves or uses information. These are useful learning frameworks, not proof that every category already exists as a real product.
+
+\subsection{Types based on capability}
+\begin{itemize}
+\item \keyterm{Narrow AI (ANI):} designed for a specific task or a limited set of related tasks. Examples include speech recognition, spam filtering and route suggestions. Most AI applications used today fall into this category.
+\item \keyterm{Artificial General Intelligence (AGI):} a proposed system that could learn and perform a broad range of intellectual tasks at a flexible, human-like level. It has not been established as a generally available system.
+\item \keyterm{Artificial Superintelligence (ASI):} a hypothetical concept describing AI that would exceed human abilities across many important areas. It is an idea discussed in research and public debate, not an established current technology.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[node distance=4mm,every node/.style={font=\small\sffamily,align=center},cap/.style={draw=Teal,fill=Pale,rounded corners=2mm,text width=42mm,minimum height=19mm,inner sep=3mm},arr/.style={-{Stealth[length=2mm]},draw=Navy,line width=.7pt}]
+\node[cap] (ani) {\textbf{Narrow AI}\\Specific tasks\\\footnotesize Used widely today};
+\node[cap,right=of ani,draw=Gold,fill=LightGold] (agi) {\textbf{AGI}\\Broad range of tasks\\\footnotesize Proposed capability};
+\node[cap,right=of agi,draw=Violet,fill=Violet!10] (asi) {\textbf{ASI}\\Beyond human ability\\\footnotesize Hypothetical concept};
+\draw[arr] (ani)--(agi);
+\draw[arr] (agi)--(asi);
+\end{tikzpicture}
+\end{center}
+\textit{Figure 1.2.} Capability categories, from task-specific AI to broader hypothetical capabilities. The arrows show a conceptual progression, not a guaranteed development path.
+
+\subsection{Types based on how a system works}
+\begin{itemize}
+\item \keyterm{Reactive machines:} respond to the current input using a defined method, without storing experiences to improve future decisions. They are a simple conceptual category.
+\item \keyterm{Limited-memory AI:} uses recent data or information from past observations to support a task. Many modern AI applications use some form of stored context or historical data, although the details differ.
+\item \keyterm{Theory-of-mind AI:} a proposed type that would interpret other people's beliefs, intentions or emotions in a deeper, context-aware way. Current systems may recognise cues but can misunderstand what people actually think or feel.
+\item \keyterm{Self-aware AI:} a hypothetical system with genuine self-awareness. There is no established evidence that today's AI systems are self-aware.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[node distance=4mm,every node/.style={font=\small\sffamily,align=center},func/.style={draw=Navy,fill=Sky,rounded corners=2mm,text width=33mm,minimum height=19mm,inner sep=2mm}]
+\node[func] (react) {\textbf{Reactive}\\Responds to current input};
+\node[func,right=of react] (memory) {\textbf{Limited memory}\\Uses stored or recent information};
+\node[func,right=of memory,draw=Gold,fill=LightGold] (mind) {\textbf{Theory of mind}\\Proposed social understanding};
+\node[func,right=of mind,draw=Violet,fill=Violet!10] (self) {\textbf{Self-aware}\\Hypothetical awareness};
+\end{tikzpicture}
+\end{center}
+\textit{Figure 1.3.} A simplified comparison of functional categories often used to introduce AI. The last two categories remain theoretical.
+
+
 \section{Narrow AI and broader ideas}
 \keyterm{Narrow AI} is built for a defined task, such as recognising speech or recommending a route. Artificial general intelligence (AGI) is a proposed form of AI that would be able to learn and perform a broad range of intellectual tasks at a human-like level. Superintelligence is a hypothetical concept involving capabilities beyond human performance across many areas. These broader ideas should not be confused with the specialised systems commonly used today.
 
@@ -105,7 +145,7 @@ AI outputs should be checked, particularly when a decision affects a person's sa
 \item Define artificial intelligence in your own words.
 \item Name four abilities associated with AI and give one example for each.
 \item Explain two uses of AI in everyday life.
-\item What is the difference between narrow AI and the idea of AGI?
+\item Name the three capability-based types of AI and give one-line descriptions.\n\item Which functional categories of AI are considered hypothetical, and why?\n\item What is the difference between narrow AI and the idea of AGI?
 \item Why should AI-generated results be checked before they are used?
 \end{enumerate}
 
