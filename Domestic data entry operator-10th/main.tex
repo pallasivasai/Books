@@ -11,6 +11,7 @@
 \setlength{\parindent}{0pt}\setlength{\parskip}{3pt}\setlength{\emergencystretch}{3em}
 \AddToShipoutPictureBG{\begin{tikzpicture}[remember picture,overlay]\draw[Navy!65,line width=.55pt] ([xshift=11mm,yshift=-11mm]current page.north west) rectangle ([xshift=-11mm,yshift=11mm]current page.south east);\draw[Teal,line width=1.6pt] ([xshift=11mm,yshift=-11mm]current page.north west)--([xshift=37mm,yshift=-11mm]current page.north west);\draw[Coral,line width=1.6pt] ([xshift=-11mm,yshift=11mm]current page.south east)--([xshift=-37mm,yshift=11mm]current page.south east);\fill[Gold] ([xshift=11mm,yshift=-11mm]current page.north west) circle (1.1mm);\fill[Violet] ([xshift=-11mm,yshift=11mm]current page.south east) circle (1.1mm);\end{tikzpicture}}
 \pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\bfseries\sffamily\color{Teal} DOMESTIC DATA ENTRY OPERATOR}\fancyhead[R]{\small\sffamily\color{Navy} MASTER TRAINER HANDBOOK}\fancyfoot[C]{\tikz[baseline=(n.base)]\node[fill=Teal,draw=Gold,line width=.7pt,text=white,circle,minimum size=7mm,inner sep=1pt,font=\small\bfseries] (n) {\thepage};}\renewcommand{\headrulewidth}{.5pt}\renewcommand{\headrule}{\hbox to\headwidth{\color{Gold}\leaders\hrule height \headrulewidth\hfill}}\setlength{\headheight}{16pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyhead[L]{\small\bfseries\sffamily\color{Teal} DOMESTIC DATA ENTRY OPERATOR}\fancyhead[R]{\small\sffamily\color{Navy} MASTER TRAINER HANDBOOK}\fancyfoot[C]{\tikz[baseline=(n.base)]\node[fill=Teal,draw=Gold,line width=.7pt,text=white,circle,minimum size=7mm,inner sep=1pt,font=\small\bfseries] (n) {\thepage};}\renewcommand{\headrulewidth}{.5pt}\renewcommand{\headrule}{\hbox to\headwidth{\color{Gold}\leaders\hrule height \headrulewidth\hfill}}\renewcommand{\footrulewidth}{0pt}}
 \titleformat{\chapter}[display]{\normalfont\sffamily\bfseries\color{Navy}}{\filleft\Large\color{Coral}\chaptername\ \thechapter}{.6ex}{\color{Teal}\LARGE\raggedright}[\vspace{.5ex}\color{Gold}\rule{\textwidth}{.8pt}]\titlespacing*{\chapter}{0pt}{-8mm}{.5ex}\titlespacing*{\section}{0pt}{1.2ex plus .2ex minus .2ex}{.35ex}\titlespacing*{\subsection}{0pt}{1ex plus .2ex minus .2ex}{.3ex}\titleformat{\section}{\Large\sffamily\bfseries\color{Teal}}{\color{Coral}\thesection}{.7em}{}\titleformat{\subsection}{\large\sffamily\bfseries\color{Violet}}{\thesubsection}{.7em}{}
 \newcommand{\keyidea}[1]{\begin{tcolorbox}[colback=Pale,colframe=Teal,boxrule=.6pt,arc=1.2mm,left=2mm,right=2mm,top=1mm,bottom=1mm]\textbf{Key idea.} #1\end{tcolorbox}}
 \newcommand{\exampractice}[1]{\begin{tcolorbox}[colback=LightGold,colframe=Gold,boxrule=.6pt,arc=1.2mm,left=2mm,right=2mm,top=1mm,bottom=1mm]\textbf{Think and answer.} #1\end{tcolorbox}}
@@ -23,7 +24,6 @@ This book follows the four-unit structure and the fifteen chapter themes shown i
 The practical examples use fictional school, library and office records. Never use real personal, financial or health information in practice files. When a source record is incomplete, flag it and seek clarification rather than inventing an answer.
 \tableofcontents
 \mainmatter
-\part{Digital Documentation (Advanced) Using LibreOffice Writer}
 \chapter{Introduction to Styles}
 \section{Why styles matter}
 A long document is easier to maintain when similar parts share the same formatting. A heading style can keep chapter titles consistent; a body-text style can keep paragraphs readable; and a caption style can give every figure the same treatment. Manual formatting changes one selection at a time. Styles record a set of choices so the same visual rule can be applied repeatedly and updated centrally.
@@ -71,7 +71,6 @@ A team prepares a four-page meeting report. One colleague changes the headings, 
 \section{Chapter questions}
 \begin{enumerate}\item How does Writer build an automatic table of contents?\item What is the purpose of Track Changes?\item Why should comments and revisions be reviewed before distribution?\item Name three items to verify after exporting a PDF.\item How can templates save time while maintaining consistency?\end{enumerate}
 
-\part{Electronic Spreadsheet (Advanced) Using LibreOffice Calc}
 \chapter{Analyse Data Using Scenarios and Goal Seek}
 \section{What-if analysis}
 A spreadsheet model contains input values and formulas that calculate results. What-if analysis explores how the result changes when one or more inputs change. A scenario stores a group of assumptions, such as a low, expected or high estimate. Scenarios are useful for comparing possibilities; they do not predict which possibility will actually occur.
@@ -82,12 +81,14 @@ Imagine a school event budget with planned attendance, cost per participant and 
 Goal Seek works backwards from a desired formula result to estimate the input value that would achieve it. Select the formula cell as the target, specify the desired value and identify the input cell the application may change. Review the returned value and confirm that the model is logical. It solves the selected relationship; it does not prove the assumptions are realistic.
 \section{Check the model}
 Test a simple case manually. Confirm that changing one input affects the expected outputs and that the target cell contains a formula. Save a separate copy before experimenting with a complex model. Write down the assumptions that make the result meaningful, especially when sharing the spreadsheet with someone who did not build it.
+\begin{center}\includegraphics[width=.86\textwidth]{book_illustrations/spreadsheet_formula.png}\end{center}
 \section{Chapter questions}
 \begin{enumerate}\item What is a scenario in a spreadsheet?\item Distinguish scenario analysis from Goal Seek.\item Why should assumptions and units be labelled?\item What checks should be made after Goal Seek returns a value?\item Give a practical example where comparing low, expected and high cases is useful.\end{enumerate}
 
 \chapter{Using Macros in a Spreadsheet}
 \section{Purpose of a macro}
 A macro automates a repeated sequence of operations. For example, a macro might apply the same number format to a report or prepare a standard print layout. Automation saves repetitive effort, but an incorrect macro can repeat a mistake across many cells. Understand what a macro does before using it on important files.
+\begin{center}\includegraphics[width=.86\textwidth]{book_illustrations/macro_safety.png}\end{center}
 \section{Recording and reviewing}
 Where macro recording is enabled, record a short harmless task on a sample sheet. Stop recording, give the macro a meaningful name and test it on a copy. Review whether it refers to fixed cells or to the intended active selection. Small changes in the workbook structure can affect recorded steps, so avoid assuming that a macro will work unchanged in every file.
 \section{Security and trust}
@@ -121,7 +122,6 @@ Use comments or notes to explain unusual values and assumptions. When several ve
 \section{Chapter questions}
 \begin{enumerate}\item What should be agreed before a spreadsheet is edited by several people?\item Why are clear sheet names and units important?\item Explain the difference between protecting cells and securing a file.\item Name four checks to perform before sharing a workbook.\item Why is version control important?\end{enumerate}
 
-\part{Database Management System Using LibreOffice Base}
 \chapter{Introduction to Database Management System}
 \section{From files to a database}
 A database is an organised collection of related data. A Database Management System (DBMS) helps create, store, retrieve and maintain that data. A paper register or separate files can work for a small task, but duplicate records and inconsistent updates become harder to manage as the information grows. A database can enforce rules and connect related information in a structured way.
@@ -161,6 +161,7 @@ List the entities, their attributes and the unique identifier for each. Draw the
 \chapter{Queries in Base}
 \section{What a query does}
 A query asks the database for a subset or calculated view of its data. It can select records matching conditions, choose particular fields, sort results and combine related tables. A query normally does not replace the underlying source table; it describes which information to retrieve. The exact design interface depends on the selected database and version.
+\begin{center}\includegraphics[width=.86\textwidth]{book_illustrations/query_process.png}\end{center}
 \section{Criteria and sorting}
 Suppose the asset register contains equipment in several conditions. A query can show only records whose Condition is “Needs Repair,” or sort all assets by ItemName. Criteria should match the field's data type. A date condition should use a valid date value, while text criteria need the correct spelling and should account for how the database handles case and spaces.
 \section{Queries involving several tables}
@@ -181,7 +182,6 @@ Give forms clear labels and logical tab order. Use validation rules where suppor
 \section{Chapter questions}
 \begin{enumerate}\item What is the purpose of a form?\item How does a report differ from a table?\item Why should forms make required fields clear?\item Name four checks to make before distributing a report.\item Why must a report be checked against the query and source data?\end{enumerate}
 
-\part{Maintain a Healthy, Safe and Secure Working Environment}
 \chapter{Health, Safety and Security at Workplace}
 \section{Recognising workplace risks}
 Computer-based work can involve physical, environmental and information-security risks. Poor workstation setup may contribute to discomfort; clutter can create trip hazards; exposed electrical equipment can cause serious injury; and weak information handling can expose private records. Risk management starts by recognising hazards, considering who may be harmed and following the organisation's procedures.
@@ -202,6 +202,7 @@ Lock the screen when leaving a shared computer, use approved accounts and keep p
 Quality work meets the stated requirement reliably, not just quickly. For data entry, this means using the correct source, entering values in the intended fields, checking completeness and protecting records. A quality process makes the expected standard visible and gives people a way to identify and correct errors.
 \section{Checks before submission}
 A final review can include a field-by-field comparison with the source, checking required fields, identifying duplicates, confirming date and number formats, and verifying that the file is saved in the correct place. The amount of checking should reflect the task's risk. High-impact records deserve careful review and the required approval.
+\begin{center}\includegraphics[width=.86\textwidth]{book_illustrations/data_quality_check.png}\end{center}
 \section{Documenting a problem}
 When an error cannot be resolved from the available source, mark it for follow-up and identify the appropriate person or process. Do not silently substitute a plausible value. A correction should follow the organisation's rules so the record remains understandable and, where required, traceable. Keep the note concise and avoid including unnecessary personal information.
 \section{Continuous improvement}
@@ -212,6 +213,7 @@ If the same error occurs repeatedly, look for a process cause. The instruction m
 \chapter{Prevent Accidents and Emergencies}
 \section{Preparedness before an incident}
 An emergency may arise from fire, electrical failure, injury, smoke, severe weather or another unexpected event. Each organisation should have an emergency action plan that identifies alarms, exit routes, assembly points, communication roles and procedures for obtaining assistance. Learn the local plan before an incident occurs; do not wait until the alarm sounds to look for an exit.
+\begin{center}\includegraphics[width=.86\textwidth]{book_illustrations/emergency_preparedness.png}\end{center}
 \begin{center}\includegraphics[width=.83\textwidth]{book_illustrations/emergency_route.png}\end{center}
 \section{During evacuation}
 When an alarm or authorised evacuation instruction is given, follow the site's procedure, use the designated safe route and move calmly. Do not return to collect personal belongings. Do not use lifts where the plan says not to. Go to the assigned assembly point and follow instructions from the responsible coordinator. Never re-enter until the responsible authority says it is safe.
