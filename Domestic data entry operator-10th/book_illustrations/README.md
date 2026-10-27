@@ -1,6 +1,8 @@
 # Class X book illustrations
 
-The LaTeX source references these seven locally generated, topic-specific diagram files. Add the PNG files with the exact names below so GitHub Actions can compile the PDF:
+The PNG diagrams are generated from `../make_diagrams.py` during the GitHub Actions build. They are topic-specific illustrations for the Class X material and are not copied from the Class IX folder.
+
+Expected outputs:
 
 - `style_categories.png`
 - `image_workflow.png`
