@@ -105,12 +105,12 @@ AI can be grouped in more than one way. One common classroom explanation groups 
 \end{itemize}
 
 \begin{center}
-\begin{tikzpicture}[node distance=4mm,every node/.style={font=\small\sffamily,align=center},cap/.style={draw=Teal,fill=Pale,rounded corners=2mm,text width=42mm,minimum height=19mm,inner sep=3mm},arr/.style={-{Stealth[length=2mm]},draw=Navy,line width=.7pt}]
-\node[cap] (ani) {\textbf{Narrow AI}\\Specific tasks\\\footnotesize Used widely today};
+\begin{tikzpicture}[node distance=4mm,every node/.style={font=\small\sffamily,align=center},aiCapabilityBox/.style={draw=Teal,fill=Pale,rounded corners=2mm,text width=42mm,minimum height=19mm,inner sep=3mm},aiDiagramArrow/.style={-{Stealth[length=2mm]},draw=Navy,line width=.7pt}]
+\node[aiCapabilityBox] (ani) {\textbf{Narrow AI}\\Specific tasks\\\footnotesize Used widely today};
 \node[cap,right=of ani,draw=Gold,fill=LightGold] (agi) {\textbf{AGI}\\Broad range of tasks\\\footnotesize Proposed capability};
 \node[cap,right=of agi,draw=Violet,fill=Violet!10] (asi) {\textbf{ASI}\\Beyond human ability\\\footnotesize Hypothetical concept};
-\draw[arr] (ani)--(agi);
-\draw[arr] (agi)--(asi);
+\draw[aiDiagramArrow] (ani)--(agi);
+\draw[aiDiagramArrow] (agi)--(asi);
 \end{tikzpicture}
 \end{center}
 \textit{Figure 1.2.} Capability categories, from task-specific AI to broader hypothetical capabilities. The arrows show a conceptual progression, not a guaranteed development path.
@@ -124,8 +124,8 @@ AI can be grouped in more than one way. One common classroom explanation groups 
 \end{itemize}
 
 \begin{center}
-\begin{tikzpicture}[node distance=4mm,every node/.style={font=\small\sffamily,align=center},func/.style={draw=Navy,fill=Sky,rounded corners=2mm,text width=33mm,minimum height=19mm,inner sep=2mm}]
-\node[func] (react) {\textbf{Reactive}\\Responds to current input};
+\begin{tikzpicture}[node distance=4mm,every node/.style={font=\small\sffamily,align=center},aiFunctionBox/.style={draw=Navy,fill=Sky,rounded corners=2mm,text width=33mm,minimum height=19mm,inner sep=2mm}]
+\node[aiFunctionBox] (react) {\textbf{Reactive}\\Responds to current input};
 \node[func,right=of react] (memory) {\textbf{Limited memory}\\Uses stored or recent information};
 \node[func,right=of memory,draw=Gold,fill=LightGold] (mind) {\textbf{Theory of mind}\\Proposed social understanding};
 \node[func,right=of mind,draw=Violet,fill=Violet!10] (self) {\textbf{Self-aware}\\Hypothetical awareness};
@@ -366,14 +366,14 @@ Missing values occur when a field has not been recorded. Duplicates represent re
 Do not automatically replace every missing value with zero: zero may have a real meaning. Depending on the task, a missing value may be left unknown, filled using a justified method or excluded with a clear explanation.
 
 \begin{center}
-\begin{tikzpicture}[node distance=4mm,every node/.style={font=\small\sffamily,align=center},stepbox/.style={draw=Teal,fill=Pale,rounded corners=2mm,minimum width=27mm,minimum height=12mm},arr/.style={-{Stealth[length=2mm]},draw=Navy,line width=.7pt}]
+\begin{tikzpicture}[node distance=4mm,every node/.style={font=\small\sffamily,align=center},stepbox/.style={draw=Teal,fill=Pale,rounded corners=2mm,minimum width=27mm,minimum height=12mm},aiDiagramArrow/.style={-{Stealth[length=2mm]},draw=Navy,line width=.7pt}]
 \node[stepbox] (raw) {Raw data\\as collected};
 \node[stepbox,right=of raw] (inspect) {Inspect\\and identify};
 \node[stepbox,right=of inspect] (clean) {Clean\\carefully};
 \node[stepbox,right=of clean] (check) {Validate\\the result};
-\draw[arr] (raw)--(inspect);
-\draw[arr] (inspect)--(clean);
-\draw[arr] (clean)--(check);
+\draw[aiDiagramArrow] (raw)--(inspect);
+\draw[aiDiagramArrow] (inspect)--(clean);
+\draw[aiDiagramArrow] (clean)--(check);
 \end{tikzpicture}
 \end{center}
 \textit{Figure 7.1.} A simple data-cleaning workflow. Keep the original data and record important changes.
