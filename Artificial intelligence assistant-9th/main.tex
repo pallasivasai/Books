@@ -325,6 +325,19 @@ Missing values occur when a field has not been recorded. Duplicates represent re
 \end{enumerate}
 Do not automatically replace every missing value with zero: zero may have a real meaning. Depending on the task, a missing value may be left unknown, filled using a justified method or excluded with a clear explanation.
 
+\begin{center}
+\begin{tikzpicture}[node distance=4mm,every node/.style={font=\small\sffamily,align=center},stepbox/.style={draw=Teal,fill=Pale,rounded corners=2mm,minimum width=27mm,minimum height=12mm},arr/.style={-{Stealth[length=2mm]},draw=Navy,line width=.7pt}]
+\node[stepbox] (raw) {Raw data\\as collected};
+\node[stepbox,right=of raw] (inspect) {Inspect\\and identify};
+\node[stepbox,right=of inspect] (clean) {Clean\\carefully};
+\node[stepbox,right=of clean] (check) {Validate\\the result};
+\draw[arr] (raw)--(inspect);
+\draw[arr] (inspect)--(clean);
+\draw[arr] (clean)--(check);
+\end{tikzpicture}
+\end{center}
+\textit{Figure 7.1.} A simple data-cleaning workflow. Keep the original data and record important changes.
+
 \section{Preparing data for machine learning}
 For supervised learning, input features and the target label must be identified. Categorical data may need encoding and numerical features may need scaling for some algorithms. Split data into training and test sets before using test results to make decisions. Any transformation that learns from data should be fitted using the training data only, to reduce information leakage.
 
@@ -344,9 +357,20 @@ Mathematics helps describe data, compare values and reason about patterns. Basic
 \section{Counts, totals and averages}
 The total is the sum of values. The mean is the total divided by the number of values. The median is the middle value after sorting, and the mode is the most frequent value. The mean can be affected by extreme values, while the median is often more resistant to them.
 
-\begin{tcolorbox}[colback=LightGold,colframe=Gold,boxrule=.6pt,arc=1mm]
-\textbf{Worked example.} For the values 4, 5, 5, 6 and 20, the mean is \(40/5=8\), the median is 5 and the mode is 5. The high value 20 raises the mean, so reporting only the mean may hide the typical values in this small set.
-\end{tcolorbox}
+\begin{center}
+\begin{tikzpicture}[every node/.style={font=\small\sffamily,align=center}]
+\node[draw=Teal,fill=Pale,rounded corners=2mm,minimum width=13mm,minimum height=9mm] (v1) at (0,0) {4};
+\node[draw=Teal,fill=Pale,rounded corners=2mm,minimum width=13mm,minimum height=9mm] (v2) at (1.55,0) {5};
+\node[draw=Teal,fill=Pale,rounded corners=2mm,minimum width=13mm,minimum height=9mm] (v3) at (3.1,0) {5};
+\node[draw=Teal,fill=Pale,rounded corners=2mm,minimum width=13mm,minimum height=9mm] (v4) at (4.65,0) {6};
+\node[draw=Coral,fill=Rose,rounded corners=2mm,minimum width=13mm,minimum height=9mm] (v5) at (6.2,0) {20};
+\node[font=\footnotesize\sffamily,text=Ink,below=3mm of v3] {Sorted values};
+\node[draw=Gold,fill=LightGold,rounded corners=2mm,minimum width=39mm,minimum height=9mm] at (8.2,0) {Mean = 8};
+\node[draw=Teal,fill=Pale,rounded corners=2mm,minimum width=39mm,minimum height=9mm] at (11.1,0) {Median = 5};
+\node[draw=Navy,fill=Sky,rounded corners=2mm,minimum width=39mm,minimum height=9mm] at (14,0) {Mode = 5};
+\end{tikzpicture}
+\end{center}
+\textit{Figure 8.2.} A compact visual summary of one dataset. The unusually large value 20 pulls the mean above the median and mode.
 
 \section{Percentages and ratios}
 A percentage expresses a part out of one hundred. The percentage of a group meeting a condition is calculated as the number meeting the condition divided by the total number, multiplied by 100. A ratio compares quantities. Always state the denominator and the population being compared so that a percentage is not misinterpreted.
@@ -460,6 +484,15 @@ Reinforcement & Actions, environment feedback and rewards & Learn a strategy in 
 
 \section{Deep learning}
 Deep learning uses neural networks with multiple processing layers to learn representations from data. It can be effective for images, audio, language and other complex inputs, but it often needs substantial data and computing resources. Deep learning is one family of methods within machine learning, not a synonym for all AI.
+
+\begin{center}
+\begin{tikzpicture}[node distance=5mm,every node/.style={font=\small\sffamily,align=center},mlbox/.style={draw=Navy,fill=Sky,rounded corners=2mm,minimum width=43mm,minimum height=13mm}]
+\node[mlbox] (sup) {Supervised learning\\Examples include known labels};
+\node[mlbox,right=of sup] (unsup) {Unsupervised learning\\Find structure without labels};
+\node[mlbox,right=of unsup] (rein) {Reinforcement learning\\Learn from reward feedback};
+\end{tikzpicture}
+\end{center}
+\textit{Figure 10.1.} Three common learning approaches differ in the kind of feedback or information available.
 
 \section{Selecting an approach}
 Start with the problem and the available data. If examples have correct labels, supervised learning may be suitable. If the aim is to explore structure without labels, an unsupervised method may help. If actions influence an environment and feedback is available, reinforcement learning may be relevant. The choice should be tested rather than assumed.
