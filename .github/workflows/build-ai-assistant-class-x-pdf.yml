@@ -1,4 +1,4 @@
-name: Build AI Assistant Grade X PDF
+name: Build Artificial Intelligence Assistant Class 10 PDF
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 
 # Keep only the newest pending build for this textbook.
 concurrency:
-  group: ai-assistant-grade-x-pdf
+  group: artificial-intelligence-assistant-class-10-pdf
   cancel-in-progress: true
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-      - name: Compile AI Assistant Grade X textbook
+      - name: Compile Artificial Intelligence Assistant Class 10 textbook
         uses: xu-cheng/latex-action@v3
         with:
           root_file: main.tex
@@ -31,7 +31,7 @@ jobs:
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Artificial-Intelligence-Assistant-Grade-X-PDF
+          name: Artificial-Intelligence-Assistant-Class-10-PDF
           path: 'Artificial intelligence assistant-10th/main.pdf'
           if-no-files-found: error
           retention-days: 30
