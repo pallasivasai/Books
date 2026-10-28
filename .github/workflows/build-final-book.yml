@@ -52,6 +52,15 @@ jobs:
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Seamac%20Computer%20Based%20Training%20Room.jpg" "Junior software developer-11th/images/people-photo.jpg" &
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20education%20girls%20Gujarat.jpg" "Junior software developer-12th/images/people-photo.jpg" &
           # Domestic Data Entry Operator IX committed illustrations are already present; generated Class X figures fall back safely when missing.
+          # Human photographs matched to curriculum topics (Wikimedia Commons, freely reusable).
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Data_Entry_and_Information_Process_Worker_-_DPLA_-_3e4ca19e7a4f012f3f4e52edd52bbeef.jpg" "Domestic data entry operator-9th/images/human-data-entry.jpg" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Data_Entry_and_Information_Process_Worker_-_DPLA_-_3e4ca19e7a4f012f3f4e52edd52bbeef.jpg" "Domestic data entry operator-10th/images/human-data-entry.jpg" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programmer_at_work_%28Unsplash%29.jpg" "Web developer-11th/images/human-programmer.jpg" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programmer_at_work_%28Unsplash%29.jpg" "Web developer-12th/images/human-programmer.jpg" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programmer_at_work_%28Unsplash%29.jpg" "Junior software developer-11th/images/human-programmer.jpg" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programmer_at_work_%28Unsplash%29.jpg" "Junior software developer-12th/images/human-programmer.jpg" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Data_Entry_and_Information_Process_Worker_-_DPLA_-_3e4ca19e7a4f012f3f4e52edd52bbeef.jpg" "Artificial intelligence assistant-9th/images/human-workplace.jpg" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Data_Entry_and_Information_Process_Worker_-_DPLA_-_3e4ca19e7a4f012f3f4e52edd52bbeef.jpg" "Artificial intelligence assistant-10th/images/human-workplace.jpg" &
           # Domestic Data Entry Operator X: real photographs from Wikimedia Commons.
           # Class X diagrams: fetch from Wikimedia Commons/remote image URLs at build time when missing locally.
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Document%20structure%20styles.png" "Domestic data entry operator-10th/book_illustrations/style_categories.png" &
