@@ -95,11 +95,60 @@ def extract_body(path: Path) -> str:
     # The book parts are stitched together without creating separate books or cover pages.
     return text.strip()
 
+def add_section_illustrations(text: str, book_index: int) -> str:
+    """Ensure every section has an illustration, preferring topic-matched downloaded assets."""
+    # Process each section up to the next section/subsection/chapter heading.
+    pattern = re.compile(r"(\\section\*?\{[^{}]*\})(.*?)(?=\\(?:section\*?|chapter\*?|part\*?)\{|\\appendix\b|$)", re.S)
+    topic_assets = (
+        (("database", "query", "sql", "record", "table", "form"), "database-er.jpg"),
+        (("code", "program", "html", "css", "javascript", "software", "python"), "programming-code.jpg"),
+        (("network", "router", "internet", "lan", "server", "cloud"), "server-rack.jpg"),
+        (("workstation", "ergonomic", "health", "safety", "posture", "office"), "ergonomic-workstation.png"),
+        (("emergency", "fire", "accident", "evacuation", "exit"), "emergency_preparedness.jpg"),
+        (("spreadsheet", "formula", "cell", "data", "quality", "scenario"), "spreadsheet_cells.png"),
+        (("image", "picture", "document", "style", "presentation"), "document_workflow.png"),
+        (("artificial intelligence", "machine learning", "model", "robot", "assistant"), "programming-code.jpg"),
+    )
+    fallback = "assets/book1/book_illustrations/document_workflow.png"
+
+    def update(match: re.Match[str]) -> str:
+        heading, body = match.group(1), match.group(2)
+        if r"\includegraphics" in body or r"\photo{" in body or r"\begin{figure" in body:
+            return heading + body
+        title = re.sub(r"\\section\*?\{|\}", "", heading).lower()
+        candidates = []
+        for keywords, filename in topic_assets:
+            if any(word in title for word in keywords):
+                # Prefer the current curriculum's matching downloaded image.
+                candidates.extend((
+                    f"assets/book{book_index}/images/{filename}",
+                    f"assets/book{book_index}/book_illustrations/{filename}",
+                ))
+        # The eight original, committed Class IX illustrations provide a dependable
+        # non-generated fallback if a remote image is temporarily unavailable.
+        candidates.extend((
+            f"assets/book{book_index}/book_illustrations/document_workflow.png",
+            f"assets/book{book_index}/book_illustrations/it_ites_workflow.png",
+            f"assets/book{book_index}/book_illustrations/workstation_posture.png",
+            fallback,
+        ))
+        # Nested file checks let LaTeX choose a downloaded topic image if present.
+        graphic = r"\includegraphics[width=.62\textwidth,height=32mm,keepaspectratio]{"
+        expression = r"\fbox{\parbox{.55\textwidth}{\centering Illustration unavailable}}"
+        for path in reversed(candidates):
+            expression = r"\IfFileExists{" + path + "}{" + graphic + path + "}}{" + expression + "}"
+        image = "\n\\begin{center}\\vspace{-2pt}" + expression + "\\end{center}\n"
+        return heading + image + body
+
+    return pattern.sub(update, text)
+
+
 def render_main_tex(tex_path: Path) -> str:
     bodies = []
     for index, book in enumerate(BOOKS, start=1):
         path = source_tex(book)
         body = extract_body(path)
+        body = add_section_illustrations(body, index)
         # Add a real, topic-relevant classroom photograph at the start of each curriculum.
         # Photos are fetched from Wikimedia Commons by the workflow and credited below.
         people_photos = {
