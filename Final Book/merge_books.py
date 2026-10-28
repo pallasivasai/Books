@@ -113,7 +113,11 @@ def add_section_illustrations(text: str, book_index: int) -> str:
 
     def update(match: re.Match[str]) -> str:
         heading, body = match.group(1), match.group(2)
-        if r"\includegraphics" in body or r"\photo{" in body or r"\begin{figure" in body:
+        # Skip only when this section already references an image file that is
+        # actually present in the merged asset directory. Missing-image placeholders
+        # do not count as illustrations.
+        existing_images = re.findall(r"\\includegraphics(?:\[[^\]]*\])?\{([^{}]+)\}", body)
+        if any((FINAL_BOOK_DIR / image_path).is_file() for image_path in existing_images):
             return heading + body
         title = re.sub(r"\\section\*?\{|\}", "", heading).lower()
         candidates = []
