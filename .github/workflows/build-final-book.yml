@@ -59,8 +59,8 @@ jobs:
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programmer_at_work_%28Unsplash%29.jpg" "Web developer-12th/images/human-programmer.jpg" &
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programmer_at_work_%28Unsplash%29.jpg" "Junior software developer-11th/images/human-programmer.jpg" &
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programmer_at_work_%28Unsplash%29.jpg" "Junior software developer-12th/images/human-programmer.jpg" &
-          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Data_Entry_and_Information_Process_Worker_-_DPLA_-_3e4ca19e7a4f012f3f4e52edd52bbeef.jpg" "Artificial intelligence assistant-9th/images/human-workplace.jpg" &
-          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Data_Entry_and_Information_Process_Worker_-_DPLA_-_3e4ca19e7a4f012f3f4e52edd52bbeef.jpg" "Artificial intelligence assistant-10th/images/human-workplace.jpg" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programmer_at_work_%28Unsplash%29.jpg" "Artificial intelligence assistant-9th/images/human-workplace.jpg" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programmer_at_work_%28Unsplash%29.jpg" "Artificial intelligence assistant-10th/images/human-workplace.jpg" &
           # Domestic Data Entry Operator X: real photographs from Wikimedia Commons.
           # Class X diagrams: fetch from Wikimedia Commons/remote image URLs at build time when missing locally.
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Document%20structure%20styles.png" "Domestic data entry operator-10th/book_illustrations/style_categories.png" &
