@@ -156,6 +156,69 @@ def _fetch_unique_commons_image(title: str, book_index: int) -> str | None:
         print(f"Commons image search skipped for {title!r}: {exc}")
     return None
 
+def _generate_topic_image(title: str, book_index: int) -> str:
+    """Create a distinct topic illustration locally during GitHub Actions when web search fails."""
+    from PIL import Image, ImageDraw, ImageFont
+    output_dir = FINAL_BOOK_DIR / "assets" / f"book{book_index}" / "section_images"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")[:48] or "topic"
+    serial = len(_USED_SECTION_IMAGES) + 1
+    output = output_dir / f"generated-{serial:04d}-{slug}.png"
+    width, height = 1200, 620
+    image = Image.new("RGB", (width, height), "#f4f7fb")
+    draw = ImageDraw.Draw(image)
+    try:
+        title_font = ImageFont.truetype("DejaVuSans-Bold.ttf", 38)
+        label_font = ImageFont.truetype("DejaVuSans.ttf", 24)
+        small_font = ImageFont.truetype("DejaVuSans.ttf", 19)
+    except OSError:
+        title_font = label_font = small_font = ImageFont.load_default()
+    draw.rounded_rectangle((28, 28, width-28, height-28), radius=28, fill="white", outline="#176b78", width=5)
+    draw.rounded_rectangle((52, 52, width-52, 145), radius=20, fill="#17365d")
+    display_title = title if len(title) <= 54 else title[:51] + "..."
+    draw.text((78, 78), display_title, font=title_font, fill="white")
+    words = set(re.findall(r"[a-z]+", title.lower()))
+    if words & {"database","sql","query","table","record","spreadsheet","data"}:
+        labels = ["Input records", "Validate data", "Store securely", "Retrieve results"]
+        symbols = ["01", "02", "03", "04"]
+    elif words & {"html","css","javascript","web","website","php","browser"}:
+        labels = ["Structure", "Style", "Interaction", "Web page"]
+        symbols = ["<>", "{ }", "JS", "WWW"]
+    elif words & {"network","router","lan","internet","server","cloud"}:
+        labels = ["Device", "Connection", "Server", "Network"]
+        symbols = ["PC", "↔", "SV", "NET"]
+    elif words & {"artificial","intelligence","machine","learning","model","robot","assistant"}:
+        labels = ["Collect data", "Learn patterns", "Test model", "Use results"]
+        symbols = ["DATA", "AI", "TEST", "OUT"]
+    elif words & {"safety","health","emergency","fire","workstation","ergonomic"}:
+        labels = ["Identify risk", "Assess area", "Take action", "Check safety"]
+        symbols = ["!", "02", "✓", "SAFE"]
+    elif words & {"software","program","python","algorithm","code","system","process"}:
+        labels = ["Plan", "Write code", "Test", "Improve"]
+        symbols = ["PLAN", "</>", "TEST", "✓"]
+    else:
+        labels = ["Understand", "Organise", "Apply", "Review"]
+        symbols = ["01", "02", "03", "04"]
+    colors = ["#dceeff", "#dff4ee", "#fff0d2", "#f0e7ff"]
+    lefts = [70, 350, 630, 910]
+    for i, (x, label, symbol) in enumerate(zip(lefts, labels, symbols)):
+        draw.rounded_rectangle((x, 220, x+220, 445), radius=22, fill=colors[i], outline="#9aabba", width=3)
+        draw.ellipse((x+64, 245, x+156, 337), fill="#17365d")
+        bbox = draw.textbbox((0, 0), symbol, font=label_font)
+        sw, sh = bbox[2]-bbox[0], bbox[3]-bbox[1]
+        draw.text((x+110-sw/2, 291-sh/2), symbol, font=label_font, fill="white")
+        bbox = draw.textbbox((0, 0), label, font=label_font)
+        draw.text((x+110-(bbox[2]-bbox[0])/2, 365), label, font=label_font, fill="#17365d")
+        if i < 3:
+            draw.line((x+224, 330, x+270, 330), fill="#176b78", width=6)
+            draw.polygon([(x+270,330),(x+254,319),(x+254,341)], fill="#176b78")
+    draw.text((72, 500), "Topic illustration • Created locally during the repository build", font=small_font, fill="#526579")
+    image.save(output, format="PNG", optimize=True)
+    rel = output.relative_to(FINAL_BOOK_DIR).as_posix()
+    _USED_SECTION_IMAGES.add(rel)
+    _USED_SECTION_IMAGES.add(output.name.lower())
+    return rel
+
 def add_section_illustrations(text: str, book_index: int) -> str:
     """Give each section its own topic-relevant image; never reuse an image in a later section."""
     pattern = re.compile(r"(\\section\*?\{[^{}]*\})(.*?)(?=\\(?:section\*?|chapter\*?|part\*?)\{|\\appendix\b|$)", re.S)
@@ -194,11 +257,12 @@ def add_section_illustrations(text: str, book_index: int) -> str:
                             if score:
                                 assets.append((score, rel, path))
             if not assets:
-                return heading + body
-            assets.sort(key=lambda item: (-item[0], item[1]))
-            _, image_path, chosen = assets[0]
-            _USED_SECTION_IMAGES.add(image_path)
-            _USED_SECTION_IMAGES.add(chosen.name.lower())
+                image_path = _generate_topic_image(title, book_index)
+            else:
+                assets.sort(key=lambda item: (-item[0], item[1]))
+                _, image_path, chosen = assets[0]
+                _USED_SECTION_IMAGES.add(image_path)
+                _USED_SECTION_IMAGES.add(chosen.name.lower())
         image = (
             "\n\\begin{center}\\vspace{-2pt}"
             "\\includegraphics[width=.72\\textwidth,height=38mm,keepaspectratio]{"
