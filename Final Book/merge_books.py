@@ -159,6 +159,11 @@ def render_main_tex(tex_path: Path) -> str:
 \newcommand{\keyterm}[1]{\textbf{\color{Navy}#1}}
 \newcommand{\checklistitem}{\noindent$\square$\quad}
 \newcommand{\exampractice}[1]{\begin{tcolorbox}[colback=LightGold,colframe=Gold,boxrule=.6pt,arc=1.2mm,left=2mm,right=2mm,top=1mm,bottom=1mm]\textbf{Review questions.} #1\end{tcolorbox}}
+\newenvironment{keybox}{\begin{tcolorbox}[colback=Pale,colframe=Teal,boxrule=.6pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm]}{\end{tcolorbox}}
+\newenvironment{notebox}{\begin{tcolorbox}[colback=SoftGray,colframe=Navy!70,boxrule=.6pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm]}{\end{tcolorbox}}
+\newenvironment{examplebox}{\begin{tcolorbox}[colback=Sky!45,colframe=Teal!80,boxrule=.6pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm]}{\end{tcolorbox}}
+\newenvironment{warningbox}{\begin{tcolorbox}[colback=Rose,colframe=Coral,boxrule=.6pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm]}{\end{tcolorbox}}
+\newenvironment{activitybox}{\begin{tcolorbox}[colback=LightGold,colframe=Gold,boxrule=.6pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm]}{\end{tcolorbox}}
 \newcommand{\reviewtitle}{\par\noindent\textbf{\color{Navy}Review Questions}\par}
 \newcommand{\review}[1]{\par\smallskip\reviewtitle\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=1pt,topsep=2pt]\small #1\end{enumerate}\smallskip}
 \newcommand{\photo}[3]{\begin{center}\begin{tcolorbox}[colback=white,colframe=Teal!70,boxrule=.8pt,arc=1mm,left=2mm,right=2mm,top=2mm,bottom=2mm,width=.88\textwidth]\centering\IfFileExists{../Junior software developer-11th/images/#1}{\includegraphics[width=.92\linewidth,height=46mm,keepaspectratio]{../Junior software developer-11th/images/#1}}{\textbf{#2}}\end{tcolorbox}\end{center}{\small\textit{#3}}}
