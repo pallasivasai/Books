@@ -79,6 +79,8 @@ jobs:
           done
       - name: Generate merged LaTeX source
         run: python "Final Book/merge_books.py"
+      - name: Validate merged LaTeX source
+        run: python "Final Book/merge_books.py" --check
       - name: Compile combined handbook
         uses: xu-cheng/latex-action@v3
         with:

@@ -1,18 +1,42 @@
 # Final Book — Combined Handbook
 
-This folder contains the checked-in `main.tex` source for one continuous combined handbook PDF, plus a helper script to regenerate it.
+This folder builds one continuous final handbook PDF by merging the eight source-book PDFs in a fixed order.
 
-## Book order
-1. Domestic Data Entry Operator — Class IX
-2. Domestic Data Entry Operator — Class X
-3. Web Developer — Grade XI
-4. Web Developer — Grade XII
-5. Artificial Intelligence Assistant — Grade IX
-6. Artificial Intelligence Assistant — Grade X
-7. Junior Software Developer — Grade XI
-8. Junior Software Developer — Grade XII
+## Input order (8 source PDFs)
+1. `../Domestic data entry operator-9th/Domestic data entry operator-9th.pdf`
+2. `../Domestic data entry operator-10th/Domestic data entry operator-10th.pdf`
+3. `../Web developer-11th/Web developer-11th.pdf`
+4. `../Web developer-12th/Web developer-12th.pdf`
+5. `../Artificial intelligence assistant-9th/Artificial intelligence assistant-9th.pdf`
+6. `../Artificial intelligence assistant-10th/Artificial intelligence assistant-10th.pdf`
+7. `../Junior software developer-11th/Junior software developer-11th.pdf`
+8. `../Junior software developer-12th/Junior software developer-12th.pdf`
 
-The combined source has one `HANDBOOK` cover page, one contents section, continuous page numbering, and all eight book bodies in the order above. Exact duplicate chapter bodies are the only content suitable for automatic deduplication; distinct explanations and practice material are preserved.
+## Dependencies
+- Python 3.10+
+- LaTeX with `pdfpages` (for example TeX Live)
+- `latexmk` (recommended for repeatable builds)
 
-## Build the PDF
-GitHub Actions builds `main.tex` with XeLaTeX and publishes both the PDF and source as the `Final-Combined-Handbook-PDF` artifact. Open **Actions → Build Final Combined Handbook** to view the latest build and download its artifact.
+## Build commands
+From repository root (`/home/runner/work/Books/Books`):
+
+```bash
+python "Final Book/merge_books.py"
+latexmk -xelatex -cd "Final Book/main.tex"
+```
+
+Output PDF:
+- `/home/runner/work/Books/Books/Final Book/main.pdf`
+
+## Validation command (CI/local)
+Use this to verify all eight inputs exist and `Final Book/main.tex` includes exactly those eight PDFs in order with `pdfpages`:
+
+```bash
+python "Final Book/merge_books.py" --check
+```
+
+## Troubleshooting
+- **Missing source PDF/folder:** `merge_books.py` prints a clear list of missing paths and exits non-zero.
+- **Multiple PDFs in one source folder:** keep one source PDF in that folder or restore the expected `<folder-name>.pdf` filename.
+- **LaTeX compile failure:** ensure a LaTeX distribution is installed and that the `pdfpages` package is available.
+- **Spaces in paths:** `main.tex` uses `\detokenize{...}` around PDF paths so folders with spaces work correctly.
