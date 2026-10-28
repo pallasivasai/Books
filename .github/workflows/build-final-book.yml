@@ -140,12 +140,22 @@ jobs:
           else
             echo "The published PDF is already up to date."
           fi
-      - name: Upload final PDF and merged source
+      - name: Create downloadable ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "Final Book/download"
+          cp "Final Book/main.pdf" "Final Book/download/Final-Combined-Handbook.pdf"
+          cp "Final Book/main.tex" "Final Book/download/main.tex"
+          cd "Final Book/download"
+          zip -9 "../Final-Combined-Handbook.zip" "Final-Combined-Handbook.pdf" "main.tex"
+      - name: Upload final PDF, source and ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: Final-Combined-Handbook-PDF
+          name: Final-Combined-Handbook-ZIP
           path: |
             Final Book/main.pdf
             Final Book/main.tex
+            Final Book/Final-Combined-Handbook.zip
           if-no-files-found: error
           retention-days: 30
