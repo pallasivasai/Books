@@ -84,7 +84,7 @@ jobs:
           from pathlib import Path
           from PIL import Image, ImageDraw
           tex = Path("Final Book/main.tex").read_text(encoding="utf-8")
-          names = re.findall(r"\\\\includegraphics(?:\\[[^]]*\\])?\\s*\\{([^}]+)\\}", tex)
+          names = re.findall(r"\\includegraphics(?:\[[^]]*\])?\s*\{([^}]+)\}", tex)
           made = []
           for name in names:
               if "#" in name or "\\" in name:
