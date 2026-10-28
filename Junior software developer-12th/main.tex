@@ -62,9 +62,6 @@
 \vfill\begin{center}{\small Prepared as a learning-focused companion based on the supplied Junior Software Developer Grade XII study material.}\end{center}
 \end{titlepage}
 \frontmatter
-\chapter*{About this handbook}
-This handbook follows the four topic areas in the supplied Grade XII Junior Software Developer study material: relational database concepts and MySQL; advanced Python; software engineering; and emerging technologies with social impact. Explanations, examples and exercises are freshly written for study and revision.
-\begin{keybox}\textbf{Study method.} Read the concept, trace the example, run code in a safe environment, modify one input, then answer the review questions without looking back.\end{keybox}
 \tableofcontents\mainmatter
 \chapter{Relational Database Foundations}
 \section{Data and information}
@@ -75,6 +72,7 @@ Independent files may duplicate values and become inconsistent when only some co
 \section{Tables, keys and constraints}
 A relation is a table; a tuple is a row; an attribute is a column; a domain is the set of valid values; a schema is the planned structure; an instance is the data present at a particular time. A candidate key uniquely identifies a row. One candidate becomes the primary key. A composite key combines attributes. A foreign key references a key in another table. Constraints such as NOT NULL, UNIQUE and CHECK express rules close to the data.
 \begin{center}\begin{tikzpicture}[node distance=14mm,>=Latex]\node[draw=Navy,fill=Pale,rounded corners,align=center] (s) {\textbf{Student}\\StudentID (PK)\\FullName};\node[draw=Teal,fill=Pale,rounded corners,align=center,right=of s] (e) {\textbf{Enrollment}\\StudentID (FK)\\CourseID (FK)};\draw[->,thick,Gold](e.west)--node[above,font=\small]{references}(s.east);\end{tikzpicture}\end{center}
+\photo{database-er.jpg}{Entity--relationship diagram}{An ER diagram maps entities and the relationships that become tables and key links in a relational database. Source and licence are listed in IMAGE-CREDITS.txt.}
 \section{Database models}
 Relational databases use related tables. Document stores hold document-like records; key-value stores map keys to values; graph databases emphasise relationships. Select a model based on data shape, consistency needs and query patterns.
 \review{\item Explain data versus information.\item Give four limitations of independent file-based records.\item Define relation, tuple, attribute, schema and instance.\item Distinguish primary and foreign keys.\item Give one relational database use case.}
@@ -99,6 +97,7 @@ WHERE ClassLevel = 12
 ORDER BY FullName;
 \end{lstlisting}
 Choose types deliberately. Use date types for dates, suitable text types for names and exact decimal types for currency. WHERE filters rows; ORDER BY sorts; GROUP BY forms groups; HAVING filters groups after aggregation.
+\photo{mysql-design.png}{Relational database design example}{The diagram illustrates how a database design organises related records and supports consistent retrieval. Source and licence are listed in IMAGE-CREDITS.txt.}
 \begin{lstlisting}[language=SQL]
 SELECT ClassLevel, COUNT(*) AS StudentCount
 FROM Student
