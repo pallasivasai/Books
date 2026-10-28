@@ -22,28 +22,39 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Download licensed textbook photographs
+      - name: Download unique, topic-matched licensed images
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p "Web developer-12th/images"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Woman_sitting_in_her_workspace_and_typing_on_laptop.jpg" -o "Web developer-12th/images/web-developer-workspace.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming_code.jpg" -o "Web developer-12th/images/programming-code.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/ComputerProgrammer.jpg" -o "Web developer-12th/images/programmer-work.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20room.jpg" -o "Web developer-12th/images/computer-room.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming.jpg" -o "Web developer-12th/images/sql-programming.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming_code.jpg" -o "Web developer-12th/images/php-code.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20server%20rack.jpg" -o "Web developer-12th/images/server-rack.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20workstation%20while%20out%20of%20use.jpg" -o "Web developer-12th/images/workstation.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ergonomic%20Workstation.png" -o "Web developer-12th/images/ergonomic-workstation.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Recycling%20Bins.jpg" -o "Web developer-12th/images/recycling-bins.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/A%20wheelchair%20beside%20a%20desk.jpg" -o "Web developer-12th/images/wheelchair-access.jpg"
           file "Web developer-12th/images/"*
           cat > "Web developer-12th/IMAGE-CREDITS.txt" <<'EOF'
-          Image credits and source links
-          1. web-developer-workspace.jpg
-             Shixart1985, Wikimedia Commons, CC BY 2.0.
-             https://commons.wikimedia.org/wiki/File:Woman_sitting_in_her_workspace_and_typing_on_laptop.jpg
-          2. programming-code.jpg
-             Martin Vorel, Wikimedia Commons, CC BY-SA 4.0.
+          Image credits and licences (each image is used for a distinct topic)
+          1. computer-room.jpg — StellaAnnie, CC BY-SA 4.0.
+             https://commons.wikimedia.org/wiki/File:Computer_room.jpg
+          2. sql-programming.jpg — Lorenzo Cafaro, CC0 1.0.
+             https://commons.wikimedia.org/wiki/File:Programming.jpg
+          3. php-code.jpg — Martin Vorel, CC BY-SA 4.0.
              https://commons.wikimedia.org/wiki/File:Programming_code.jpg
-          3. programmer-work.jpg
-             Free-Photos / Pixabay, Wikimedia Commons, CC0 1.0.
-             https://commons.wikimedia.org/wiki/File:ComputerProgrammer.jpg
+          4. server-rack.jpg — Ricardo Moctezuma López / ronK, CC BY-SA 2.5.
+             https://commons.wikimedia.org/wiki/File:Computer_server_rack.jpg
+          5. workstation.jpg — Frederick Noronha, CC BY-SA 4.0.
+             https://commons.wikimedia.org/wiki/File:Computer_workstation_while_out_of_use.jpg
+          6. ergonomic-workstation.png — Marcel Kollmar and Partynia, Creative Commons Attribution-ShareAlike (see source page for exact licence terms).
+             https://commons.wikimedia.org/wiki/File:Ergonomic_Workstation.png
+          7. recycling-bins.jpg — Si Griffiths, CC BY-SA 3.0.
+             https://commons.wikimedia.org/wiki/File:Recycling_Bins.jpg
+          8. wheelchair-access.jpg — David290, CC BY-SA 4.0.
+             https://commons.wikimedia.org/wiki/File:A_wheelchair_beside_a_desk.jpg
           EOF
-
       - name: Compile Grade XII textbook with XeLaTeX
         uses: xu-cheng/latex-action@v3
         with:
