@@ -47,25 +47,11 @@ def extract_body(path: Path) -> str:
     text = re.sub(r"(?m)^\s*\\appendix\s*$", "", text)
     # Remove the per-book running headers and page decorations if any source body repeats them.
     text = re.sub(r"\\thispagestyle\{[^}]*\}", "", text)
-    # Images are retained, with paths redirected to their original source folders.
-    folder = path.parent.name
-    text = re.sub(
-        r"(\\includegraphics(?:\[[^\]]*\])?\{)(?![^}]*[/\\\\])([^}]+)(\})",
-        lambda m: m.group(1) + "../" + folder + "/" + m.group(2) + m.group(3),
-        text,
-    )
-    text = re.sub(
-        r"(\\includegraphics(?:\[[^\]]*\])?\{)([^}]*)(\})",
-        lambda m: m.group(1) + (
-            m.group(2) if m.group(2).startswith("../") else
-            ("../" + folder + "/" + m.group(2) if not m.group(2).startswith("/") else m.group(2))
-        ) + m.group(3),
-        text,
-    )
-    # Keep file paths literal so TeX can handle source directory names containing spaces.
+    # Rewrite illustration paths to space-free aliases prepared by the workflow.
+    book_index = next(i for i, item in enumerate(BOOKS, start=1) if item.folder == path.parent.name)
     text = re.sub(
         r"(\\includegraphics(?:\[[^\]]*\])?\{)([^{}]+)(\})",
-        lambda m: m.group(1) + r"\detokenize{" + m.group(2).replace(r"\ ", " ") + "}" + m.group(3),
+        lambda m: m.group(1) + f"assets/book{book_index}/" + m.group(2).replace(r"\ ", " ").lstrip("./") + m.group(3),
         text,
     )
     # The book parts are stitched together without creating separate books or cover pages.
