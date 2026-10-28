@@ -101,6 +101,53 @@ def extract_body(path: Path) -> str:
 _USED_SECTION_IMAGES: set[str] = set()
 _USED_COMMONS_TITLES: set[str] = set()
 
+def _fetch_web_image(title: str, book_index: int) -> str | None:
+    """Search the wider web (Google Images first, Bing Images second) for a topic-specific image."""
+    query = re.sub(r"[^A-Za-z0-9 ]+", " ", title).strip()
+    if not query:
+        return None
+    destination_dir = FINAL_BOOK_DIR / "assets" / f"book{book_index}" / "section_images"
+    destination_dir.mkdir(parents=True, exist_ok=True)
+    slug = re.sub(r"[^a-z0-9]+", "-", query.lower()).strip("-")[:54] or "topic"
+    searches = [
+        ("https://www.google.com/search?" + urllib.parse.urlencode({"tbm": "isch", "q": query + " educational diagram"}), r'"(https?://[^"]+\\.(?:jpg|jpeg|png|webp)(?:\\?[^"]*)?)"'),
+        ("https://www.bing.com/images/search?" + urllib.parse.urlencode({"q": query + " educational diagram"}), r'"murl":"(https?://[^"]+)"')
+    ]
+    for search_url, pattern in searches:
+        try:
+            request = urllib.request.Request(search_url, headers={
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/125 Safari/537.36"
+            })
+            with urllib.request.urlopen(request, timeout=12) as response:
+                html = response.read().decode("utf-8", errors="ignore")
+            candidates = []
+            for raw in re.findall(pattern, html, flags=re.I):
+                url = raw.replace(r"\\u0026", "&").replace(r"\\/", "/").replace("&amp;", "&")
+                if url.startswith("https://") and not any(x in url.lower() for x in ("gstatic.com", "bing.com/th", "google.com/images")):
+                    candidates.append(url)
+            for url in candidates[:15]:
+                try:
+                    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+                    with urllib.request.urlopen(req, timeout=10) as response:
+                        data = response.read()
+                        content_type = response.headers.get("Content-Type", "").lower()
+                    if len(data) < 12000 or not content_type.startswith("image/"):
+                        continue
+                    ext = ".jpg" if "jpeg" in content_type else ".png" if "png" in content_type else ".webp" if "webp" in content_type else ".jpg"
+                    filename = f"web-{slug}-{len(_USED_SECTION_IMAGES)+1}{ext}"
+                    destination = destination_dir / filename
+                    destination.write_bytes(data)
+                    rel = destination.relative_to(FINAL_BOOK_DIR).as_posix()
+                    _USED_SECTION_IMAGES.add(rel)
+                    _USED_SECTION_IMAGES.add(destination.name.lower())
+                    print(f"Downloaded web image for section {title!r} from {search_url.split('/')[2]}")
+                    return rel
+                except Exception:
+                    continue
+        except Exception as exc:
+            print(f"Web image search skipped for {title!r}: {exc}")
+    return None
+
 def _fetch_unique_commons_image(title: str, book_index: int) -> str | None:
     """Search Wikimedia Commons for a relevant reusable image and download it once."""
     query = re.sub(r"[^A-Za-z0-9 ]+", " ", title).strip()
@@ -234,7 +281,8 @@ def add_section_illustrations(text: str, book_index: int) -> str:
                     _USED_SECTION_IMAGES.add(full.name.lower())
                     return heading + body
         title = re.sub(r"\\section\*?\{|\}", "", heading).strip()
-        commons_path = _fetch_unique_commons_image(title, book_index)
+        web_path = _fetch_web_image(title, book_index)
+        commons_path = web_path or _fetch_unique_commons_image(title, book_index)
         if commons_path:
             image_path = commons_path
         else:
@@ -267,7 +315,7 @@ def add_section_illustrations(text: str, book_index: int) -> str:
             "\n\\begin{center}\\vspace{-2pt}"
             "\\includegraphics[width=.72\\textwidth,height=38mm,keepaspectratio]{"
             + image_path + "}"
-            "\\par{\\scriptsize\\textit{Topic image sourced from Wikimedia Commons; check source licence and attribution.}}"
+            "\\par{\\scriptsize\\textit{Section-specific visual selected or created for this topic.}}"
             "\\end{center}\n"
         )
         return heading + image + body
