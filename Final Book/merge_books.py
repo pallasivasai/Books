@@ -71,7 +71,7 @@ def extract_body(path: Path) -> str:
         options = match.group(1) or ""
         image_path = match.group(2)
         original = f"\\includegraphics{options}{{{image_path}}}"
-        return f"\\IfFileExists{{{image_path}}}{{{original}}}{{\\fbox{{Illustration unavailable}}}}"
+        return f"\\IfFileExists{{{image_path}}}{{{original}}}{{\\relax}}"
     text = re.sub(r"\\includegraphics(\[[^\]]*\])?\{([^{}]+)\}", guard_image, text)
     # Older source books may use raw LaTeX \input{...} or \include{...}; keep these
     # untouched unless those files exist in the merged directory, to avoid fatal missing-file errors.
