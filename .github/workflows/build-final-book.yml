@@ -32,7 +32,7 @@ jobs:
             local url="$1" output="$2"
             mkdir -p "$(dirname "$output")"
             for attempt in 1; do
-              if curl --connect-timeout 4 --max-time 10 -fLsS "$url" -o "$output" && test -s "$output"; then
+              if curl --retry 0 --connect-timeout 4 --max-time 10 -fLsS "$url" -o "$output" && test -s "$output"; then
                 echo "Downloaded $output"
                 return 0
               fi
@@ -76,6 +76,8 @@ jobs:
           for f in programming-code.png stack-queue.png python-simulation.jpg router-vlan.png lan-topology.png; do
             test ! -s "Junior software developer-11th/images/$f" || cp "Junior software developer-11th/images/$f" "Junior software developer-12th/images/$f"
           done
+      - name: Generate merged LaTeX source
+        run: python "Final Book/merge_books.py"
       - name: Compile combined handbook
         uses: xu-cheng/latex-action@v3
         with:
