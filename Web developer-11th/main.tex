@@ -667,6 +667,7 @@ Events describe interactions such as clicks, keyboard input, form submission, an
 Good validation explains what needs correction. It should preserve user input where possible, identify the field with an issue, and avoid relying on colour alone to communicate errors. A successful action should also provide clear confirmation.
 
 \section{Safe DOM Updates}
+When displaying untrusted text, prefer \texttt{textContent} rather than inserting arbitrary HTML with \texttt{innerHTML}. This reduces the risk of interpreting user input as markup or script. More complex applications need additional security controls appropriate to their data and architecture.
 
 
 \section{Drawing with the HTML Canvas}
@@ -689,8 +690,6 @@ context.font = "16px sans-serif";
 context.fillText("Web Developer", 30, 115);
 \end{lstlisting}
 The canvas dimensions define its drawing surface. CSS can control how large it appears on the page, but changing only its displayed size may scale the drawing. For beginner projects, keep the example small and test it in the browser.
-When displaying untrusted text, prefer \texttt{textContent} rather than inserting arbitrary HTML with \texttt{innerHTML}. This reduces the risk of interpreting user input as markup or script. More complex applications need additional security controls appropriate to their data and architecture.
-
 
 \section{Using JavaScript with Images}
 JavaScript can respond to a button click by changing an image's source, updating alternative text, or adjusting presentation classes. Alternative text should continue to describe the image's purpose after a change. Images should have appropriate dimensions and should not be stretched in ways that distort their content.
