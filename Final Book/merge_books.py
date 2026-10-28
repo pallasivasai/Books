@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 FINAL_BOOK_DIR = ROOT / "Final Book"
 DEFAULT_OUTPUT = FINAL_BOOK_DIR / "main.tex"
-INCLUDE_OPTIONS = r"pages=-,pagecommand={\thispagestyle{mergedbook}}"
+BASE_INCLUDE_OPTIONS = r"pages=-,pagecommand={\thispagestyle{mergedbook}}"
 
 
 @dataclass(frozen=True)
@@ -75,11 +75,16 @@ def rel_pdf_path(pdf_path: Path, tex_path: Path) -> str:
 def render_main_tex(sources: list[tuple[SourceBook, Path]], tex_path: Path) -> str:
     include_entries: list[str] = []
 
-    for book, pdf in sources:
+    for index, (book, pdf) in enumerate(sources, start=1):
         relative_path = rel_pdf_path(pdf, tex_path)
+        label = re.sub(r"[^a-z0-9]+", "-", book.folder.lower()).strip("-")
+        include_options = (
+            f"{BASE_INCLUDE_OPTIONS},"
+            f"addtotoc={{1,chapter,1,{{{book.title}}},{label}-{index}}}"
+        )
         include_entries.append(
             f"% {book.title}\n"
-            f"\\includepdf[{INCLUDE_OPTIONS}]{{\\detokenize{{{relative_path}}}}}"
+            f"\\includepdf[{include_options}]{{\\detokenize{{{relative_path}}}}}"
         )
 
     include_block = "\n\n".join(include_entries)
@@ -107,6 +112,8 @@ def render_main_tex(sources: list[tuple[SourceBook, Path]], tex_path: Path) -> s
         "}\n\n"
         "\\begin{document}\n"
         "\\setcounter{page}{1}\n"
+        "\\tableofcontents\n"
+        "\\clearpage\n"
         f"{include_block}\n"
         "\\end{document}\n"
     )
@@ -121,15 +128,22 @@ def validate_generated_structure(tex_text: str, sources: list[tuple[SourceBook, 
         errors.append("main.tex is missing \\usepackage{fancyhdr}.")
     if "\\fancypagestyle{mergedbook}" not in tex_text:
         errors.append("main.tex is missing mergedbook page style definition.")
-    if "\\tableofcontents" in tex_text:
-        errors.append("main.tex should not include a table of contents for just-merge output.")
+    if "\\tableofcontents" not in tex_text:
+        errors.append("main.tex is missing \\tableofcontents.")
     if "\\begin{titlepage}" in tex_text:
-        errors.append("main.tex should not include an extra title page for just-merge output.")
+        errors.append("main.tex should not include an extra title page for merged output.")
 
-    include_pattern = re.compile(
-        r"\\includepdf\[pages=-,pagecommand=\{\\thispagestyle\{mergedbook\}\}\]\{\\detokenize\{([^}]*)\}\}"
-    )
-    included_paths = include_pattern.findall(tex_text)
+    include_pattern = re.compile(r"\\includepdf\[([^\]]+)\]\{\\detokenize\{([^}]*)\}\}")
+    include_entries = include_pattern.findall(tex_text)
+    included_paths = [path for _, path in include_entries]
+
+    for options, _ in include_entries:
+        if "pages=-" not in options:
+            errors.append(f"includepdf options missing pages=-: {options}")
+        if r"pagecommand={\thispagestyle{mergedbook}}" not in options:
+            errors.append(f"includepdf options missing mergedbook pagecommand: {options}")
+        if "addtotoc={" not in options:
+            errors.append(f"includepdf options missing addtotoc: {options}")
 
     if len(included_paths) != len(sources):
         errors.append(
