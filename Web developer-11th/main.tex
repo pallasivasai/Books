@@ -34,6 +34,31 @@
 \setlength{\parskip}{3pt}
 \setlength{\emergencystretch}{3em}
 
+% Define CSS and JavaScript explicitly; listings does not provide these
+% language names consistently across TeX Live installations.
+\lstdefinelanguage{CSS}{
+  sensitive=true,
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]',
+  alsoletter={-},
+  morekeywords={align-items,background,background-color,border,border-radius,box-shadow,
+    box-sizing,color,display,flex,font-family,font-size,font-weight,gap,grid-template-columns,
+    height,justify-content,margin,max-width,min-height,padding,position,transition,width,
+    @media,important,auto,block,grid,none,relative,absolute,center,solid,rem,px,white,black}
+}
+\lstdefinelanguage{JavaScript}{
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]',
+  morekeywords={const,let,var,function,return,if,else,for,while,break,continue,
+    class,new,this,throw,try,catch,finally,async,await,import,from,export,default,
+    true,false,null,undefined,typeof,instanceof,console,log,document,window,
+    addEventListener,querySelector,querySelectorAll,getElementById,Math,Number,String,
+    Array,Object,Promise,fetch}
+}
 % Code Listing Style
 \lstdefinestyle{webcode}{
     basicstyle=\ttfamily\small,
