@@ -22,32 +22,32 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Download unique topic-matched Wikimedia Commons images
+      - name: Download fresh, topic-specific Wikimedia Commons images (no generated images)
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p "Junior software developer-11th/images"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20room.jpg" -o "Junior software developer-11th/images/computer-room.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming_code.jpg" -o "Junior software developer-11th/images/programming-code.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20workstation%20while%20out%20of%20use.jpg" -o "Junior software developer-11th/images/workstation.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20server%20rack.jpg" -o "Junior software developer-11th/images/server-rack.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming.jpg" -o "Junior software developer-11th/images/python-code.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ethernet%20cable%20closeup.JPG" -o "Junior software developer-11th/images/network-cables.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20Motherboard%20Closeup.jpg" -o "Junior software developer-11th/images/motherboard.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Python%20code%20example.png" -o "Junior software developer-11th/images/programming-code.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Screen-python-code-matplotlib-physics-simulation.jpg" -o "Junior software developer-11th/images/python-simulation.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Router%20on%20a%20stick.png" -o "Junior software developer-11th/images/router-vlan.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/LAN-physicalTopology.png" -o "Junior software developer-11th/images/lan-topology.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Atx%20computer%20motherboard%20with%20cpu%20and%20fan.jpg" -o "Junior software developer-11th/images/cpu-motherboard.jpg"
           file "Junior software developer-11th/images/"*
           cat > "Junior software developer-11th/IMAGE-CREDITS.txt" <<'EOF'
           Image credits and source links
-          1. computer-room.jpg — StellaAnnie, Wikimedia Commons, CC BY-SA 4.0.
-             https://commons.wikimedia.org/wiki/File:Computer_room.jpg
-          2. programming-code.jpg — Martin Vorel, Wikimedia Commons, CC BY-SA 4.0.
-             https://commons.wikimedia.org/wiki/File:Programming_code.jpg
-          3. workstation.jpg — Frederick Noronha, Wikimedia Commons, CC BY-SA 4.0.
-             https://commons.wikimedia.org/wiki/File:Computer_workstation_while_out_of_use.jpg
-          4. server-rack.jpg — Ricardo Moctezuma López / ronK, Wikimedia Commons, CC BY-SA 2.5.
-             https://commons.wikimedia.org/wiki/File:Computer_server_rack.jpg
-          5. python-code.jpg — Lorenzo Cafaro, Wikimedia Commons, CC0 1.0.
-             https://commons.wikimedia.org/wiki/File:Programming.jpg
-          6. network-cables.jpg — Dmitry "EthernetCable" Bulatović, Wikimedia Commons, CC BY-SA 3.0.
-             https://commons.wikimedia.org/wiki/File:Ethernet_cable_closeup.JPG
+          1. motherboard.jpg — Lenharth Systems, Wikimedia Commons, CC0 1.0.
+             https://commons.wikimedia.org/wiki/File:Computer_Motherboard_Closeup.jpg
+          2. programming-code.png — Zhanjack822, Wikimedia Commons, CC0 1.0.
+             https://commons.wikimedia.org/wiki/File:Python_code_example.png
+          3. python-simulation.jpg — MikeRun, Wikimedia Commons, CC BY-SA 4.0.
+             https://commons.wikimedia.org/wiki/File:Screen-python-code-matplotlib-physics-simulation.jpg
+          4. router-vlan.png — Anatoly099, Wikimedia Commons, CC BY-SA 4.0.
+             https://commons.wikimedia.org/wiki/File:Router_on_a_stick.png
+          5. lan-topology.png — Mattias.Campe, Wikimedia Commons, CC BY-SA 3.0.
+             https://commons.wikimedia.org/wiki/File:LAN-physicalTopology.png
+          6. cpu-motherboard.jpg — Leon Brooks, Wikimedia Commons, public domain.
+             https://commons.wikimedia.org/wiki/File:Atx_computer_motherboard_with_cpu_and_fan.jpg
           EOF
 
       - name: Compile textbook with XeLaTeX
