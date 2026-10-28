@@ -305,7 +305,10 @@ def add_section_illustrations(text: str, book_index: int) -> str:
                             if score:
                                 assets.append((score, rel, path))
             if not assets:
-                image_path = _generate_topic_image(title, book_index)
+                # Never insert generic generated diagrams. If web search and committed
+                # topic-matched assets fail, leave this section without an image.
+                print(f"No suitable non-repeating web/local image found for section: {title}")
+                return heading + body
             else:
                 assets.sort(key=lambda item: (-item[0], item[1]))
                 _, image_path, chosen = assets[0]
