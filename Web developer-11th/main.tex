@@ -5,16 +5,13 @@
 \usepackage{tikz}
 \usepackage{tcolorbox}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
-% Preserve TikZ's drawing command before hyperref defines its URL-path command.
-\let\TikZPath\path
 \usepackage{hyperref}
-\let\path\TikZPath
 \definecolor{Navy}{HTML}{17365D}\definecolor{Teal}{HTML}{007F86}\definecolor{Pale}{HTML}{EAF6F7}\definecolor{Gold}{HTML}{E3A72F}\definecolor{Ink}{HTML}{293746}\definecolor{LightGold}{HTML}{FFF5DD}\definecolor{SoftGray}{HTML}{F4F6F9}\definecolor{Coral}{HTML}{D95D50}\definecolor{Violet}{HTML}{7656A6}\definecolor{Sky}{HTML}{DCEEFF}\definecolor{Rose}{HTML}{FCEBE8}
 \hypersetup{colorlinks=true,linkcolor=Teal,urlcolor=Teal,pdftitle={Web Developer -- Grade XI},pdfauthor={Web Developer Learning Handbook}}
 \setlist[itemize]{leftmargin=1.5em,itemsep=2pt,topsep=3pt,parsep=0pt}\setlist[enumerate]{leftmargin=1.7em,itemsep=2.5pt,topsep=3pt,parsep=0pt}
 \setlength{\parindent}{0pt}\setlength{\parskip}{4pt}\setlength{\emergencystretch}{3em}
 \lstdefinestyle{webcode}{basicstyle=\ttfamily\small,keywordstyle=\color{Navy}\bfseries,commentstyle=\color{Teal},stringstyle=\color{Violet},numbers=left,numberstyle=\tiny\color{Ink!65},stepnumber=1,numbersep=7pt,showstringspaces=false,breaklines=true,frame=single,rulecolor=\color{Teal!55},backgroundcolor=\color{SoftGray},xleftmargin=2mm,framexleftmargin=2mm,aboveskip=5pt,belowskip=5pt}
-\AddToShipoutPictureBG{\begin{tikzpicture}[remember picture,overlay]\draw[Navy!65,line width=.55pt] ([xshift=11mm,yshift=-11mm]current page.north west) rectangle ([xshift=-11mm,yshift=11mm]current page.south east);\draw[Teal,line width=1.6pt] ([xshift=11mm,yshift=-11mm]current page.north west)--([xshift=37mm,yshift=-11mm]current page.north west);\draw[Coral,line width=1.6pt] ([xshift=-11mm,yshift=11mm]current page.south east)--([xshift=-37mm,yshift=11mm]current page.south east);\path [fill=Gold] ([xshift=11mm,yshift=-11mm]current page.north west) circle (1.1mm);\path [fill=Violet] ([xshift=-11mm,yshift=11mm]current page.south east) circle (1.1mm);\end{tikzpicture}}
+\AddToShipoutPictureBG{\begin{tikzpicture}[remember picture,overlay]\draw[Navy!65,line width=.55pt] ([xshift=11mm,yshift=-11mm]current page.north west) rectangle ([xshift=-11mm,yshift=11mm]current page.south east);\draw[Teal,line width=1.6pt] ([xshift=11mm,yshift=-11mm]current page.north west)--([xshift=37mm,yshift=-11mm]current page.north west);\draw[Coral,line width=1.6pt] ([xshift=-11mm,yshift=11mm]current page.south east)--([xshift=-37mm,yshift=11mm]current page.south east);\fill[Gold] ([xshift=11mm,yshift=-11mm]current page.north west) circle (1.1mm);\fill[Violet] ([xshift=-11mm,yshift=11mm]current page.south east) circle (1.1mm);\end{tikzpicture}}
 \pagestyle{fancy}\fancyhf{}\fancyhead[L]{\raisebox{-3.5mm}[0pt][0pt]{\small\bfseries\sffamily\color{Teal} WEB DEVELOPER}}\fancyhead[R]{\raisebox{-3.5mm}[0pt][0pt]{\small\sffamily\color{Navy} GRADE XI TEXTBOOK}}\fancyfoot[C]{\tikz[baseline=(n.base)]\node[fill=Teal,draw=Gold,line width=.7pt,text=white,circle,minimum size=7mm,inner sep=1pt,font=\small\bfseries] (n) {\thepage};}
 \renewcommand{\headrulewidth}{.5pt}\renewcommand{\headrule}{\hbox to\headwidth{\color{Gold}\leaders\hrule height \headrulewidth\hfill}}\setlength{\headheight}{22pt}
 \fancypagestyle{plain}{\fancyhf{}\fancyhead[L]{\raisebox{-3.5mm}[0pt][0pt]{\small\bfseries\sffamily\color{Teal} WEB DEVELOPER}}\fancyhead[R]{\raisebox{-3.5mm}[0pt][0pt]{\small\sffamily\color{Navy} GRADE XI TEXTBOOK}}\fancyfoot[C]{\tikz[baseline=(n.base)]\node[fill=Teal,draw=Gold,line width=.7pt,text=white,circle,minimum size=7mm,inner sep=1pt,font=\small\bfseries] (n) {\thepage};}\renewcommand{\headrulewidth}{.5pt}\renewcommand{\headrule}{\hbox to\headwidth{\color{Gold}\leaders\hrule height \headrulewidth\hfill}}}
@@ -24,7 +21,7 @@
 \newtcolorbox{keybox}{colback=Pale,colframe=Teal,boxrule=.6pt,arc=1mm,left=2mm,right=2mm,top=1.5mm,bottom=1.5mm}
 \begin{document}
 \begin{titlepage}\thispagestyle{empty}
-\begin{tikzpicture}[remember picture,overlay]\path [fill=Navy] (current page.north west) rectangle ([yshift=-11.4cm]current page.north east);\path [fill=Teal] ([yshift=-11.4cm]current page.north west) rectangle ([yshift=-11.68cm]current page.north east);\path [fill=Coral] ([yshift=-11.68cm]current page.north west) rectangle ([yshift=-11.82cm]current page.north east);\draw[Gold,line width=2pt] ([xshift=22mm,yshift=-20mm]current page.north west)--([xshift=-22mm,yshift=-20mm]current page.north east);\draw[Gold,line width=1pt] ([xshift=22mm,yshift=-103mm]current page.north west)--([xshift=-22mm,yshift=-103mm]current page.north east);\end{tikzpicture}
+\begin{tikzpicture}[remember picture,overlay]\fill[Navy] (current page.north west) rectangle ([yshift=-11.4cm]current page.north east);\fill[Teal] ([yshift=-11.4cm]current page.north west) rectangle ([yshift=-11.68cm]current page.north east);\fill[Coral] ([yshift=-11.68cm]current page.north west) rectangle ([yshift=-11.82cm]current page.north east);\draw[Gold,line width=2pt] ([xshift=22mm,yshift=-20mm]current page.north west)--([xshift=-22mm,yshift=-20mm]current page.north east);\draw[Gold,line width=1pt] ([xshift=22mm,yshift=-103mm]current page.north west)--([xshift=-22mm,yshift=-103mm]current page.north east);\end{tikzpicture}
 \vspace*{20mm}{\color{white}\rmfamily\bfseries\fontsize{38}{44}\selectfont HANDBOOK\par}\vspace{5mm}{\color{Gold}\rule{.72\textwidth}{1.2pt}\par}\vspace{7mm}{\color{white}\sffamily\Large Web Developer\par}\vspace{3mm}{\color{white}\sffamily\large Grade XI \textbullet\ IT--ITeS Vocational Education\par}\vfill
 \begin{center}\begin{tikzpicture}[node distance=7mm,>=Latex]
 \node[draw=Gold,fill=white,rounded corners=2mm,minimum width=31mm,minimum height=14mm,font=\sffamily\bfseries\color{Navy}] (h) {HTML};
@@ -221,7 +218,7 @@ CSS layout tools include normal flow, Flexbox, Grid, positioning and media queri
 \chapter{The CSS Box Model}
 Each element is laid out as a rectangular box. The content area holds text or other content. Padding adds space inside the border, border surrounds padding and content, and margin creates space outside the border.
 \begin{center}\begin{tikzpicture}
-\path [fill=Gold!22] (0,0) rectangle (10,5.2);\path [fill=Coral!18] (.7,.7) rectangle (9.3,4.5);\path [fill=Teal!18] (1.4,1.3) rectangle (8.6,3.9);\path [fill=Sky] (2.1,1.95) rectangle (7.9,3.25);
+\fill[Gold!22] (0,0) rectangle (10,5.2);\fill[Coral!18] (.7,.7) rectangle (9.3,4.5);\fill[Teal!18] (1.4,1.3) rectangle (8.6,3.9);\fill[Sky] (2.1,1.95) rectangle (7.9,3.25);
 \draw[Gold!80!black,thick] (0,0) rectangle (10,5.2);\draw[Coral!80!black,thick] (.7,.7) rectangle (9.3,4.5);\draw[Teal!80!black,thick] (1.4,1.3) rectangle (8.6,3.9);\draw[Navy,thick] (2.1,1.95) rectangle (7.9,3.25);
 \node[font=\sffamily\bfseries] at (5,4.85) {Margin};\node[font=\sffamily\bfseries] at (5,4.2) {Border};\node[font=\sffamily\bfseries] at (5,3.55) {Padding};\node[font=\sffamily\bfseries\color{Navy}] at (5,2.6) {Content};
 \end{tikzpicture}\end{center}
@@ -359,7 +356,7 @@ context.fillStyle = "#e3a72f";
 context.fill();
 \end{lstlisting}
 The canvas coordinate origin is at the top-left. Horizontal coordinates increase to the right and vertical coordinates increase downwards. Drawing often involves setting a style, beginning a path, defining shapes and filling or stroking the path. Animation may repeatedly clear and redraw the canvas, often using \texttt{requestAnimationFrame}. Important canvas information should also be available through accessible text or another suitable representation.
-\begin{center}\begin{tikzpicture}[x=.65cm,y=.45cm]\draw[->,thick,Navy] (0,0)--(10,0) node[right]{x};\draw[->,thick,Navy] (0,0)--(0,6) node[above]{y};\path [fill=Teal!25] (2,1) rectangle (6,4);\draw[Teal,thick] (2,1) rectangle (6,4);\node[font=\small] at (4,2.5) {Rectangle};\node[font=\small,below] at (2,.7) {(x,y)};\end{tikzpicture}\end{center}
+\begin{center}\begin{tikzpicture}[x=.65cm,y=.45cm]\draw[->,thick,Navy] (0,0)--(10,0) node[right]{x};\draw[->,thick,Navy] (0,0)--(0,6) node[above]{y};\fill[Teal!25] (2,1) rectangle (6,4);\draw[Teal,thick] (2,1) rectangle (6,4);\node[font=\small] at (4,2.5) {Rectangle};\node[font=\small,below] at (2,.7) {(x,y)};\end{tikzpicture}\end{center}
 \section*{Review Questions}\begin{enumerate}\item What is the canvas element used for?\item How do you obtain a two-dimensional drawing context?\item Explain the canvas coordinate system.\item What is the difference between filling and stroking a shape?\item Why should important canvas information have an accessible alternative?\end{enumerate}
 
 \chapter{Testing, Accessibility and Publishing}
