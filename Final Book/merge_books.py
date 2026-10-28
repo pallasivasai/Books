@@ -167,26 +167,7 @@ def render_main_tex(tex_path: Path) -> str:
         path = source_tex(book)
         body = extract_body(path)
         body = add_section_illustrations(body, index)
-        # Add a real, topic-relevant classroom photograph at the start of each curriculum.
-        # Photos are fetched from Wikimedia Commons by the workflow and credited below.
-        people_photos = {
-            1: (r"assets/book1/people-photo.jpg", r"Computer-based training room photograph: Lcjuera, Wikimedia Commons, CC BY-SA 4.0."),
-            2: (r"assets/book2/people-photo.jpg", r"Computer education class photograph: Yann Forget, Wikimedia Commons, CC BY-SA 2.5."),
-            3: (r"assets/book3/people-photo.jpg", r"Students learning programming in Bengaluru: Nayakyashraj, Wikimedia Commons, CC BY-SA 4.0."),
-            4: (r"assets/book4/people-photo.jpg", r"Teacher and students in a training session: Dr. Balkrishna Hari Mali, Wikimedia Commons, CC BY-SA 4.0."),
-            5: (r"assets/book5/people-photo.jpg", r"Students learning programming in Bengaluru: Nayakyashraj, Wikimedia Commons, CC BY-SA 4.0."),
-            6: (r"assets/book6/people-photo.jpg", r"Teacher and students in a training session: Dr. Balkrishna Hari Mali, Wikimedia Commons, CC BY-SA 4.0."),
-            7: (r"assets/book7/people-photo.jpg", r"Computer-based training room photograph: Lcjuera, Wikimedia Commons, CC BY-SA 4.0."),
-            8: (r"assets/book8/people-photo.jpg", r"Computer education class photograph: Yann Forget, Wikimedia Commons, CC BY-SA 2.5."),
-        }
-        photo_path, photo_credit = people_photos[index]
-        photo_block = (
-            "\n\\begin{center}\\includegraphics[width=.82\\textwidth,height=48mm,keepaspectratio]{"
-            + photo_path + "}\\par{\\footnotesize\\textit{" + photo_credit
-            + "}}\\end{center}\n"
-        )
-        # Place the photograph after the first chapter heading, not on a separate page.
-        body = re.sub(r"(\\chapter(?:\\*?)\\s*\\{[^{}]*\\})", lambda match: match.group(1) + photo_block, body, count=1)
+        # Topic-matched section images are inserted once each; do not add repeated curriculum-opening photos.
         # Keep the source chapter text and illustrations; only mark transitions between source curricula.
         bodies.append(
             "\n% ============================================================\n"
