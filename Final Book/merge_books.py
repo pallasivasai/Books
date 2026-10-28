@@ -125,6 +125,9 @@ def main():
 \newcommand{\review}[1]{\par\smallskip\reviewtitle\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=1pt,topsep=2pt]\small #1\end{enumerate}\smallskip}
 \lstdefinestyle{webcode}{basicstyle=\ttfamily\small,keywordstyle=\color{Navy}\bfseries,commentstyle=\color{Teal},stringstyle=\color{Violet},numbers=left,numberstyle=\tiny\color{Ink!65},stepnumber=1,numbersep=8pt,showstringspaces=false,breaklines=true,frame=single,rulecolor=\color{Teal!55},backgroundcolor=\color{SoftGray},xleftmargin=2mm,framexleftmargin=2mm,aboveskip=5pt,belowskip=5pt}
 \lstset{style=webcode}
+% Prevent LaTeX's alphabetic Appendix numbering from overflowing after Appendix Z.
+\renewcommand{\appendixname}{Appendix}
+\renewcommand{\thechapter}{\arabic{chapter}}
 """
     cover = r"""\begin{document}
 \begin{titlepage}\thispagestyle{empty}
