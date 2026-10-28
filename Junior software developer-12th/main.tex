@@ -226,7 +226,35 @@ Modularity divides a system into components with clear responsibilities. High co
 \review{\item Distinguish functional and non-functional requirements.\item Define cohesion and coupling.\item List five quality attributes.\item Rewrite a vague requirement measurably.}
 \chapter{Software Development Life Cycle}
 Typical activities include planning, requirements analysis, design, implementation, testing, deployment and maintenance. Sequential and iterative approaches organise these activities differently; feedback may send work back to earlier stages.
-\begin{center}\begin{tikzpicture}[node distance=4mm and 4mm,>=Latex]\node[draw=Teal,fill=Pale,rounded corners,align=center,text width=2cm] (a) {Plan and\\requirements};\node[draw=Teal,fill=Pale,rounded corners,align=center,text width=1.5cm,right=of a] (b) {Design};\node[draw=Teal,fill=Pale,rounded corners,align=center,text width=1.5cm,right=of b] (c) {Build};\node[draw=Teal,fill=Pale,rounded corners,align=center,text width=1.5cm,right=of c] (d) {Test};\node[draw=Teal,fill=Pale,rounded corners,align=center,text width=2cm,right=of d] (e) {Release and\\maintain};\draw[->,thick,Navy](a)--(b);\draw[->,thick,Navy](b)--(c);\draw[->,thick,Navy](c)--(d);\draw[->,thick,Navy](d)--(e);\end{tikzpicture}\end{center}
+\begin{center}
+\begin{tikzpicture}[
+  >=Latex,
+  phase/.style={draw=Navy!75,fill=white,rounded corners=2mm,
+    line width=.8pt,minimum height=15mm,text width=1.72cm,
+    align=center,font=\sffamily\small\bfseries,inner sep=3pt},
+  stepnum/.style={circle,fill=Teal,text=white,minimum size=5mm,
+    inner sep=0pt,font=\sffamily\scriptsize\bfseries},
+  flow/.style={->,draw=Teal,line width=1.1pt}
+]
+\node[phase] (a) {Plan and\\requirements};
+\node[phase,right=3mm of a] (b) {Design};
+\node[phase,right=3mm of b] (c) {Implement};
+\node[phase,right=3mm of c] (d) {Test};
+\node[phase,right=3mm of d] (e) {Deploy};
+\node[phase,right=3mm of e] (f) {Operate and\\maintain};
+\foreach \n/\p in {1/a,2/b,3/c,4/d,5/e,6/f}
+  \node[stepnum,above=1mm of \p.north west,anchor=south west] {\n};
+\draw[flow] (a.east)--(b.west);
+\draw[flow] (b.east)--(c.west);
+\draw[flow] (c.east)--(d.west);
+\draw[flow] (d.east)--(e.west);
+\draw[flow] (e.east)--(f.west);
+\draw[->,draw=Coral,line width=1pt]
+  (f.south) to[bend right=28]
+  node[below=2mm,midway,font=\sffamily\scriptsize\color{Coral}]
+  {Feedback, fixes and new requirements} (a.south);
+\end{tikzpicture}
+\end{center}
 Plan-driven methods suit some stable or constrained projects. Iterative methods deliver increments and incorporate feedback. Version control records changes; meaningful commits and code review support collaboration. Risk planning records likelihood, impact, owners and mitigation actions.
 \review{\item List typical SDLC activities.\item Compare plan-driven and iterative approaches.\item Why is code review useful?\item Describe a project risk and mitigation.}
 \chapter{Software Testing and Maintenance}
