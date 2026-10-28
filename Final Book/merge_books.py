@@ -43,24 +43,24 @@ def main():
         if not src.exists():
             raise SystemExit(f"Missing source file: {src}")
         body = get_body(src)
-        chunks = re.split(r"(?=\\chapter\\*?(?:\\[[^]]*\\])?\\{)", body)
+        chunks = re.split(r"(?=\\chapter\*?(?:\[[^]]*\])?\{)", body)
         kept = []
         for chunk in chunks:
-            match = re.search(r"\\chapter\\*?(?:\\[[^]]*\\])?\\{([^}]*)\\}", chunk)
+            match = re.search(r"\\chapter\*?(?:\[[^]]*\])?\{([^}]*)\}", chunk)
             if not match:
                 if chunk.strip():
                     kept.append(chunk)
                 continue
             title = match.group(1).strip().casefold()
-            normalized = re.sub(r"%[^\\n]*", "", chunk)
-            normalized = re.sub(r"\\s+", " ", normalized).strip()
+            normalized = re.sub(r"%[^\n]*", "", chunk)
+            normalized = re.sub(r"\s+", " ", normalized).strip()
             key = (title, normalized)
             if key not in seen_chapters:
                 seen_chapters.add(key)
                 kept.append(chunk)
-        sections.append(r"\\part*{" + label + "}" + "\\n" +
-                        r"\\addcontentsline{toc}{part}{" + label + "}" + "\\n\\n" +
-                        "\\n\\n".join(kept))
+        sections.append(r"\part*{" + label + "}" + "\n" +
+                        r"\addcontentsline{toc}{part}{" + label + "}" + "\n\n" +
+                        "\n\n".join(kept))
 
     preamble = r"""\documentclass[11pt,openany,oneside]{book}
 \usepackage[a4paper,top=25mm,bottom=23mm,left=25mm,right=22mm,headheight=22pt]{geometry}
