@@ -225,7 +225,8 @@ The development life cycle provides a sequence of activities that helps a team m
 \draw[->,thick,Gold] (build)--(test);
 \draw[->,thick,Gold] (test)--(publish);
 \draw[->,thick,Gold] (publish)--(maintain);
-\draw[->,thick,Coral,bend right=24] (maintain.west) to node[below,font=\scriptsize]{feedback and new needs} (req.south);
+\draw[->,thick,Coral] (maintain.south) -- ++(0,-8mm)
+  -| node[pos=.25,below,font=\scriptsize,fill=white,inner sep=1pt]{feedback and new needs} (req.south);
 \end{tikzpicture}
 \end{center}
 \textit{Figure 1.3.} A practical website life cycle with feedback after release.
