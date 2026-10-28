@@ -190,14 +190,14 @@ Web development is the process of building and maintaining the website's structu
 Back-end development, when required, handles server-side tasks such as business rules, user authentication, data storage, and communication with other services. A database stores information in an organised form. An application programming interface (API) can provide a defined way for the browser or another application to request data or perform an operation. A small static information site may not need a back end; a learning portal with student accounts and saved results usually does.
 
 \begin{center}
-\begin{tikzpicture}[node distance=6mm and 8mm,>=Latex]
+\begin{tikzpicture}[node distance=8mm and 18mm,>=Latex]
 \node[draw=Navy,fill=Sky,rounded corners,minimum width=34mm,minimum height=11mm,align=center] (user) {Visitor\\Browser};
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=36mm,minimum height=11mm,align=center,right=of user] (front) {Front end\\HTML + CSS + JS};
 \node[draw=Gold,fill=LightGold,rounded corners,minimum width=36mm,minimum height=11mm,align=center,right=of front] (server) {Server / API\\Application logic};
 \node[draw=Violet,fill=Violet!10,rounded corners,minimum width=30mm,minimum height=11mm,align=center,below=of server] (db) {Database};
-\draw[<->,thick,Teal] (user)--node[above,font=\scriptsize]{requests / pages}(front);
-\draw[<->,thick,Teal] (front)--node[above,font=\scriptsize]{HTTP requests}(server);
-\draw[<->,thick,Gold] (server)--node[right,font=\scriptsize]{queries}(db);
+\draw[<->,thick,Teal] (user)--node[midway,above=7mm,font=\scriptsize,fill=white,inner sep=1pt]{requests / pages}(front);
+\draw[<->,thick,Teal] (front)--node[midway,above=7mm,font=\scriptsize,fill=white,inner sep=1pt]{HTTP requests}(server);
+\draw[<->,thick,Gold] (server)--node[midway,right=2mm,font=\scriptsize,fill=white,inner sep=1pt]{queries}(db);
 \end{tikzpicture}
 \end{center}
 \textit{Figure 1.2.} A common website architecture. A simple static site may use only the browser and front-end files.
