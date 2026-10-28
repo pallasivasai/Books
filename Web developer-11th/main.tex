@@ -9,7 +9,7 @@
 \setlist[itemize]{leftmargin=1.5em,itemsep=2pt,topsep=3pt,parsep=0pt}\setlist[enumerate]{leftmargin=1.7em,itemsep=2.5pt,topsep=3pt,parsep=0pt}
 \setlength{\parindent}{0pt}\setlength{\parskip}{4pt}\setlength{\emergencystretch}{3em}
 \lstdefinestyle{webcode}{basicstyle=\ttfamily\small,keywordstyle=\color{Navy}\bfseries,commentstyle=\color{Teal},stringstyle=\color{Violet},numbers=left,numberstyle=\tiny\color{Ink!65},stepnumber=1,numbersep=7pt,showstringspaces=false,breaklines=true,frame=single,rulecolor=\color{Teal!55},backgroundcolor=\color{SoftGray},xleftmargin=2mm,framexleftmargin=2mm,aboveskip=5pt,belowskip=5pt}
-\AddToShipoutPictureBG{\AtPageLowerLeft{\put(0,0){\begin{tikzpicture}[remember picture,overlay]\draw[Navy!65,line width=.55pt] ([xshift=11mm,yshift=-11mm]current page.north west) rectangle ([xshift=-11mm,yshift=11mm]current page.south east);\draw[Teal,line width=1.6pt] ([xshift=11mm,yshift=-11mm]current page.north west)--([xshift=37mm,yshift=-11mm]current page.north west);\draw[Coral,line width=1.6pt] ([xshift=-11mm,yshift=11mm]current page.south east)--([xshift=-37mm,yshift=11mm]current page.south east);\draw[fill=Gold,draw=none] ([xshift=11mm,yshift=-11mm]current page.north west) circle (1.1mm);\draw[fill=Violet,draw=none] ([xshift=-11mm,yshift=11mm]current page.south east) circle (1.1mm);\end{tikzpicture}}}}
+\AddToShipoutPictureBG{\AtPageLowerLeft{\put(0,0){\begin{tikzpicture}[remember picture,overlay]\path[draw=Navy!65,line width=.55pt] ([xshift=11mm,yshift=-11mm]current page.north west) rectangle ([xshift=-11mm,yshift=11mm]current page.south east);\path[draw=Teal,line width=1.6pt] ([xshift=11mm,yshift=-11mm]current page.north west)--([xshift=37mm,yshift=-11mm]current page.north west);\path[draw=Coral,line width=1.6pt] ([xshift=-11mm,yshift=11mm]current page.south east)--([xshift=-37mm,yshift=11mm]current page.south east);\path[fill=Gold,draw=none] ([xshift=11mm,yshift=-11mm]current page.north west) circle (1.1mm);\path[fill=Violet,draw=none] ([xshift=-11mm,yshift=11mm]current page.south east) circle (1.1mm);\end{tikzpicture}}}}
 \pagestyle{fancy}\fancyhf{}\fancyhead[L]{\raisebox{-3.5mm}[0pt][0pt]{\small\bfseries\sffamily\color{Teal} WEB DEVELOPER}}\fancyhead[R]{\raisebox{-3.5mm}[0pt][0pt]{\small\sffamily\color{Navy} GRADE XI TEXTBOOK}}\fancyfoot[C]{\tikz[baseline=(n.base)]\node[fill=Teal,draw=Gold,line width=.7pt,text=white,circle,minimum size=7mm,inner sep=1pt,font=\small\bfseries] (n) {\thepage};}
 \renewcommand{\headrulewidth}{.5pt}\renewcommand{\headrule}{\hbox to\headwidth{\color{Gold}\leaders\hrule height \headrulewidth\hfill}}\setlength{\headheight}{22pt}
 \fancypagestyle{plain}{\fancyhf{}\fancyhead[L]{\raisebox{-3.5mm}[0pt][0pt]{\small\bfseries\sffamily\color{Teal} WEB DEVELOPER}}\fancyhead[R]{\raisebox{-3.5mm}[0pt][0pt]{\small\sffamily\color{Navy} GRADE XI TEXTBOOK}}\fancyfoot[C]{\tikz[baseline=(n.base)]\node[fill=Teal,draw=Gold,line width=.7pt,text=white,circle,minimum size=7mm,inner sep=1pt,font=\small\bfseries] (n) {\thepage};}\renewcommand{\headrulewidth}{.5pt}\renewcommand{\headrule}{\hbox to\headwidth{\color{Gold}\leaders\hrule height \headrulewidth\hfill}}}
@@ -19,15 +19,15 @@
 \newtcolorbox{keybox}{colback=Pale,colframe=Teal,boxrule=.6pt,arc=1mm,left=2mm,right=2mm,top=1.5mm,bottom=1.5mm}
 \begin{document}
 \begin{titlepage}\thispagestyle{empty}
-\begin{tikzpicture}[remember picture,overlay]\draw[fill=Navy,draw=none] (current page.north west) rectangle ([yshift=-11.4cm]current page.north east);\draw[fill=Teal,draw=none] ([yshift=-11.4cm]current page.north west) rectangle ([yshift=-11.68cm]current page.north east);\draw[fill=Coral,draw=none] ([yshift=-11.68cm]current page.north west) rectangle ([yshift=-11.82cm]current page.north east);\draw[Gold,line width=2pt] ([xshift=22mm,yshift=-20mm]current page.north west)--([xshift=-22mm,yshift=-20mm]current page.north east);\draw[Gold,line width=1pt] ([xshift=22mm,yshift=-103mm]current page.north west)--([xshift=-22mm,yshift=-103mm]current page.north east);\end{tikzpicture}
+\begin{tikzpicture}[remember picture,overlay]\path[fill=Navy,draw=none] (current page.north west) rectangle ([yshift=-11.4cm]current page.north east);\path[fill=Teal,draw=none] ([yshift=-11.4cm]current page.north west) rectangle ([yshift=-11.68cm]current page.north east);\path[fill=Coral,draw=none] ([yshift=-11.68cm]current page.north west) rectangle ([yshift=-11.82cm]current page.north east);\path[draw=Gold,line width=2pt] ([xshift=22mm,yshift=-20mm]current page.north west)--([xshift=-22mm,yshift=-20mm]current page.north east);\path[draw=Gold,line width=1pt] ([xshift=22mm,yshift=-103mm]current page.north west)--([xshift=-22mm,yshift=-103mm]current page.north east);\end{tikzpicture}
 \vspace*{20mm}{\color{white}\rmfamily\bfseries\fontsize{38}{44}\selectfont HANDBOOK\par}\vspace{5mm}{\color{Gold}\rule{.72\textwidth}{1.2pt}\par}\vspace{7mm}{\color{white}\sffamily\Large Web Developer\par}\vspace{3mm}{\color{white}\sffamily\large Grade XI \textbullet\ IT--ITeS Vocational Education\par}\vfill
 \begin{center}\begin{tikzpicture}[node distance=7mm,>=Latex]
 \node[draw=Gold,fill=white,rounded corners=2mm,minimum width=31mm,minimum height=14mm,font=\sffamily\bfseries\color{Navy}] (h) {HTML};
 \node[draw=Gold,fill=white,rounded corners=2mm,minimum width=31mm,minimum height=14mm,right=of h,font=\sffamily\bfseries\color{Teal}] (c) {CSS};
 \node[draw=Gold,fill=white,rounded corners=2mm,minimum width=31mm,minimum height=14mm,right=of c,font=\sffamily\bfseries\color{Violet}] (j) {JavaScript};
-\draw[Gold,very thick,->] (h)--(c);\draw[Gold,very thick,->] (c)--(j);
+\path[draw=Gold,very thick,->] (h)--(c);\path[draw=Gold,very thick,->] (c)--(j);
 \node[draw=Teal,fill=Pale,rounded corners=2mm,minimum width=102mm,minimum height=13mm,below=of c,font=\sffamily\bfseries\color{Navy}] (site) {Interactive, accessible and responsive website};
-\draw[Teal,thick,->] (h.south) |- (site.west);\draw[Teal,thick,->] (c.south)--(site.north);\draw[Teal,thick,->] (j.south) |- (site.east);
+\path[draw=Teal,thick,->] (h.south) |- (site.west);\path[draw=Teal,thick,->] (c.south)--(site.north);\path[draw=Teal,thick,->] (j.south) |- (site.east);
 \end{tikzpicture}
 \vspace{7mm}{\sffamily\Large\bfseries\color{Teal} Web Development Essentials \textbullet\ HTML \textbullet\ CSS \textbullet\ JavaScript\par}\vspace{4mm}{\sffamily\large\color{Ink} A textbook-style learning resource with diagrams, code examples and review questions\par}\end{center}
 \vfill\begin{center}{\small Based on Grade XI Web Developer study material topics\par}\end{center}
@@ -52,7 +52,7 @@ Important IT/ITeS segments include software development, hardware manufacturing,
 \node[draw=Gold,fill=LightGold,rounded corners,minimum width=31mm,minimum height=10mm,align=center,right=of it] (sw) {Software};
 \node[draw=Violet,fill=Violet!10,rounded corners,minimum width=31mm,minimum height=10mm,align=center,below=of sw] (sv) {Digital services};
 \node[draw=Coral,fill=Rose,rounded corners,minimum width=31mm,minimum height=10mm,align=center,below=of it] (u) {Users and organisations};
-\draw[->,thick,Teal] (it)--(sw);\draw[->,thick,Teal] (sw)--(sv);\draw[->,thick,Teal] (u)--(sv);\draw[->,thick,Teal] (u)--(it);\end{tikzpicture}\end{center}
+\path[draw=->,thick,Teal] (it)--(sw);\path[draw=->,thick,Teal] (sw)--(sv);\path[draw=->,thick,Teal] (u)--(sv);\path[draw=->,thick,Teal] (u)--(it);\end{tikzpicture}\end{center}
 The industry contributes to digital transformation, connectivity, employment, innovation, education, healthcare and business operations. Important trends include cloud computing, AI and machine learning, cybersecurity, remote work and data analytics. Web-development career paths may progress from junior web developer to front-end, back-end, full-stack, lead developer, manager or technology leadership. Freelancing and running a small agency are also possible paths.
 \begin{keybox}\textbf{Remember:} Web developers need technical skills together with communication, teamwork, problem-solving, responsible data handling and continuous learning.\end{keybox}
 \section*{Review Questions}\begin{enumerate}\item Define IT and name four components of an IT system.\item Explain ITeS and give three examples.\item Distinguish voice-based and non-voice-based BPO services.\item List five IT/ITeS industry segments.\item Describe three ways IT contributes to society and the economy.\item Outline a possible career path for a web developer.\end{enumerate}
@@ -68,7 +68,7 @@ Web design focuses on appearance, layout, navigation and user experience. Web de
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=24mm,minimum height=9mm,right=of d] (b) {Build};
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=24mm,minimum height=9mm,right=of b] (t) {Test};
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=24mm,minimum height=9mm,right=of t] (l) {Launch};
-\draw[->,thick,Gold] (p)--(d);\draw[->,thick,Gold] (d)--(b);\draw[->,thick,Gold] (b)--(t);\draw[->,thick,Gold] (t)--(l);\draw[->,thick,Coral,bend right=35] (l.south) to node[below,font=\small]{feedback and maintenance} (p.south);\end{tikzpicture}\end{center}
+\path[draw=->,thick,Gold] (p)--(d);\path[draw=->,thick,Gold] (d)--(b);\path[draw=->,thick,Gold] (b)--(t);\path[draw=->,thick,Gold] (t)--(l);\path[draw=->,thick,Coral,bend right=35] (l.south) to node[below,font=\small]{feedback and maintenance} (p.south);\end{tikzpicture}\end{center}
 \section{Design elements and constraints}
 Basic elements include layout and grid structure, colour scheme, typography, navigation, meaningful content, imagery, interaction, consistency, accessibility and performance. Constraints may be technical, accessibility-related, content-related, brand-related, budget-related, usability-related or time-related. Designers should consider screen sizes, browsers, keyboard access, contrast, loading speed and users with disabilities.
 \section{Assumptions and collaboration}
@@ -95,7 +95,7 @@ The Waterfall model organises work into sequential phases. It can be clear when 
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=30mm,minimum height=8mm,below=of d] (c) {Coding};
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=30mm,minimum height=8mm,below=of c] (t) {Testing};
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=30mm,minimum height=8mm,below=of t] (m) {Maintenance};
-\draw[->,thick,Gold] (r)--(d);\draw[->,thick,Gold] (d)--(c);\draw[->,thick,Gold] (c)--(t);\draw[->,thick,Gold] (t)--(m);\end{tikzpicture}\end{center}
+\path[draw=->,thick,Gold] (r)--(d);\path[draw=->,thick,Gold] (d)--(c);\path[draw=->,thick,Gold] (c)--(t);\path[draw=->,thick,Gold] (t)--(m);\end{tikzpicture}\end{center}
 \section*{Review Questions}\begin{enumerate}\item What is the SDLC? List its main activities.\item Explain the Waterfall model and one limitation.\item How does iterative development work?\item State the main characteristics of Agile development.\item What should a team consider when choosing a model?\end{enumerate}
 
 \chapter{Web Designing Specifications}
@@ -108,7 +108,7 @@ A Software Requirements Specification (SRS) describes what software must do and 
 \node[draw=Gold,fill=LightGold,rounded corners,minimum width=45mm,minimum height=9mm,align=center,below=of n] (b) {BRD: scope and outcomes};
 \node[draw=Violet,fill=Violet!10,rounded corners,minimum width=45mm,minimum height=9mm,align=center,below=of b] (s) {SRS: system requirements};
 \node[draw=Coral,fill=Rose,rounded corners,minimum width=45mm,minimum height=9mm,align=center,below=of s] (t) {Design, build and verify};
-\draw[->,thick,Teal] (n)--(b);\draw[->,thick,Teal] (b)--(s);\draw[->,thick,Teal] (s)--(t);\end{tikzpicture}\end{center}
+\path[draw=->,thick,Teal] (n)--(b);\path[draw=->,thick,Teal] (b)--(s);\path[draw=->,thick,Teal] (s)--(t);\end{tikzpicture}\end{center}
 Gather stakeholder needs, clarify ambiguous statements, define scope and exclusions, identify assumptions, prioritise requirements, review them with stakeholders and record approval. Replace vague requirements such as “load quickly” with a measurable target agreed for the project. Traceability links a requirement to design, implementation and test.
 \section*{Review Questions}\begin{enumerate}\item What is the purpose of a BRD?\item What information is included in an SRS?\item Distinguish functional and non-functional requirements.\item Why should requirements be measurable and testable?\item What is requirement traceability?\end{enumerate}
 
@@ -123,7 +123,7 @@ Object-oriented design organises behaviour and data into classes and objects. Da
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=30mm,minimum height=11mm,align=center] (u) {User interface};
 \node[draw=Gold,fill=LightGold,rounded corners,minimum width=30mm,minimum height=11mm,align=center,right=of u] (a) {Application / API};
 \node[draw=Violet,fill=Violet!10,rounded corners,minimum width=30mm,minimum height=11mm,align=center,right=of a] (d) {Database};
-\draw[<->,thick,Teal] (u)--node[above,font=\small]{requests} (a);\draw[<->,thick,Teal] (a)--node[above,font=\small]{queries} (d);\end{tikzpicture}\end{center}
+\path[draw=<->,thick,Teal] (u)--node[above,font=\small]{requests} (a);\path[draw=<->,thick,Teal] (a)--node[above,font=\small]{queries} (d);\end{tikzpicture}\end{center}
 \section*{Review Questions}\begin{enumerate}\item Compare HLD and LLD.\item What can an HLD diagram communicate?\item Explain the role of database design.\item What should an API specification contain?\item Why should UI, API and database designs be reviewed together?\end{enumerate}
 
 \chapter{Testing and Identifying Design Defects}
@@ -216,8 +216,8 @@ CSS layout tools include normal flow, Flexbox, Grid, positioning and media queri
 \chapter{The CSS Box Model}
 Each element is laid out as a rectangular box. The content area holds text or other content. Padding adds space inside the border, border surrounds padding and content, and margin creates space outside the border.
 \begin{center}\begin{tikzpicture}
-\draw[fill=Gold!22,draw=none] (0,0) rectangle (10,5.2);\draw[fill=Coral!18,draw=none] (.7,.7) rectangle (9.3,4.5);\draw[fill=Teal!18,draw=none] (1.4,1.3) rectangle (8.6,3.9);\draw[fill=Sky,draw=none] (2.1,1.95) rectangle (7.9,3.25);
-\draw[Gold!80!black,thick] (0,0) rectangle (10,5.2);\draw[Coral!80!black,thick] (.7,.7) rectangle (9.3,4.5);\draw[Teal!80!black,thick] (1.4,1.3) rectangle (8.6,3.9);\draw[Navy,thick] (2.1,1.95) rectangle (7.9,3.25);
+\path[fill=Gold!22,draw=none] (0,0) rectangle (10,5.2);\path[fill=Coral!18,draw=none] (.7,.7) rectangle (9.3,4.5);\path[fill=Teal!18,draw=none] (1.4,1.3) rectangle (8.6,3.9);\path[fill=Sky,draw=none] (2.1,1.95) rectangle (7.9,3.25);
+\path[draw=Gold!80!black,thick] (0,0) rectangle (10,5.2);\path[draw=Coral!80!black,thick] (.7,.7) rectangle (9.3,4.5);\path[draw=Teal!80!black,thick] (1.4,1.3) rectangle (8.6,3.9);\path[draw=Navy,thick] (2.1,1.95) rectangle (7.9,3.25);
 \node[font=\sffamily\bfseries] at (5,4.85) {Margin};\node[font=\sffamily\bfseries] at (5,4.2) {Border};\node[font=\sffamily\bfseries] at (5,3.55) {Padding};\node[font=\sffamily\bfseries\color{Navy}] at (5,2.6) {Content};
 \end{tikzpicture}\end{center}
 With the default content-box model, declared width describes the content area; padding and borders add to the rendered width. The border-box model includes padding and border inside the declared width, making many layouts easier to calculate.
@@ -241,7 +241,7 @@ JavaScript adds behaviour to web pages. It can respond to actions, validate form
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=31mm,minimum height=12mm,align=center] (h) {\textbf{HTML}\\Structure};
 \node[draw=Gold,fill=LightGold,rounded corners,minimum width=31mm,minimum height=12mm,align=center,right=of h] (c) {\textbf{CSS}\\Presentation};
 \node[draw=Violet,fill=Violet!10,rounded corners,minimum width=31mm,minimum height=12mm,align=center,right=of c] (j) {\textbf{JavaScript}\\Behaviour};
-\draw[<->,thick,Coral] (h)--(c);\draw[<->,thick,Coral] (c)--(j);\end{tikzpicture}\end{center}
+\path[draw=<->,thick,Coral] (h)--(c);\path[draw=<->,thick,Coral] (c)--(j);\end{tikzpicture}\end{center}
 \section{Variables, values and operators}
 Variables store values. Use \texttt{const} when a binding should not be reassigned and \texttt{let} when it must change. Values include strings, numbers, booleans, arrays, objects and \texttt{null}. Operators perform arithmetic, comparison, assignment and logical operations.
 \begin{lstlisting}[style=webcode,language=JavaScript,caption={Variables and expressions}]
@@ -354,7 +354,7 @@ context.fillStyle = "#e3a72f";
 context.fill();
 \end{lstlisting}
 The canvas coordinate origin is at the top-left. Horizontal coordinates increase to the right and vertical coordinates increase downwards. Drawing often involves setting a style, beginning a path, defining shapes and filling or stroking the path. Animation may repeatedly clear and redraw the canvas, often using \texttt{requestAnimationFrame}. Important canvas information should also be available through accessible text or another suitable representation.
-\begin{center}\begin{tikzpicture}[x=.65cm,y=.45cm]\draw[->,thick,Navy] (0,0)--(10,0) node[right]{x};\draw[->,thick,Navy] (0,0)--(0,6) node[above]{y};\draw[fill=Teal!25,draw=none] (2,1) rectangle (6,4);\draw[Teal,thick] (2,1) rectangle (6,4);\node[font=\small] at (4,2.5) {Rectangle};\node[font=\small,below] at (2,.7) {(x,y)};\end{tikzpicture}\end{center}
+\begin{center}\begin{tikzpicture}[x=.65cm,y=.45cm]\path[draw=->,thick,Navy] (0,0)--(10,0) node[right]{x};\path[draw=->,thick,Navy] (0,0)--(0,6) node[above]{y};\path[fill=Teal!25,draw=none] (2,1) rectangle (6,4);\path[draw=Teal,thick] (2,1) rectangle (6,4);\node[font=\small] at (4,2.5) {Rectangle};\node[font=\small,below] at (2,.7) {(x,y)};\end{tikzpicture}\end{center}
 \section*{Review Questions}\begin{enumerate}\item What is the canvas element used for?\item How do you obtain a two-dimensional drawing context?\item Explain the canvas coordinate system.\item What is the difference between filling and stroking a shape?\item Why should important canvas information have an accessible alternative?\end{enumerate}
 
 \chapter{Testing, Accessibility and Publishing}
