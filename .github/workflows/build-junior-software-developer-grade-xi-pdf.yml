@@ -1,0 +1,89 @@
+name: Build Junior Software Developer Grade XI PDF
+
+on:
+  push:
+    paths:
+      - 'Junior software developer-11th/**'
+      - '.github/workflows/build-junior-software-developer-grade-xi-pdf.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: junior-software-developer-grade-xi-pdf
+  cancel-in-progress: true
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Download unique topic-matched Wikimedia Commons images
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "Junior software developer-11th/images"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20room.jpg" -o "Junior software developer-11th/images/computer-room.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming_code.jpg" -o "Junior software developer-11th/images/programming-code.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20workstation%20while%20out%20of%20use.jpg" -o "Junior software developer-11th/images/workstation.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20server%20rack.jpg" -o "Junior software developer-11th/images/server-rack.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming.jpg" -o "Junior software developer-11th/images/python-code.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Responsive-web-design-devices.jpg" -o "Junior software developer-11th/images/network-cables.jpg"
+          file "Junior software developer-11th/images/"*
+          cat > "Junior software developer-11th/IMAGE-CREDITS.txt" <<'EOF'
+          Image credits and source links
+          1. computer-room.jpg — StellaAnnie, Wikimedia Commons, CC BY-SA 4.0.
+             https://commons.wikimedia.org/wiki/File:Computer_room.jpg
+          2. programming-code.jpg — Martin Vorel, Wikimedia Commons, CC BY-SA 4.0.
+             https://commons.wikimedia.org/wiki/File:Programming_code.jpg
+          3. workstation.jpg — Frederick Noronha, Wikimedia Commons, CC BY-SA 4.0.
+             https://commons.wikimedia.org/wiki/File:Computer_workstation_while_out_of_use.jpg
+          4. server-rack.jpg — Ricardo Moctezuma López / ronK, Wikimedia Commons, CC BY-SA 2.5.
+             https://commons.wikimedia.org/wiki/File:Computer_server_rack.jpg
+          5. python-code.jpg — Lorenzo Cafaro, Wikimedia Commons, CC0 1.0.
+             https://commons.wikimedia.org/wiki/File:Programming.jpg
+          6. network-cables.jpg — Muhammad Rafizeldi, Wikimedia Commons, CC BY-SA 3.0.
+             https://commons.wikimedia.org/wiki/File:Responsive-web-design-devices.jpg
+          EOF
+
+      - name: Compile textbook with XeLaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: 'Junior software developer-11th'
+          latexmk_use_xelatex: true
+
+      - name: Package Overleaf-ready source and images
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > "Junior software developer-11th/README-OVERLEAF.txt" <<'EOF'
+          Overleaf import instructions
+          1. In Overleaf, choose New Project > Upload Project and upload this ZIP.
+          2. Select main.tex as the main document if needed.
+          3. Compile with XeLaTeX.
+          4. The images/ folder, IMAGE-CREDITS.txt and this guide are included.
+          5. The source compiles without needing to download images again.
+          EOF
+          cd "Junior software developer-11th"
+          zip -r "../Junior-Software-Developer-Grade-XI-Overleaf-Source.zip" main.tex images IMAGE-CREDITS.txt README-OVERLEAF.txt
+
+      - name: Upload Overleaf source ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: Junior-Software-Developer-Grade-XI-Overleaf-Source
+          path: 'Junior-Software-Developer-Grade-XI-Overleaf-Source.zip'
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Junior-Software-Developer-Grade-XI-PDF
+          path: 'Junior software developer-11th/main.pdf'
+          if-no-files-found: error
+          retention-days: 30
