@@ -100,16 +100,19 @@ def add_section_illustrations(text: str, book_index: int) -> str:
     # Process each section up to the next section/subsection/chapter heading.
     pattern = re.compile(r"(\\section\*?\{[^{}]*\})(.*?)(?=\\(?:section\*?|chapter\*?|part\*?)\{|\\appendix\b|$)", re.S)
     topic_assets = (
-        (("database", "query", "sql", "record", "table", "form"), "database-er.jpg"),
-        (("code", "program", "html", "css", "javascript", "software", "python"), "programming-code.jpg"),
-        (("network", "router", "internet", "lan", "server", "cloud"), "server-rack.jpg"),
-        (("workstation", "ergonomic", "health", "safety", "posture", "office"), "ergonomic-workstation.png"),
+        (("database", "query", "sql", "record", "table", "form", "spreadsheet", "formula", "cell", "data", "quality", "scenario"), "human-data-entry.jpg"),
+        (("code", "program", "html", "css", "javascript", "software", "python", "network", "router", "internet", "lan", "server", "cloud"), "human-programmer.jpg"),
+        (("workstation", "ergonomic", "health", "safety", "posture", "office", "artificial intelligence", "machine learning", "model", "robot", "assistant"), "human-workplace.jpg"),
         (("emergency", "fire", "accident", "evacuation", "exit"), "emergency_preparedness.jpg"),
-        (("spreadsheet", "formula", "cell", "data", "quality", "scenario"), "spreadsheet_cells.png"),
-        (("image", "picture", "document", "style", "presentation"), "document_workflow.png"),
-        (("artificial intelligence", "machine learning", "model", "robot", "assistant"), "programming-code.jpg"),
+        (("image", "picture", "document", "style", "presentation"), "human-data-entry.jpg"),
     )
-    fallback = "assets/book1/book_illustrations/document_workflow.png"
+    photo_by_book = {
+        1: "human-data-entry.jpg", 2: "human-data-entry.jpg",
+        3: "human-programmer.jpg", 4: "human-programmer.jpg",
+        5: "human-workplace.jpg", 6: "human-workplace.jpg",
+        7: "human-programmer.jpg", 8: "human-programmer.jpg",
+    }
+    fallback = f"assets/book{book_index}/images/{photo_by_book.get(book_index, 'human-data-entry.jpg')}"
 
     def update(match: re.Match[str]) -> str:
         heading, body = match.group(1), match.group(2)
@@ -128,20 +131,22 @@ def add_section_illustrations(text: str, book_index: int) -> str:
                     f"assets/book{book_index}/images/{filename}",
                     f"assets/book{book_index}/book_illustrations/{filename}",
                 ))
-        # The eight original, committed Class IX illustrations provide a dependable
-        # non-generated fallback if a remote image is temporarily unavailable.
+        # Prefer the authentic photograph selected for this curriculum, then any
+        # matching human photo, then existing committed diagrams.
         candidates.extend((
+            fallback,
+            f"assets/book{book_index}/images/human-data-entry.jpg",
+            f"assets/book{book_index}/images/human-programmer.jpg",
+            f"assets/book{book_index}/images/human-workplace.jpg",
             f"assets/book{book_index}/book_illustrations/document_workflow.png",
             f"assets/book{book_index}/book_illustrations/it_ites_workflow.png",
-            f"assets/book{book_index}/book_illustrations/workstation_posture.png",
-            fallback,
+            "assets/book1/book_illustrations/document_workflow.png",
         ))
-        # Nested file checks let LaTeX choose a downloaded topic image if present.
-        graphic = r"\includegraphics[width=.62\textwidth,height=32mm,keepaspectratio]{"
-        expression = r"\fbox{\parbox{.55\textwidth}{\centering Illustration unavailable}}"
+        graphic = r"\\includegraphics[width=.72\\textwidth,height=38mm,keepaspectratio]{"
+        expression = r"\\fbox{\\parbox{.55\\textwidth}{\\centering No suitable image was available during build}}"
         for path in reversed(candidates):
-            expression = r"\IfFileExists{" + path + "}{" + graphic + path + "}}{" + expression + "}"
-        image = "\n\\begin{center}\\vspace{-2pt}" + expression + "\\end{center}\n"
+            expression = r"\\IfFileExists{" + path + "}{" + graphic + path + r"}\\par{\\scriptsize\\textit{Photograph: Wikimedia Commons.}}}{" + expression + "}"
+        image = "\\n\\\\begin{center}\\\\vspace{-2pt}" + expression + "\\\\end{center}\\n"
         return heading + image + body
 
     return pattern.sub(update, text)
