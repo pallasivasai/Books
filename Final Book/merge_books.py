@@ -62,6 +62,12 @@ def extract_body(path: Path) -> str:
         ) + m.group(3),
         text,
     )
+    # TeX graphics paths containing source-folder spaces must escape those spaces.
+    text = re.sub(
+        r"(\\includegraphics(?:\[[^\]]*\])?\{)([^}]+)(\})",
+        lambda m: m.group(1) + m.group(2).replace(" ", r"\ ") + m.group(3),
+        text,
+    )
     # The book parts are stitched together without creating separate books or cover pages.
     return text.strip()
 
