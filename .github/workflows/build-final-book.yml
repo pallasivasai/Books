@@ -29,6 +29,7 @@ jobs:
         run: python make_diagrams.py
       - name: Download original book image assets
         shell: bash
+        timeout-minutes: 5
         run: |
           set -euo pipefail
           # Web Developer XI
