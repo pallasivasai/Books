@@ -30,6 +30,17 @@ def get_body(path: Path) -> str:
     text = text.replace(r"\includegraphics", r"\includegraphics")
     text = re.sub(r"\{book_illustrations/", "{../" + path.parent.name + r"/book_illustrations/", text)
     text = re.sub(r"\{images/", "{../" + path.parent.name + r"/images/", text)
+    # Keep the source compile-safe when a remote image cannot be fetched.
+    def guarded(match):
+        options = match.group(1) or ""
+        image_path = match.group(2)
+        if "#" in image_path:
+            return match.group(0)
+        label = Path(image_path).name.rsplit(".", 1)[0].replace("_", " ").replace("-", " ")
+        return (r"\IfFileExists{" + image_path + "}{" + r"\includegraphics" + options +
+                "{" + image_path + "}}{\\begin{center}\\fbox{\\parbox[c][28mm][c]{.76\\textwidth}{\\centering\\small Illustration not available: " +
+                label + "}}\\end{center}}")
+    text = re.sub(r"\\includegraphics(\[[^\]]*\])?\{([^}]+)\}", guarded, text)
     # Photo helper commands in source books expect a local images/ directory.
     # Prefix the path argument passed into \photo so the original image remains discoverable.
     text = re.sub(r"\\photo\{([^}]+)\}", lambda m: r"\photo{../" + path.parent.name + "/images/" + m.group(1) + "}", text)
@@ -119,6 +130,7 @@ def main():
 \lstdefinelanguage{SQL}{morekeywords={SELECT,FROM,WHERE,ORDER,BY,GROUP,INSERT,INTO,VALUES,UPDATE,SET,DELETE,CREATE,DATABASE,TABLE,ALTER,DROP,PRIMARY,KEY,FOREIGN,REFERENCES,NOT,NULL,UNIQUE,DEFAULT,JOIN,LEFT,INNER,ON,AS,COUNT,SUM,AVG,MIN,MAX,GRANT,REVOKE,COMMIT,ROLLBACK,USE,INT,VARCHAR,TINYINT,CHECK,HAVING,RIGHT,AND,OR,IS,IN,LIKE,LIMIT},sensitive=false,morecomment=[l]{--},morestring=[b]'}
 \newcommand{\review}[1]{\par\smallskip\reviewtitle\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=1pt,topsep=2pt]\small #1\end{enumerate}\smallskip}
 \lstdefinestyle{webcode}{basicstyle=\ttfamily\small,keywordstyle=\color{Navy}\bfseries,commentstyle=\color{Teal},stringstyle=\color{Violet},numbers=left,numberstyle=\tiny\color{Ink!65},stepnumber=1,numbersep=8pt,showstringspaces=false,breaklines=true,frame=single,rulecolor=\color{Teal!55},backgroundcolor=\color{SoftGray},xleftmargin=2mm,framexleftmargin=2mm,aboveskip=5pt,belowskip=5pt}
+\lstset{style=webcode}
 """
     cover = r"""\begin{document}
 \begin{titlepage}\thispagestyle{empty}
