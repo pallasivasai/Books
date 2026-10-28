@@ -29,49 +29,57 @@ jobs:
         run: python make_diagrams.py
       - name: Download original book image assets
         shell: bash
-        timeout-minutes: 5
         run: |
           set -euo pipefail
-          # Web Developer XI
-          mkdir -p "Web developer-11th/images"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Woman_sitting_in_her_workspace_and_typing_on_laptop.jpg" -o "Web developer-11th/images/web-developer-workspace.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Website%20Coding.jpg" -o "Web developer-11th/images/html-coding.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Responsive-web-design-devices.jpg" -o "Web developer-11th/images/responsive-devices.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming_code.jpg" -o "Web developer-11th/images/programming-code.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/ComputerProgrammer.jpg" -o "Web developer-11th/images/programmer-work.jpg"
+          fetch_image() {
+            local url="$1" output="$2"
+            mkdir -p "$(dirname "$output")"
+            for attempt in 1 2 3; do
+              if curl --connect-timeout 15 --max-time 50 -fLsS "$url" -o "$output" && test -s "$output"; then
+                echo "Downloaded $output"
+                return 0
+              fi
+              sleep 2
+            done
+            echo "WARNING: Image unavailable: $url"
+            rm -f "$output"
+            return 0
+          }
+          # Domestic Data Entry Operator X diagrams are generated in the prior step.
+          # Web Developer XI images
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Woman_sitting_in_her_workspace_and_typing_on_laptop.jpg" "Web developer-11th/images/web-developer-workspace.jpg"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Website%20Coding.jpg" "Web developer-11th/images/html-coding.jpg"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Responsive-web-design-devices.jpg" "Web developer-11th/images/responsive-devices.jpg"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming_code.jpg" "Web developer-11th/images/programming-code.jpg"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/ComputerProgrammer.jpg" "Web developer-11th/images/programmer-work.jpg"
           # Web Developer XII
-          mkdir -p "Web developer-12th/images"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20room.jpg" -o "Web developer-12th/images/computer-room.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming.jpg" -o "Web developer-12th/images/sql-programming.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming_code.jpg" -o "Web developer-12th/images/php-code.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20server%20rack.jpg" -o "Web developer-12th/images/server-rack.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20workstation%20while%20out%20of%20use.jpg" -o "Web developer-12th/images/workstation.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ergonomic%20Workstation.png" -o "Web developer-12th/images/ergonomic-workstation.png"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Recycling%20Bins.jpg" -o "Web developer-12th/images/recycling-bins.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/A%20wheelchair%20beside%20a%20desk.jpg" -o "Web developer-12th/images/wheelchair-access.jpg"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20room.jpg" "Web developer-12th/images/computer-room.jpg"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming.jpg" "Web developer-12th/images/sql-programming.jpg"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming_code.jpg" "Web developer-12th/images/php-code.jpg"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20server%20rack.jpg" "Web developer-12th/images/server-rack.jpg"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20workstation%20while%20out%20of%20use.jpg" "Web developer-12th/images/workstation.jpg"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ergonomic%20Workstation.png" "Web developer-12th/images/ergonomic-workstation.png"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Recycling%20Bins.jpg" "Web developer-12th/images/recycling-bins.jpg"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/A%20wheelchair%20beside%20a%20desk.jpg" "Web developer-12th/images/wheelchair-access.jpg"
           # Junior Software Developer XI
-          mkdir -p "Junior software developer-11th/images"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20Motherboard%20Closeup.jpg" -o "Junior software developer-11th/images/motherboard.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Python%20code%20example.png" -o "Junior software developer-11th/images/programming-code.png"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ubuntu%2025.04%20default%20desktop%20-%20English.png" -o "Junior software developer-11th/images/ubuntu-desktop.png"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20abstraction%20layers%20separated%20OS.svg" -o "Junior software developer-11th/images/os-abstraction-source.svg"
-          rsvg-convert -o "Junior software developer-11th/images/os-abstraction.png" "Junior software developer-11th/images/os-abstraction-source.svg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/ProcessStates.png" -o "Junior software developer-11th/images/process-states.png"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Diagram%20of%20a%20security%20descriptor%20for%20a%20file%20on%20Windows.png" -o "Junior software developer-11th/images/file-permissions.png"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Screen-python-code-matplotlib-physics-simulation.jpg" -o "Junior software developer-11th/images/python-simulation.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Router%20on%20a%20stick.png" -o "Junior software developer-11th/images/router-vlan.png"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/LAN-physicalTopology.png" -o "Junior software developer-11th/images/lan-topology.png"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/QUEUE%20VS%20STACK.png" -o "Junior software developer-11th/images/stack-queue.png"
-          # Junior Software Developer XII
-          mkdir -p "Junior software developer-12th/images"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/System%20Development%20Life-cycle%20diagram.png" -o "Junior software developer-12th/images/software-sdlc.png"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Entity%20Relationship%20Diagram.jpg" -o "Junior software developer-12th/images/database-er.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Mysql%20database%20design.png" -o "Junior software developer-12th/images/mysql-design.png"
-          cp "Junior software developer-11th/images/programming-code.png" "Junior software developer-12th/images/programming-code.png"
-          cp "Junior software developer-11th/images/stack-queue.png" "Junior software developer-12th/images/stack-queue.png"
-          cp "Junior software developer-11th/images/python-simulation.jpg" "Junior software developer-12th/images/python-simulation.jpg"
-          cp "Junior software developer-11th/images/router-vlan.png" "Junior software developer-12th/images/router-vlan.png"
-          cp "Junior software developer-11th/images/lan-topology.png" "Junior software developer-12th/images/lan-topology.png"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20Motherboard%20Closeup.jpg" "Junior software developer-11th/images/motherboard.jpg"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Python%20code%20example.png" "Junior software developer-11th/images/programming-code.png"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ubuntu%2025.04%20default%20desktop%20-%20English.png" "Junior software developer-11th/images/ubuntu-desktop.png"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20abstraction%20layers%20separated%20OS.svg" "Junior software developer-11th/images/os-abstraction-source.svg"
+          if test -s "Junior software developer-11th/images/os-abstraction-source.svg"; then rsvg-convert -o "Junior software developer-11th/images/os-abstraction.png" "Junior software developer-11th/images/os-abstraction-source.svg" || true; fi
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/ProcessStates.png" "Junior software developer-11th/images/process-states.png"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Diagram%20of%20a%20security%20descriptor%20for%20a%20file%20on%20Windows.png" "Junior software developer-11th/images/file-permissions.png"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Screen-python-code-matplotlib-physics-simulation.jpg" "Junior software developer-11th/images/python-simulation.jpg"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Router%20on%20a%20stick.png" "Junior software developer-11th/images/router-vlan.png"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/LAN-physicalTopology.png" "Junior software developer-11th/images/lan-topology.png"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/QUEUE%20VS%20STACK.png" "Junior software developer-11th/images/stack-queue.png"
+          # Junior Software Developer XII; reuse if fetched successfully above.
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/System%20Development%20Life-cycle%20diagram.png" "Junior software developer-12th/images/software-sdlc.png"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Entity%20Relationship%20Diagram.jpg" "Junior software developer-12th/images/database-er.jpg"
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Mysql%20database%20design.png" "Junior software developer-12th/images/mysql-design.png"
+          for f in programming-code.png stack-queue.png python-simulation.jpg router-vlan.png lan-topology.png; do
+            test ! -s "Junior software developer-11th/images/$f" || cp "Junior software developer-11th/images/$f" "Junior software developer-12th/images/$f"
+          done
       - name: Generate merged LaTeX source
         run: python "Final Book/merge_books.py"
       - name: Compile combined handbook
