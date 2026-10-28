@@ -45,8 +45,10 @@ def extract_body(path: Path) -> str:
     text = re.split(r"\\backmatter\b|\\end\{document\}", text, maxsplit=1)[0]
     text = re.sub(r"\\frontmatter\b|\\mainmatter\b|\\tableofcontents\b", "", text)
     text = re.sub(r"(?m)^\s*\\appendix\s*$", "", text)
-    # Remove the per-book running headers and page decorations if any source body repeats them.
-    text = re.sub(r"\\thispagestyle\{[^}]*\}", "", text)
+    # Strip all source-level page styles/marks so no original book headers or footers leak into the combined volume.
+    text = re.sub(r"\\thispagestyle\{[^}]*\}|\\pagestyle\{[^}]*\}", "", text)
+    text = re.sub(r"\\markboth\{[^{}]*\}\{[^{}]*\}|\\markright\{[^{}]*\}", "", text)
+    text = re.sub(r"\\fancy(?:head|foot)\s*(?:\[[^]]*\])?\s*\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}", "", text)
     # Rewrite illustration paths to space-free aliases prepared by the workflow.
     book_index = next(i for i, item in enumerate(BOOKS, start=1) if item.folder == path.parent.name)
     text = re.sub(
