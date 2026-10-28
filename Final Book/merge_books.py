@@ -91,6 +91,9 @@ def render_main_tex(tex_path: Path) -> str:
 \setmainfont{DejaVu Serif}
 \setsansfont{DejaVu Sans}
 \usepackage{amssymb,xcolor,graphicx,array,booktabs,longtable,tabularx,colortbl,enumitem,tikz,tcolorbox,titlesec,tocloft,hyperref,microtype,listings}
+\lstdefinestyle{webcode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
+\lstdefinestyle{pythoncode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
+\lstdefinestyle{sqlcode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
 \definecolor{Navy}{HTML}{17365D}
 \definecolor{Teal}{HTML}{007F86}
