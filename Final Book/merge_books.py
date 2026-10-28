@@ -68,6 +68,21 @@ def extract_body(path: Path) -> str:
     # untouched unless those files exist in the merged directory, to avoid fatal missing-file errors.
     text = re.sub(r"\\input\{([^{}]+)\}", lambda m: m.group(0) if (FINAL_BOOK_DIR / m.group(1)).exists() else "% omitted missing input " + m.group(1), text)
     text = re.sub(r"\\include\{([^{}]+)\}", lambda m: m.group(0) if (FINAL_BOOK_DIR / (m.group(1) + ".tex")).exists() else "% omitted missing include " + m.group(1), text)
+    # Normalise code listings from independently authored curricula. Unknown source styles
+    # and language names can stop XeLaTeX; preserve code and general options, use plain code layout.
+    def normalise_listing(match: re.Match[str]) -> str:
+        options = match.group(1)
+        kept = []
+        for item in options.split(","):
+            item = item.strip()
+            if re.match(r"^(style|language)\s*=", item, flags=re.I):
+                continue
+            if item:
+                kept.append(item)
+        return r"\begin{lstlisting}" + ("[" + ",".join(kept) + "]" if kept else "")
+    text = re.sub(r"\\begin\{lstlisting\}\[([^\]]*)\]", normalise_listing, text, flags=re.I)
+    # Inline listings use the same safe fallback.
+    text = re.sub(r"\\lstinline(?:\[[^\]]*\])?", r"\\lstinline", text)
     # The book parts are stitched together without creating separate books or cover pages.
     return text.strip()
 
