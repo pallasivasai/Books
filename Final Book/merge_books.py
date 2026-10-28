@@ -23,7 +23,7 @@ def get_body(path: Path) -> str:
         text = text.split(r"\begin{document}", 1)[1]
     text = re.sub(r"\\end\{document\}.*$", "", text, flags=re.S)
     text = re.sub(r"\\begin\{titlepage\}.*?\\end\{titlepage\}", "", text, flags=re.S)
-    text = re.sub(r"\\frontmatter|\\mainmatter|\\backmatter|\\tableofcontents", "", text)
+    text = re.sub(r"\\frontmatter|\\mainmatter|\\backmatter|\\tableofcontents|\\appendix", "", text)
     text = re.sub(r"\{book_illustrations/", "{../" + path.parent.name + r"/book_illustrations/", text)
     text = re.sub(r"\{images/", "{../" + path.parent.name + r"/images/", text)
 
