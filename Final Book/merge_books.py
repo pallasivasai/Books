@@ -37,13 +37,30 @@ def get_body(path: Path) -> str:
 
 def main():
     sections = []
-    seen_titles = set()
+    seen_chapters = set()
     for folder, label in BOOKS:
         src = ROOT / folder / "main.tex"
         if not src.exists():
             raise SystemExit(f"Missing source file: {src}")
         body = get_body(src)
-        sections.append(r"\part{" + label + "}" + "\n\n" + body)
+        chunks = re.split(r"(?=\\chapter\\*?(?:\\[[^]]*\\])?\\{)", body)
+        kept = []
+        for chunk in chunks:
+            match = re.search(r"\\chapter\\*?(?:\\[[^]]*\\])?\\{([^}]*)\\}", chunk)
+            if not match:
+                if chunk.strip():
+                    kept.append(chunk)
+                continue
+            title = match.group(1).strip().casefold()
+            normalized = re.sub(r"%[^\\n]*", "", chunk)
+            normalized = re.sub(r"\\s+", " ", normalized).strip()
+            key = (title, normalized)
+            if key not in seen_chapters:
+                seen_chapters.add(key)
+                kept.append(chunk)
+        sections.append(r"\\part*{" + label + "}" + "\\n" +
+                        r"\\addcontentsline{toc}{part}{" + label + "}" + "\\n\\n" +
+                        "\\n\\n".join(kept))
 
     preamble = r"""\documentclass[11pt,openany,oneside]{book}
 \usepackage[a4paper,top=25mm,bottom=23mm,left=25mm,right=22mm,headheight=22pt]{geometry}
@@ -98,6 +115,9 @@ def main():
 \lstdefinelanguage{JavaScript}{sensitive=true,morecomment=[l]{//},morecomment=[s]{/*}{*/},morestring=[b]",morestring=[b]',morekeywords={const,let,var,function,return,if,else,for,while,break,continue,class,new,this,throw,try,catch,finally,async,await,import,from,export,default,true,false,null,undefined,typeof,instanceof,console,log,document,window,addEventListener,querySelector,querySelectorAll,getElementById,Math,Number,String,Array,Object,Promise,fetch}}
 \lstdefinelanguage{Python}{sensitive=true,morecomment=[l]{\#},morestring=[b]',morestring=[b]",morekeywords={and,as,assert,break,class,continue,def,del,elif,else,except,False,finally,for,from,global,if,import,in,is,lambda,None,not,or,pass,raise,return,True,try,while,with,yield,print,input,range,len,type,int,float,str,list,dict,tuple,set}}
 \lstdefinelanguage{Pseudo}{morekeywords={START,STOP,INPUT,OUTPUT,IF,THEN,ELSE,ENDIF,WHILE,DO,ENDWHILE,FOR,ENDFOR},sensitive=false}
+\lstdefinelanguage{PHP}{sensitive=true,morecomment=[l]{//},morecomment=[s]{/*}{*/},morestring=[b]',morestring=[b]",morekeywords={echo,print,if,else,elseif,while,for,foreach,function,return,include,require,isset,empty,global,new,try,catch,throw,public,private,protected,class,true,false,null}}
+\lstdefinelanguage{SQL}{morekeywords={SELECT,FROM,WHERE,ORDER,BY,GROUP,INSERT,INTO,VALUES,UPDATE,SET,DELETE,CREATE,DATABASE,TABLE,ALTER,DROP,PRIMARY,KEY,FOREIGN,REFERENCES,NOT,NULL,UNIQUE,DEFAULT,JOIN,LEFT,INNER,ON,AS,COUNT,SUM,AVG,MIN,MAX,GRANT,REVOKE,COMMIT,ROLLBACK,USE,INT,VARCHAR,TINYINT,CHECK,HAVING,RIGHT,AND,OR,IS,IN,LIKE,LIMIT},sensitive=false,morecomment=[l]{--},morestring=[b]'}
+\newcommand{\review}[1]{\par\smallskip\reviewtitle\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=1pt,topsep=2pt]\small #1\end{enumerate}\smallskip}
 \lstdefinestyle{webcode}{basicstyle=\ttfamily\small,keywordstyle=\color{Navy}\bfseries,commentstyle=\color{Teal},stringstyle=\color{Violet},numbers=left,numberstyle=\tiny\color{Ink!65},stepnumber=1,numbersep=8pt,showstringspaces=false,breaklines=true,frame=single,rulecolor=\color{Teal!55},backgroundcolor=\color{SoftGray},xleftmargin=2mm,framexleftmargin=2mm,aboveskip=5pt,belowskip=5pt}
 """
     cover = r"""\begin{document}
