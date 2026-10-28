@@ -1,6 +1,6 @@
 # Final Book — Combined Handbook
 
-This folder contains the build script for one combined handbook PDF. The original eight book folders are inputs only and are not edited.
+This folder contains the checked-in `main.tex` source for one continuous combined handbook PDF, plus a helper script to regenerate it.
 
 ## Book order
 1. Domestic Data Entry Operator — Class IX
@@ -12,7 +12,7 @@ This folder contains the build script for one combined handbook PDF. The origina
 7. Junior Software Developer — Grade XI
 8. Junior Software Developer — Grade XII
 
-## Build
-The GitHub Actions workflow at `.github/workflows/build-final-book.yml` downloads the image assets used by the original books, generates the Class X diagrams, merges the eight LaTeX sources into one document, and compiles it with XeLaTeX. The PDF is published as a workflow artifact named `Final-Combined-Handbook-PDF`.
+The combined source has one `HANDBOOK` cover page, one contents section, continuous page numbering, and all eight book bodies in the order above. Exact duplicate chapter bodies are the only content suitable for automatic deduplication; distinct explanations and practice material are preserved.
 
-Run it from GitHub: **Actions → Build Final Combined Handbook → Run workflow**.
+## Build the PDF
+GitHub Actions builds `main.tex` with XeLaTeX and publishes both the PDF and source as the `Final-Combined-Handbook-PDF` artifact. Open **Actions → Build Final Combined Handbook** to view the latest build and download its artifact.
