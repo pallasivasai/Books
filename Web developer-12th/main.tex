@@ -57,17 +57,13 @@
 \vfill\begin{center}{\small Developed with reference to the topics in the supplied Grade XII draft study material.\par}\end{center}
 \end{titlepage}
 \frontmatter
-\chapter*{About this textbook}
-This textbook follows the three broad learning areas in the supplied Grade XII Web Developer study material: relational database management using MySQL, server-side scripting using PHP, and health, safety, inclusion and sustainability in the workplace. The explanations and examples are reorganised into a compact learning sequence, with code samples, diagrams, practical situations and review questions.
-
-The code examples are educational starting points. Test them in a local practice environment, use current software documentation when installing tools, and never connect classroom experiments to real customer data or production systems without appropriate safeguards. Workplace guidance should always be applied alongside the current policies and rules of the organisation.
 \tableofcontents
 \mainmatter
 
 \chapter{Database Management Concepts}
 A database becomes useful when information can be stored consistently, found quickly and updated without creating confusion. A school may need student records, a shop may maintain stock and sales, and a web application may keep account details and orders. A database management system (DBMS) provides the tools needed to organise this information and control how people and applications use it.
 
-\photo{web-developer-workspace.jpg}{Database work station}{Figure 1.1. A development workspace is used to design, query and check information systems. Photograph: Shixart1985, Wikimedia Commons, CC BY 2.0.}
+\photo{computer-room.jpg}{Database infrastructure}{Figure 1.1. A computer room with server equipment illustrates infrastructure that supports database systems. Photograph: StellaAnnie, Wikimedia Commons, CC BY-SA 4.0.}
 \section{Data, databases and DBMS}
 Data is a recorded value such as a name, date, price or attendance status. A database is an organised collection of related data. A DBMS is software that creates, stores, retrieves and protects that data. MySQL is a widely used relational DBMS; other examples include PostgreSQL, Oracle Database and Microsoft SQL Server.
 
@@ -120,7 +116,7 @@ A transaction groups operations that should succeed or fail as a unit. ACID summ
 \chapter{Structured Query Language and MySQL}
 SQL is used to define database structures, retrieve records, change data and manage access. Although database products differ in some details, the basic ideas of tables, filtering, sorting, joins and constraints are widely shared.
 
-\photo{programming-code.jpg}{SQL editor}{Figure 2.1. Queries are written and checked in a database editor. Photograph: Martin Vorel, Wikimedia Commons, CC BY-SA 4.0.}
+\photo{sql-programming.jpg}{SQL and programming code}{Figure 2.1. A code screen illustrates the syntax used to write and review database queries. Photograph: Lorenzo Cafaro, Wikimedia Commons, CC0 1.0.}
 \section{Main categories of SQL commands}
 \begin{itemize}
 \item \textbf{DDL (Data Definition Language):} CREATE, ALTER and DROP define or change database objects.
@@ -238,7 +234,7 @@ GRANT assigns permitted actions to a database account; REVOKE removes permission
 \chapter{Introduction to PHP and Server-Side Scripting}
 PHP is a server-side scripting language often used to create dynamic web pages and web services. The server executes PHP code and sends a response to the browser. Visitors normally receive the resulting HTML, not the server's PHP source. PHP can process form input, apply application rules, communicate with databases and generate a response.
 
-\photo{web-developer-workspace.jpg}{Server-side development workspace}{Figure 4.1. PHP projects are commonly developed and tested in a local workspace. Photograph: Shixart1985, Wikimedia Commons, CC BY 2.0.}
+\photo{php-code.jpg}{Server-side source code}{Figure 4.1. Server-side scripts are written and tested in a programming environment. Photograph: Martin Vorel, Wikimedia Commons, CC BY-SA 4.0.}
 \section{How a PHP request works}
 \begin{center}
 \begin{tikzpicture}[node distance=7mm and 8mm,>=Latex]
@@ -345,7 +341,7 @@ Use clear names, consistent formatting, comments that explain intent, and functi
 \chapter{PHP and MySQL Database Applications}
 A web application often needs to save and retrieve information. PHP can connect to MySQL, send queries and use the returned rows to generate a response. The connection, query and output stages all need careful error handling and security controls.
 
-\photo{programming-code.jpg}{Application code}{Figure 6.1. Server-side code links user requests with data operations. Photograph: Martin Vorel, Wikimedia Commons, CC BY-SA 4.0.}
+\photo{server-rack.jpg}{Application and server infrastructure}{Figure 6.1. Web applications depend on server systems to process requests and access stored data. Photograph: Ricardo Moctezuma López / ronK, Wikimedia Commons, CC BY-SA 2.5.}
 \section{Connection choices}
 Modern PHP applications commonly use PDO or MySQLi. Both support prepared statements. PDO offers a consistent interface across supported database drivers; MySQLi is designed for MySQL-compatible databases. Use the interface supported by the project and keep credentials outside public source files, for example in environment configuration that is not committed to a repository.
 
@@ -395,7 +391,7 @@ When displaying text in HTML, use context-appropriate output encoding, such as \
 \chapter{Productivity, Quality and Professional Work Habits}
 Productivity is not simply completing a large number of tasks. Good work is accurate, useful and delivered with appropriate use of time and resources. In a software workplace, productivity improves when requirements are understood, tasks are prioritised, tools are maintained, communication is clear and defects are found early.
 
-\photo{web-developer-workspace.jpg}{Organised workspace}{Figure 7.1. A well-organised work area supports focused, consistent work. Photograph: Shixart1985, Wikimedia Commons, CC BY 2.0.}
+\photo{workstation.jpg}{Organised computer workspace}{Figure 7.1. A workstation should be kept organised so equipment and materials can be used safely. Photograph: Frederick Noronha, Wikimedia Commons, CC BY-SA 4.0.}
 \section{Planning and prioritising}
 Break large assignments into smaller tasks with clear outcomes. Estimate the effort, identify dependencies and reserve time for review. A simple task board can show work that is planned, in progress, waiting for review and complete. When priorities change, communicate the impact rather than silently missing a deadline.
 
@@ -413,7 +409,7 @@ Organise files with meaningful names, keep versions under control, back up impor
 \chapter{Health and Safety Procedures in the Workplace}
 A safe workplace is created through planning, training, suitable equipment and shared responsibility. Hazards may be physical, electrical, ergonomic, chemical, environmental or psychosocial. Identifying a hazard early gives people a chance to remove it or reduce the risk before someone is harmed.
 
-\photo{programmer-work.jpg}{Workplace setting}{Figure 8.1. Work areas should be arranged to support safe, comfortable and focused activity. Photograph: Free-Photos / Pixabay, CC0 1.0.}
+\photo{ergonomic-workstation.png}{Ergonomic computer workstation}{Figure 8.1. An ergonomic workstation supports comfortable computer use and reduces avoidable strain. Illustration: Marcel Kollmar and Partynia, Wikimedia Commons, CC BY-SA.}
 \section{Hazard and risk}
 A hazard is something that can cause harm. Risk considers how likely that harm is and how serious it could be. A loose cable across a walkway is a hazard; the risk increases when people regularly walk through the area and could trip. Report hazards promptly and follow the organisation's safety procedure.
 
@@ -449,7 +445,7 @@ Workplaces use electricity, water, paper, equipment and other materials. Waste p
 \section{Identify and separate waste}
 Waste should be separated according to local rules and the organisation's procedures. Common categories include recyclable paper and cardboard, metals, glass, suitable plastics, organic waste and residual waste. Batteries, electronic equipment, lamps and other special waste may need dedicated collection because they can contain hazardous materials.
 
-\photo{programmer-work.jpg}{Responsible workplace practices}{Figure 9.1. A tidy work area supports safe handling and organised waste collection. Photograph: Free-Photos / Pixabay, CC0 1.0.}
+\photo{recycling-bins.jpg}{Waste sorting and recycling}{Figure 9.1. Separate collection bins help people sort recyclable materials. Photograph: Si Griffiths, Wikimedia Commons, CC BY-SA 3.0.}
 \section{The waste hierarchy}
 The preferred order is to prevent waste first, reduce unnecessary use, reuse suitable items, recycle correctly and dispose of residual waste safely. Recycling is valuable, but avoiding unnecessary consumption usually prevents more waste from being created in the first place.
 
@@ -498,7 +494,7 @@ Use clear selection criteria, accessible training material, fair performance fee
 \chapter{Accessibility and Policies for Persons with Disabilities}
 Accessibility means that people can use facilities, information, services and digital tools as independently as possible. A barrier may be physical, communicative, procedural or digital. Inclusive practice identifies barriers and makes reasonable adjustments in line with applicable law and workplace policy.
 
-\photo{web-developer-workspace.jpg}{Accessible digital work}{Figure 11.1. Digital work can be made more usable through clear structure, keyboard access and appropriate tools. Photograph: Shixart1985, Wikimedia Commons, CC BY 2.0.}
+\photo{wheelchair-access.jpg}{Accessible workplace}{Figure 11.1. An accessible workplace considers clear space and practical access around desks. Photograph: David290, Wikimedia Commons, CC BY-SA 4.0.}
 \section{Recognising different access needs}
 People may have mobility, vision, hearing, learning, communication or other access requirements. Do not assume that everyone with the same disability needs the same support. Ask respectfully what adjustment is useful, protect privacy and involve the person in decisions that affect their work.
 
