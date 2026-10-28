@@ -104,6 +104,21 @@ jobs:
           done
       - name: Generate merged LaTeX source
         run: python "Final Book/merge_books.py"
+      - name: Ensure all source-code listing styles are defined
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Append fallback listing style definitions before compiling, after generated source.
+          cat >> 'Final Book/main.tex' <<'EOF'
+          % Defensive styles for source-code snippets inherited from earlier books.
+          \lstdefinestyle{pythonstyle}{language=Python,basicstyle=\ttfamily\small,keywordstyle=\color{Navy}\bfseries,commentstyle=\color{Teal},stringstyle=\color{Violet},numbers=left,numberstyle=\tiny\color{Ink!65},stepnumber=1,numbersep=8pt,showstringspaces=false,breaklines=true,frame=single,rulecolor=\color{Teal!55},backgroundcolor=\color{SoftGray},xleftmargin=2mm,framexleftmargin=2mm,aboveskip=5pt,belowskip=5pt}
+          \lstdefinestyle{webcode}{basicstyle=\ttfamily\small,keywordstyle=\color{Navy}\bfseries,commentstyle=\color{Teal},stringstyle=\color{Violet},numbers=left,numberstyle=\tiny\color{Ink!65},stepnumber=1,numbersep=8pt,showstringspaces=false,breaklines=true,frame=single,rulecolor=\color{Teal!55},backgroundcolor=\color{SoftGray},xleftmargin=2mm,framexleftmargin=2mm,aboveskip=5pt,belowskip=5pt}
+          \lstdefinestyle{sqlcode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
+          \lstdefinestyle{htmlcode}{language=HTML,basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,frame=single}
+          \lstdefinestyle{csscode}{language=CSS,basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,frame=single}
+          \lstdefinestyle{javascriptstyle}{language=JavaScript,basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,frame=single}
+          \lstdefinestyle{bashstyle}{language=bash,basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,frame=single}
+          EOF
       - name: Compile combined handbook
         uses: xu-cheng/latex-action@v3
         with:
