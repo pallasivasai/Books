@@ -29,6 +29,7 @@ jobs:
           mkdir -p "Junior software developer-11th/images"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20Motherboard%20Closeup.jpg" -o "Junior software developer-11th/images/motherboard.jpg"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Python%20code%20example.png" -o "Junior software developer-11th/images/programming-code.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ubuntu%2025.04%20default%20desktop%20-%20English.png" -o "Junior software developer-11th/images/ubuntu-desktop.png"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Screen-python-code-matplotlib-physics-simulation.jpg" -o "Junior software developer-11th/images/python-simulation.jpg"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Router%20on%20a%20stick.png" -o "Junior software developer-11th/images/router-vlan.png"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/LAN-physicalTopology.png" -o "Junior software developer-11th/images/lan-topology.png"
@@ -48,6 +49,8 @@ jobs:
              https://commons.wikimedia.org/wiki/File:LAN-physicalTopology.png
           6. cpu-motherboard.jpg — Leon Brooks, Wikimedia Commons, public domain.
              https://commons.wikimedia.org/wiki/File:Atx_computer_motherboard_with_cpu_and_fan.jpg
+          7. ubuntu-desktop.png — Canonical Limited, Wikimedia Commons, GPL.
+             https://commons.wikimedia.org/wiki/File:Ubuntu_25.04_default_desktop_-_English.png
           EOF
 
       - name: Compile textbook with XeLaTeX
