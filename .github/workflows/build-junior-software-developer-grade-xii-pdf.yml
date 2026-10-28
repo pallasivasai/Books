@@ -35,7 +35,6 @@ jobs:
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Screen-python-code-matplotlib-physics-simulation.jpg" -o "Junior software developer-12th/images/python-simulation.jpg"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Router%20on%20a%20stick.png" -o "Junior software developer-12th/images/router-vlan.png"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/LAN-physicalTopology.png" -o "Junior software developer-12th/images/lan-topology.png"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ubuntu%2025.04%20default%20desktop%20-%20English.png" -o "Junior software developer-12th/images/ubuntu-desktop.png"
           file "Junior software developer-12th/images/"*
           cat > "Junior software developer-12th/IMAGE-CREDITS.txt" <<'EOF'
           Image credits and source links
