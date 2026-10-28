@@ -1,0 +1,83 @@
+name: Build Web Developer Grade XII PDF
+
+on:
+  push:
+    paths:
+      - 'Web developer-12th/**'
+      - '.github/workflows/build-web-developer-grade-xii-pdf.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: web-developer-grade-xii-pdf
+  cancel-in-progress: true
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Download licensed textbook photographs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "Web developer-12th/images"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Woman_sitting_in_her_workspace_and_typing_on_laptop.jpg" -o "Web developer-12th/images/web-developer-workspace.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming_code.jpg" -o "Web developer-12th/images/programming-code.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/ComputerProgrammer.jpg" -o "Web developer-12th/images/programmer-work.jpg"
+          file "Web developer-12th/images/"*
+          cat > "Web developer-12th/IMAGE-CREDITS.txt" <<'EOF'
+          Image credits and source links
+          1. web-developer-workspace.jpg
+             Shixart1985, Wikimedia Commons, CC BY 2.0.
+             https://commons.wikimedia.org/wiki/File:Woman_sitting_in_her_workspace_and_typing_on_laptop.jpg
+          2. programming-code.jpg
+             Martin Vorel, Wikimedia Commons, CC BY-SA 4.0.
+             https://commons.wikimedia.org/wiki/File:Programming_code.jpg
+          3. programmer-work.jpg
+             Free-Photos / Pixabay, Wikimedia Commons, CC0 1.0.
+             https://commons.wikimedia.org/wiki/File:ComputerProgrammer.jpg
+          EOF
+
+      - name: Compile Grade XII textbook with XeLaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: 'Web developer-12th'
+          latexmk_use_xelatex: true
+
+      - name: Package Overleaf-ready source and images
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > "Web developer-12th/README-OVERLEAF.txt" <<'EOF'
+          Overleaf import instructions
+          1. Use New Project > Upload Project and upload this ZIP.
+          2. Select main.tex as the main document if it is not selected automatically.
+          3. Compile with XeLaTeX.
+          4. The images/ folder and IMAGE-CREDITS.txt are included.
+          5. No separate image download is required after upload.
+          EOF
+          cd "Web developer-12th"
+          zip -r "../Web-Developer-Grade-XII-Overleaf-Source.zip" main.tex images IMAGE-CREDITS.txt README-OVERLEAF.txt
+
+      - name: Upload Overleaf source ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: Web-Developer-Grade-XII-Overleaf-Source
+          path: 'Web-Developer-Grade-XII-Overleaf-Source.zip'
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Web-Developer-Grade-XII-PDF
+          path: 'Web developer-12th/main.pdf'
+          if-no-files-found: error
+          retention-days: 30
