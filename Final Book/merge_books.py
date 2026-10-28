@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import os
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -10,206 +9,154 @@ ROOT = Path(__file__).resolve().parents[1]
 FINAL_BOOK_DIR = ROOT / "Final Book"
 DEFAULT_OUTPUT = FINAL_BOOK_DIR / "main.tex"
 
-
 @dataclass(frozen=True)
 class SourceBook:
     folder: str
     title: str
 
-
-BOOKS: tuple[SourceBook, ...] = (
-    SourceBook("Domestic data entry operator-9th", "Domestic Data Entry Operator — Class IX"),
-    SourceBook("Domestic data entry operator-10th", "Domestic Data Entry Operator — Class X"),
-    SourceBook("Web developer-11th", "Web Developer — Grade XI"),
-    SourceBook("Web developer-12th", "Web Developer — Grade XII"),
-    SourceBook("Artificial intelligence assistant-9th", "Artificial Intelligence Assistant — Grade IX"),
-    SourceBook("Artificial intelligence assistant-10th", "Artificial Intelligence Assistant — Grade X"),
-    SourceBook("Junior software developer-11th", "Junior Software Developer — Grade XI"),
-    SourceBook("Junior software developer-12th", "Junior Software Developer — Grade XII"),
+BOOKS = (
+    SourceBook("Domestic data entry operator-9th", "Domestic Data Entry Operator"),
+    SourceBook("Domestic data entry operator-10th", "Domestic Data Entry Operator"),
+    SourceBook("Web developer-11th", "Web Development"),
+    SourceBook("Web developer-12th", "Web Development"),
+    SourceBook("Artificial intelligence assistant-9th", "Artificial Intelligence"),
+    SourceBook("Artificial intelligence assistant-10th", "Artificial Intelligence"),
+    SourceBook("Junior software developer-11th", "Junior Software Development"),
+    SourceBook("Junior software developer-12th", "Junior Software Development"),
 )
 
+def source_tex(book: SourceBook) -> Path:
+    path = ROOT / book.folder / "main.tex"
+    if not path.is_file():
+        raise FileNotFoundError(f"Missing source LaTeX file: {path}")
+    return path
 
-def resolve_book_pdf(book: SourceBook) -> Path:
-    folder = ROOT / book.folder
-    expected_pdf = folder / f"{book.folder}.pdf"
-    if expected_pdf.is_file():
-        return expected_pdf
-
-    discovered = sorted(folder.glob("*.pdf")) if folder.exists() else []
-    if len(discovered) == 1:
-        return discovered[0]
-    if not folder.exists():
-        raise FileNotFoundError(f"Missing source folder: {folder}")
-    if not discovered:
-        raise FileNotFoundError(
-            f"Missing source PDF in {folder}. Expected {expected_pdf.name} or a single *.pdf file."
-        )
-
-    options = ", ".join(path.name for path in discovered)
-    raise FileNotFoundError(
-        f"Ambiguous PDFs in {folder}: {options}. Keep a single source PDF or restore {expected_pdf.name}."
+def extract_body(path: Path) -> str:
+    text = path.read_text(encoding="utf-8")
+    start = text.find(r"\mainmatter")
+    if start >= 0:
+        text = text[start + len(r"\mainmatter"):]
+    else:
+        start = text.find(r"\begin{document}")
+        if start < 0:
+            raise ValueError(f"No document body found in {path}")
+        text = text[start + len(r"\begin{document}"):]
+    # Remove per-book back matter and document terminators.
+    text = re.split(r"\\backmatter\b|\\end\{document\}", text, maxsplit=1)[0]
+    text = re.sub(r"\\frontmatter\b|\\mainmatter\b|\\tableofcontents\b", "", text)
+    text = re.sub(r"(?m)^\s*\\appendix\s*$", "", text)
+    # Remove the per-book running headers and page decorations if any source body repeats them.
+    text = re.sub(r"\\thispagestyle\{[^}]*\}", "", text)
+    # Images are retained, with paths redirected to their original source folders.
+    folder = path.parent.name
+    text = re.sub(
+        r"(\\includegraphics(?:\[[^\]]*\])?\{)(?![^}]*[/\\\\])([^}]+)(\})",
+        lambda m: m.group(1) + "../" + folder + "/" + m.group(2) + m.group(3),
+        text,
     )
-
-
-def collect_source_pdfs() -> list[tuple[SourceBook, Path]]:
-    missing: list[str] = []
-    resolved: list[tuple[SourceBook, Path]] = []
-    for book in BOOKS:
-        try:
-            pdf_path = resolve_book_pdf(book)
-            if not pdf_path.is_file() or pdf_path.stat().st_size == 0:
-                missing.append(f"Source PDF is missing or empty: {pdf_path}")
-            else:
-                resolved.append((book, pdf_path))
-        except FileNotFoundError as exc:
-            missing.append(str(exc))
-
-    if missing:
-        details = "\n- " + "\n- ".join(missing)
-        raise SystemExit(f"Cannot build final book because required inputs are missing:{details}")
-
-    return resolved
-
-
-def rel_pdf_path(pdf_path: Path, tex_path: Path) -> str:
-    return Path(os.path.relpath(pdf_path, tex_path.parent)).as_posix()
-
-
-def render_main_tex(sources: list[tuple[SourceBook, Path]], tex_path: Path) -> str:
-    toc_entries: list[str] = []
-    include_entries: list[str] = []
-
-    for book, pdf in sources:
-        relative_path = rel_pdf_path(pdf, tex_path)
-        toc_entries.append(
-            f"\\chapter*{{{book.title}}}\n"
-            f"\\addcontentsline{{toc}}{{chapter}}{{{book.title}}}\n"
-        )
-        include_entries.append(
-            f"% {book.title}\n"
-            f"\\includepdf[pages=-,pagecommand={{}}]{{\\detokenize{{{relative_path}}}}}"
-        )
-
-    toc_block = "\n".join(toc_entries)
-    include_block = "\n\n".join(include_entries)
-
-    return (
-        "\\documentclass[11pt,openany,oneside]{book}\n"
-        "\\usepackage[a4paper,margin=20mm]{geometry}\n"
-        "\\usepackage{pdfpages}\n"
-        "\\usepackage[hidelinks]{hyperref}\n\n"
-        "\\begin{document}\n"
-        "\\begin{titlepage}\n"
-        "\\thispagestyle{empty}\n"
-        "\\centering\n"
-        "\\vspace*{18mm}\n"
-        "{\\Huge\\bfseries HANDBOOK\\par}\n"
-        "\\vspace{10mm}\n"
-        "{\\LARGE Combined Vocational Education Textbooks\\par}\n"
-        "\\vspace{4mm}\n"
-        "{\\large Classes IX--XII\\par}\n"
-        "\\vfill\n"
-        "{\\large Data Entry $\\bullet$ Web Development $\\bullet$ Artificial Intelligence $\\bullet$ Software Development\\par}\n"
-        "\\vfill\n"
-        "{\\normalsize Combined volume of eight vocational textbooks\\par}\n"
-        "\\end{titlepage}\n\n"
-        "\\frontmatter\n"
-        "\\tableofcontents\n"
-        "\\mainmatter\n\n"
-        f"{toc_block}\n\n"
-        "\\cleardoublepage\n"
-        f"{include_block}\n"
-        "\\end{document}\n"
+    text = re.sub(
+        r"(\\includegraphics(?:\[[^\]]*\])?\{)([^}]*)(\})",
+        lambda m: m.group(1) + (
+            m.group(2) if m.group(2).startswith("../") else
+            ("../" + folder + "/" + m.group(2) if not m.group(2).startswith("/") else m.group(2))
+        ) + m.group(3),
+        text,
     )
+    # The book parts are stitched together without creating separate books or cover pages.
+    return text.strip()
 
-
-def validate_generated_structure(tex_text: str, sources: list[tuple[SourceBook, Path]], tex_path: Path) -> list[str]:
-    errors: list[str] = []
-
-    if "\\usepackage{pdfpages}" not in tex_text:
-        errors.append("main.tex is missing \\usepackage{pdfpages}.")
-
-    include_pattern = re.compile(
-        r"\\includepdf\[pages=-,pagecommand=\{\}\]\{\\detokenize\{([^}]*)\}\}"
-    )
-    included_paths = include_pattern.findall(tex_text)
-
-    if len(included_paths) != len(sources):
-        errors.append(
-            f"Expected {len(sources)} include entries with pages=- and pagecommand={{}}, found {len(included_paths)}."
+def render_main_tex(tex_path: Path) -> str:
+    bodies = []
+    for index, book in enumerate(BOOKS, start=1):
+        path = source_tex(book)
+        body = extract_body(path)
+        # Keep the source chapter text and illustrations; only mark transitions between source curricula.
+        bodies.append(
+            "\n% ============================================================\n"
+            f"% Curriculum sequence {index}: {book.title}\n"
+            "% ============================================================\n"
+            + body
         )
 
-    expected_paths = [rel_pdf_path(pdf, tex_path) for _, pdf in sources]
-    if included_paths != expected_paths:
-        errors.append(
-            "Included PDF order/content mismatch.\n"
-            f"Expected: {expected_paths}\n"
-            f"Found:    {included_paths}"
-        )
+    body_text = "\n\n".join(bodies)
+    return r"""\documentclass[11pt,openany,oneside]{book}
+\usepackage[a4paper,top=20mm,bottom=20mm,left=22mm,right=22mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\usepackage{amssymb,xcolor,graphicx,array,booktabs,longtable,tabularx,colortbl,enumitem,tikz,tcolorbox,titlesec,tocloft,hyperref,microtype,listings}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+\definecolor{Navy}{HTML}{17365D}
+\definecolor{Teal}{HTML}{007F86}
+\definecolor{Pale}{HTML}{EAF6F7}
+\definecolor{Gold}{HTML}{E3A72F}
+\definecolor{Ink}{HTML}{293746}
+\definecolor{LightGold}{HTML}{FFF5DD}
+\definecolor{SoftGray}{HTML}{F4F6F9}
+\definecolor{Coral}{HTML}{D95D50}
+\definecolor{Violet}{HTML}{7656A6}
+\definecolor{Sky}{HTML}{DCEEFF}
+\definecolor{Rose}{HTML}{FCEBE8}
+\hypersetup{colorlinks=true,linkcolor=Teal,urlcolor=Teal,pdftitle={Combined Vocational Education Textbook},pdfauthor={Vocational Education}}
+\setlist[itemize]{leftmargin=1.5em,itemsep=1.5pt,topsep=2pt,parsep=0pt}
+\setlist[enumerate]{leftmargin=1.7em,itemsep=2pt,topsep=2pt,parsep=0pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\setlength{\emergencystretch}{3em}
+% No running headers, footers, page numbers, or decorative page borders.
+\pagestyle{empty}
+\titleformat{\chapter}[display]{\normalfont\sffamily\bfseries\color{Navy}}{\filleft\Large\color{Coral}\chaptername\ \thechapter}{.6ex}{\color{Teal}\LARGE\raggedright}
+\titlespacing*{\chapter}{0pt}{-2mm}{.8ex}
+\titleformat{\section}{\Large\sffamily\bfseries\color{Teal}}{\color{Coral}\thesection}{.7em}{}
+\titleformat{\subsection}{\large\sffamily\bfseries\color{Violet}}{\thesubsection}{.7em}{}
+\titlespacing*{\section}{0pt}{1.2ex plus .2ex minus .2ex}{.35ex}
+\titlespacing*{\subsection}{0pt}{1ex plus .2ex minus .2ex}{.3ex}
+\newcommand{\keyterm}[1]{\textbf{\color{Navy}#1}}
+\newcommand{\checklistitem}{\noindent$\square$\quad}
+\newcommand{\exampractice}[1]{\begin{tcolorbox}[colback=LightGold,colframe=Gold,boxrule=.6pt,arc=1.2mm,left=2mm,right=2mm,top=1mm,bottom=1mm]\textbf{Review questions.} #1\end{tcolorbox}}
+\newcommand{\reviewtitle}{\par\noindent\textbf{\color{Navy}Review Questions}\par}
+\newcommand{\review}[1]{\par\smallskip\reviewtitle\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=1pt,topsep=2pt]\small #1\end{enumerate}\smallskip}
+\newcommand{\photo}[3]{\begin{center}\begin{tcolorbox}[colback=white,colframe=Teal!70,boxrule=.8pt,arc=1mm,left=2mm,right=2mm,top=2mm,bottom=2mm,width=.88\textwidth]\centering\IfFileExists{../Junior software developer-11th/images/#1}{\includegraphics[width=.92\linewidth,height=46mm,keepaspectratio]{../Junior software developer-11th/images/#1}}{\textbf{#2}}\end{tcolorbox}\end{center}{\small\textit{#3}}}
+\begin{document}
+\begin{titlepage}
+\thispagestyle{empty}
+\centering
+\vspace*{25mm}
+{\Huge\bfseries VOCATIONAL EDUCATION\par}
+\vspace{5mm}
+{\LARGE Combined Textbook\par}
+\vspace{8mm}
+{\large Data Entry \textbullet\ Web Development \textbullet\ Artificial Intelligence \textbullet\ Software Development\par}
+\vfill
+{\large Classes IX--XII\par}
+\vspace{4mm}
+{\normalsize A continuous learning volume\par}
+\end{titlepage}
+\pagenumbering{arabic}
+\tableofcontents
+\clearpage
+""" + body_text + r"""
 
-    for book, pdf in sources:
-        relative_path = rel_pdf_path(pdf, tex_path)
-        if relative_path not in tex_text:
-            errors.append(f"Source PDF path not referenced in main.tex: {book.title} ({relative_path})")
-
-    return errors
-
-
-def write_main_tex(tex_path: Path) -> None:
-    sources = collect_source_pdfs()
-    tex_text = render_main_tex(sources, tex_path)
-    errors = validate_generated_structure(tex_text, sources, tex_path)
-    if errors:
-        raise SystemExit("Generated TeX failed structural validation:\n- " + "\n- ".join(errors))
-
-    tex_path.parent.mkdir(parents=True, exist_ok=True)
-    tex_path.write_text(tex_text, encoding="utf-8")
-    print(f"Generated {tex_path} from {len(sources)} source PDFs.")
-
-
-def check_main_tex(tex_path: Path) -> None:
-    sources = collect_source_pdfs()
-    if not tex_path.exists():
-        raise SystemExit(f"main.tex not found: {tex_path}")
-
-    tex_text = tex_path.read_text(encoding="utf-8")
-    errors = validate_generated_structure(tex_text, sources, tex_path)
-    if errors:
-        raise SystemExit("Structural validation failed:\n- " + "\n- ".join(errors))
-
-    print("Validation successful:")
-    for book, pdf in sources:
-        print(f"- {book.title}: {rel_pdf_path(pdf, tex_path)}")
-
+\end{document}
+"""
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Generate or validate the final merged-book LaTeX source.")
-    parser.add_argument(
-        "--output",
-        type=Path,
-        default=DEFAULT_OUTPUT,
-        help="Output TeX path (default: Final Book/main.tex)",
-    )
-    parser.add_argument(
-        "--check",
-        action="store_true",
-        help="Validate source PDFs and the existing main.tex structure without writing files.",
-    )
+    parser = argparse.ArgumentParser(description="Build a continuous textbook from source LaTeX chapters.")
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     return parser.parse_args()
-
 
 def main() -> None:
     args = parse_args()
-    output = args.output
-    if not output.is_absolute():
-        output = ROOT / output
-
-    if args.check:
-        check_main_tex(output)
-        return
-
-    write_main_tex(output)
-
+    output = args.output if args.output.is_absolute() else ROOT / args.output
+    output.parent.mkdir(parents=True, exist_ok=True)
+    text = render_main_tex(output)
+    if text.count(r"\begin{document}") != 1 or text.count(r"\end{document}") != 1:
+        raise SystemExit("Generated source has invalid document boundaries.")
+    if r"\includepdf" in text or r"\usepackage{pdfpages}" in text:
+        raise SystemExit("PDF concatenation is not allowed in the continuous-book build.")
+    output.write_text(text, encoding="utf-8")
+    print(f"Generated continuous textbook source: {output}")
+    print(f"Included {len(BOOKS)} curriculum source bodies in order.")
 
 if __name__ == "__main__":
     main()
