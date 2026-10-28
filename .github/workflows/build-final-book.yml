@@ -77,8 +77,6 @@ jobs:
           for f in programming-code.png stack-queue.png python-simulation.jpg router-vlan.png lan-topology.png; do
             test ! -s "Junior software developer-11th/images/$f" || cp "Junior software developer-11th/images/$f" "Junior software developer-12th/images/$f"
           done
-      - name: Generate merged LaTeX source
-        run: python "Final Book/merge_books.py"
       - name: Compile combined handbook
         uses: xu-cheng/latex-action@v3
         with:
