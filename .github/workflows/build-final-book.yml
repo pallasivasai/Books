@@ -6,9 +6,10 @@ on:
     paths:
       - 'Final Book/**'
       - '.github/workflows/build-final-book.yml'
+      - '!Final Book/Final-Combined-Handbook.pdf'
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: final-combined-handbook
@@ -81,6 +82,21 @@ jobs:
           root_file: main.tex
           working_directory: 'Final Book'
           latexmk_use_xelatex: true
+      - name: Publish final PDF in Final Book folder on main
+        if: github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp "Final Book/main.pdf" "Final Book/Final-Combined-Handbook.pdf"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "Final Book/Final-Combined-Handbook.pdf"
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish final combined handbook PDF"
+            git push origin HEAD:main
+          else
+            echo "The published PDF is already up to date."
+          fi
       - name: Upload final PDF and merged source
         uses: actions/upload-artifact@v4
         with:
