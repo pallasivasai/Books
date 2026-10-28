@@ -28,11 +28,11 @@ def get_body(path: Path) -> str:
     text = re.sub(r"\\frontmatter|\\mainmatter|\\backmatter|\\tableofcontents", "", text)
     # Make image paths unique while preserving each book's original image directory.
     text = text.replace(r"\includegraphics", r"\includegraphics")
-    text = re.sub(r"\{book_illustrations/", "{" + path.parent.name + r"/book_illustrations/", text)
-    text = re.sub(r"\{images/", "{" + path.parent.name + r"/images/", text)
+    text = re.sub(r"\\{book_illustrations/", "{" + path.parent.name + r"/book_illustrations/", text)
+    text = re.sub(r"\{images/", "{../" + path.parent.name + r"/images/", text)
     # Photo helper commands in source books expect a local images/ directory.
     # Prefix the path argument passed into \photo so the original image remains discoverable.
-    text = re.sub(r"\\photo\{([^}]+)\}", lambda m: r"\photo{" + path.parent.name + "/" + m.group(1) + "}", text)
+    text = re.sub(r"\\photo\{([^}]+)\}", lambda m: r"\photo{../" + path.parent.name + "/images/" + m.group(1) + "}", text)
     return text.strip()
 
 def main():
