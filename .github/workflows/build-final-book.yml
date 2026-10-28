@@ -77,6 +77,31 @@ jobs:
           for f in programming-code.png stack-queue.png python-simulation.jpg router-vlan.png lan-topology.png; do
             test ! -s "Junior software developer-11th/images/$f" || cp "Junior software developer-11th/images/$f" "Junior software developer-12th/images/$f"
           done
+      - name: Prepare space-free image asset paths
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "Final Book/assets"
+          folders=(
+            "Domestic data entry operator-9th"
+            "Domestic data entry operator-10th"
+            "Web developer-11th"
+            "Web developer-12th"
+            "Artificial intelligence assistant-9th"
+            "Artificial intelligence assistant-10th"
+            "Junior software developer-11th"
+            "Junior software developer-12th"
+          )
+          i=1
+          for folder in "\${folders[@]}"; do
+            mkdir -p "Final Book/assets/book\${i}"
+            for subdir in images book_illustrations; do
+              if [ -d "\${folder}/\${subdir}" ]; then
+                cp -a "\${folder}/\${subdir}" "Final Book/assets/book\${i}/"
+              fi
+            done
+            i=$((i+1))
+          done
       - name: Generate merged LaTeX source
         run: python "Final Book/merge_books.py"
       - name: Compile combined handbook
