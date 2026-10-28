@@ -37,7 +37,6 @@
 \titleformat{\subsection}{\large\sffamily\bfseries\color{Violet}}{\thesubsection}{.7em}{}
 \titlespacing*{\section}{0pt}{1.2ex plus .2ex minus .2ex}{.35ex}
 \titlespacing*{\subsection}{0pt}{1ex plus .2ex minus .2ex}{.3ex}
-\newcommand{\exampractice}[1]{\begin{tcolorbox}[colback=LightGold,colframe=Gold,boxrule=.6pt,arc=1.2mm,left=2mm,right=2mm,top=1mm,bottom=1mm]\textbf{Review questions.} #1\end{tcolorbox}}
 \newcommand{\keyterm}[1]{\textbf{\color{Navy}#1}}
 \newcommand{\photo}[3]{\begin{center}\begin{tcolorbox}[colback=white,colframe=Teal!70,boxrule=.8pt,arc=1mm,left=2mm,right=2mm,top=2mm,bottom=2mm,width=.88\textwidth]\centering\IfFileExists{images/#1}{\includegraphics[width=.92\linewidth,height=48mm,keepaspectratio]{images/#1}}{\vspace{8mm}\textbf{#2}\par\small Visual example for this topic\vspace{8mm}}\end{tcolorbox}\end{center}{\small\textit{#3}}}
 \begin{document}
@@ -111,7 +110,13 @@ Normalisation is a way of organising tables to reduce unnecessary repetition and
 \section{Transactions and ACID}
 A transaction groups operations that should succeed or fail as a unit. ACID summarises four important properties: Atomicity (all or nothing), Consistency (valid rules remain satisfied), Isolation (concurrent work is controlled), and Durability (committed changes persist according to the system's guarantees). Transactions matter in banking, ordering, stock control and any workflow where partial updates would create a misleading result.
 
-\exampractice{1. Define DBMS and give two examples. 2. Distinguish a row from a column. 3. Explain primary and foreign keys. 4. State two advantages and two limitations of a file-based approach. 5. What does each ACID property protect?}
+\par\noindent\textbf{Review Questions}\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=2pt,topsep=2pt]
+\item Define DBMS and give two examples.
+\item Distinguish a row from a column.
+\item Explain primary and foreign keys.
+\item State two advantages and two limitations of a file-based approach.
+\item What does each ACID property protect?
+\end{enumerate}
 
 \chapter{Structured Query Language and MySQL}
 SQL is used to define database structures, retrieve records, change data and manage access. Although database products differ in some details, the basic ideas of tables, filtering, sorting, joins and constraints are widely shared.
@@ -194,7 +199,14 @@ INNER JOIN courses AS c
 \section{Installation and safe database practice}
 For learning, use the official MySQL Community Edition download and follow current installation instructions for your operating system. A typical setup may include MySQL Server and a client such as MySQL Workbench. Create a dedicated practice account, use a strong password, keep the server local while learning, and do not expose the database port to the public internet without a carefully designed security plan.
 
-\exampractice{1. Compare DDL and DML. 2. What is the purpose of a primary key? 3. Write a query to sort marks from highest to lowest. 4. Explain the difference between WHERE and HAVING. 5. Compare INNER JOIN and LEFT JOIN. 6. Why should UPDATE and DELETE statements be checked before execution?}
+\par\noindent\textbf{Review Questions}\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=2pt,topsep=2pt]
+\item Compare DDL and DML.
+\item What is the purpose of a primary key?
+\item Write a query to sort marks from highest to lowest.
+\item Explain the difference between WHERE and HAVING.
+\item Compare INNER JOIN and LEFT JOIN.
+\item Why should UPDATE and DELETE statements be checked before execution?
+\end{enumerate}
 
 \chapter{SQL Functions and Data Handling}
 Functions help queries express common calculations without requiring every operation to be performed manually outside the database. A function accepts a value or expression and returns a result. Exact names and behaviour can differ across database products, so check the documentation for the system in use.
@@ -229,7 +241,13 @@ FROM students;
 \section{Permissions and transactions}
 GRANT assigns permitted actions to a database account; REVOKE removes permissions. Follow least privilege: give each account only the access it needs. COMMIT confirms a transaction and ROLLBACK abandons uncommitted changes. Transaction support and behaviour depend on the storage engine and the operations being performed.
 
-\exampractice{1. Give examples of string and numeric functions. 2. Compare COUNT(*) with COUNT(column). 3. Why should dates be stored using date types? 4. What is NULL? 5. Explain least privilege in database access.}
+\par\noindent\textbf{Review Questions}\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=2pt,topsep=2pt]
+\item Give examples of string and numeric functions.
+\item Compare COUNT(*) with COUNT(column).
+\item Why should dates be stored using date types?
+\item What is NULL?
+\item Explain least privilege in database access.
+\end{enumerate}
 
 \chapter{Introduction to PHP and Server-Side Scripting}
 PHP is a server-side scripting language often used to create dynamic web pages and web services. The server executes PHP code and sends a response to the browser. Visitors normally receive the resulting HTML, not the server's PHP source. PHP can process form input, apply application rules, communicate with databases and generate a response.
@@ -292,7 +310,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 \end{lstlisting}
 The example demonstrates basic checking only. A real form should include a suitable HTML form, a clear label, server-side validation, CSRF protection where relevant, safe output encoding and meaningful error handling.
 
-\exampractice{1. What is server-side scripting? 2. Describe the journey of an HTTP request to a PHP server. 3. What is the difference between GET and POST? 4. Why should user-provided text be escaped before it is inserted into HTML?}
+\par\noindent\textbf{Review Questions}\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=2pt,topsep=2pt]
+\item What is server-side scripting?
+\item Describe the journey of an HTTP request to a PHP server.
+\item What is the difference between GET and POST?
+\item Why should user-provided text be escaped before it is inserted into HTML?
+\end{enumerate}
 
 \chapter{PHP Arrays, Strings and Functions}
 \section{Arrays}
@@ -336,7 +359,13 @@ The \texttt{\$\_SERVER} superglobal provides request and server information, suc
 \section{Error handling and maintainability}
 Use clear names, consistent formatting, comments that explain intent, and functions with a focused purpose. During development, errors can be logged for diagnosis. Production systems should avoid showing stack traces, secrets or internal paths to visitors. Logs should not unnecessarily contain passwords, session tokens or sensitive personal information.
 
-\exampractice{1. Compare indexed and associative arrays. 2. What is the purpose of a foreach loop? 3. Explain function parameters and return values. 4. What is a base case in recursion? 5. Why should internal error details not be displayed to every visitor?}
+\par\noindent\textbf{Review Questions}\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=2pt,topsep=2pt]
+\item Compare indexed and associative arrays.
+\item What is the purpose of a foreach loop?
+\item Explain function parameters and return values.
+\item What is a base case in recursion?
+\item Why should internal error details not be displayed to every visitor?
+\end{enumerate}
 
 \chapter{PHP and MySQL Database Applications}
 A web application often needs to save and retrieve information. PHP can connect to MySQL, send queries and use the returned rows to generate a response. The connection, query and output stages all need careful error handling and security controls.
@@ -386,7 +415,13 @@ When displaying text in HTML, use context-appropriate output encoding, such as \
 \item Back up data and test recovery procedures.
 \end{itemize}
 
-\exampractice{1. Name two PHP interfaces used with MySQL. 2. How do prepared statements reduce SQL injection risk? 3. What do CRUD operations mean? 4. Why is output encoding necessary? 5. Give four checks to complete before a database-backed form is released.}
+\par\noindent\textbf{Review Questions}\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=2pt,topsep=2pt]
+\item Name two PHP interfaces used with MySQL.
+\item How do prepared statements reduce SQL injection risk?
+\item What do CRUD operations mean?
+\item Why is output encoding necessary?
+\item Give four checks to complete before a database-backed form is released.
+\end{enumerate}
 
 \chapter{Productivity, Quality and Professional Work Habits}
 Productivity is not simply completing a large number of tasks. Good work is accurate, useful and delivered with appropriate use of time and resources. In a software workplace, productivity improves when requirements are understood, tasks are prioritised, tools are maintained, communication is clear and defects are found early.
@@ -404,7 +439,12 @@ Share information in a clear and respectful way. Confirm important instructions,
 \section{Managing digital work responsibly}
 Organise files with meaningful names, keep versions under control, back up important work and avoid saving confidential material in unapproved locations. Lock the screen when stepping away, use strong authentication and report suspicious messages or unexpected access requests.
 
-\exampractice{1. Distinguish productivity from simply working faster. 2. Give three methods for improving quality. 3. Why should a project risk be reported early? 4. List four habits that support responsible digital work.}
+\par\noindent\textbf{Review Questions}\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=2pt,topsep=2pt]
+\item Distinguish productivity from simply working faster.
+\item Give three methods for improving quality.
+\item Why should a project risk be reported early?
+\item List four habits that support responsible digital work.
+\end{enumerate}
 
 \chapter{Health and Safety Procedures in the Workplace}
 A safe workplace is created through planning, training, suitable equipment and shared responsibility. Hazards may be physical, electrical, ergonomic, chemical, environmental or psychosocial. Identifying a hazard early gives people a chance to remove it or reduce the risk before someone is harmed.
@@ -437,7 +477,13 @@ Do not use damaged plugs, exposed wires or overloaded extension boards. Keep liq
 \section{Incident reporting}
 Report injuries, near misses, unsafe conditions and equipment faults according to workplace policy. Record factual details such as location, time, what was observed and immediate controls taken. Timely reporting helps prevent recurrence and supports a safer environment for everyone.
 
-\exampractice{1. Define hazard and risk. 2. Name the main levels in the hierarchy of controls. 3. Give five ways to improve computer-work ergonomics. 4. What should an employee do after noticing a damaged power cable? 5. Why are near misses worth reporting?}
+\par\noindent\textbf{Review Questions}\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=2pt,topsep=2pt]
+\item Define hazard and risk.
+\item Name the main levels in the hierarchy of controls.
+\item Give five ways to improve computer-work ergonomics.
+\item What should an employee do after noticing a damaged power cable?
+\item Why are near misses worth reporting?
+\end{enumerate}
 
 \chapter{Waste Management, Recycling and Resource Conservation}
 Workplaces use electricity, water, paper, equipment and other materials. Waste prevention and careful resource use reduce environmental impact and can also lower operating costs. Sustainability works best when it is part of routine purchasing, maintenance and daily decisions.
@@ -469,7 +515,12 @@ Switch off equipment when it is not needed and when policy permits; use power-sa
 \section{Planning a small waste programme}
 Start by observing what the workplace throws away and where the waste is produced. Set a realistic target, provide clearly labelled collection points, explain the process, identify an approved collection route and review results periodically. Do not mix separated waste after collection, and never handle unknown or hazardous material without the required training.
 
-\exampractice{1. Put the main waste-management options in preferred order. 2. Why does electronic waste need special attention? 3. List five ways to conserve resources in an office. 4. Outline a simple workplace recycling programme.}
+\par\noindent\textbf{Review Questions}\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=2pt,topsep=2pt]
+\item Put the main waste-management options in preferred order.
+\item Why does electronic waste need special attention?
+\item List five ways to conserve resources in an office.
+\item Outline a simple workplace recycling programme.
+\end{enumerate}
 
 \chapter{Diversity, Equality and Inclusive Workplaces}
 An inclusive workplace makes it possible for people with different backgrounds, experiences and abilities to participate and contribute. Respect is shown through fair procedures, accessible communication, equitable opportunities and prompt action when discrimination or harassment occurs.
@@ -489,7 +540,12 @@ Fair workplaces apply consistent standards, provide equal access to learning and
 \section{Building an inclusive team}
 Use clear selection criteria, accessible training material, fair performance feedback and a reliable process for raising concerns. Review workplace practices regularly. Inclusion is not achieved by a slogan; it requires people to notice barriers and improve the way work is organised.
 
-\exampractice{1. Explain the difference between equality and equity. 2. Give four examples of inclusive behaviour. 3. Why should hiring criteria be transparent? 4. What should a worker do if they experience or witness harassment?}
+\par\noindent\textbf{Review Questions}\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=2pt,topsep=2pt]
+\item Explain the difference between equality and equity.
+\item Give four examples of inclusive behaviour.
+\item Why should hiring criteria be transparent?
+\item What should a worker do if they experience or witness harassment?
+\end{enumerate}
 
 \chapter{Accessibility and Policies for Persons with Disabilities}
 Accessibility means that people can use facilities, information, services and digital tools as independently as possible. A barrier may be physical, communicative, procedural or digital. Inclusive practice identifies barriers and makes reasonable adjustments in line with applicable law and workplace policy.
@@ -507,7 +563,12 @@ Possible adjustments include accessible routes, suitable desk arrangements, assi
 \section{Respectful support and privacy}
 Speak directly to the person rather than only to a companion. Ask before offering physical assistance or moving mobility equipment. Do not disclose a person's disability or medical information without an appropriate basis. Apply workplace policies and relevant Indian law, including the Rights of Persons with Disabilities Act, 2016, where applicable; consult official guidance for current obligations.
 
-\exampractice{1. What is an accessibility barrier? 2. Give five examples of digital accessibility practices. 3. Why should adjustments be discussed with the person concerned? 4. How can a workplace improve emergency access for people with disabilities?}
+\par\noindent\textbf{Review Questions}\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=2pt,topsep=2pt]
+\item What is an accessibility barrier?
+\item Give five examples of digital accessibility practices.
+\item Why should adjustments be discussed with the person concerned?
+\item How can a workplace improve emergency access for people with disabilities?
+\end{enumerate}
 
 \chapter{Integrated Case Study and Revision}
 \section{Case study: a training-centre portal}
