@@ -142,11 +142,11 @@ def add_section_illustrations(text: str, book_index: int) -> str:
             f"assets/book{book_index}/book_illustrations/it_ites_workflow.png",
             "assets/book1/book_illustrations/document_workflow.png",
         ))
-        graphic = r"\\includegraphics[width=.72\\textwidth,height=38mm,keepaspectratio]{"
-        expression = r"\\fbox{\\parbox{.55\\textwidth}{\\centering No suitable image was available during build}}"
+        graphic = r"\includegraphics[width=.72\textwidth,height=38mm,keepaspectratio]{"
+        expression = r"\fbox{\parbox{.55\textwidth}{\centering No suitable image was available during build}}"
         for path in reversed(candidates):
-            expression = r"\\IfFileExists{" + path + "}{" + graphic + path + r"}\\par{\\scriptsize\\textit{Photograph: Wikimedia Commons.}}}{" + expression + "}"
-        image = "\\n\\\\begin{center}\\\\vspace{-2pt}" + expression + "\\\\end{center}\\n"
+            expression = r"\IfFileExists{" + path + "}{" + graphic + path + r"}\par{\scriptsize\textit{Photograph: Wikimedia Commons.}}}{" + expression + "}"
+        image = "\n\\begin{center}\\vspace{-2pt}" + expression + "\\end{center}\n"
         return heading + image + body
 
     return pattern.sub(update, text)
