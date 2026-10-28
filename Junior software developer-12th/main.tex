@@ -40,6 +40,7 @@
 \newcommand{\keyterm}[1]{\textbf{\color{Navy}#1}}
 \newcommand{\photo}[3]{\begin{center}\begin{tcolorbox}[colback=white,colframe=Teal!70,boxrule=.8pt,arc=1mm,left=2mm,right=2mm,top=2mm,bottom=2mm,width=.88\textwidth]\centering\IfFileExists{images/#1}{\includegraphics[width=.92\linewidth,height=46mm,keepaspectratio]{images/#1}}{\vspace{8mm}\textbf{#2}\par\small Visual example for this topic\vspace{8mm}}\end{tcolorbox}\end{center}{\small\textit{#3}}}
 \newcommand{\reviewtitle}{\par\noindent\textbf{\color{Navy}Review Questions}\par}
+\newtcolorbox{keybox}{colback=Pale,colframe=Teal,boxrule=.7pt,arc=1mm,left=2mm,right=2mm,top=1.5mm,bottom=1.5mm,before skip=4pt,after skip=4pt}
 
 \lstdefinelanguage{SQL}{morekeywords={SELECT,FROM,WHERE,ORDER,BY,INSERT,INTO,VALUES,UPDATE,SET,DELETE,CREATE,DATABASE,TABLE,PRIMARY,KEY,FOREIGN,REFERENCES,NOT,NULL,UNIQUE,DEFAULT,CHECK,ALTER,DROP,JOIN,INNER,LEFT,RIGHT,ON,GROUP,HAVING,COUNT,SUM,AVG,MIN,MAX,AS,AND,OR,IS,IN,LIKE,LIMIT,COMMIT,ROLLBACK,USE,INT,VARCHAR,TINYINT},sensitive=false}
 \lstset{style=webcode}
