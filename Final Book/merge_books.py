@@ -2,6 +2,9 @@ from __future__ import annotations
 
 import argparse
 import re
+import json
+import urllib.parse
+import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -96,66 +99,111 @@ def extract_body(path: Path) -> str:
     return text.strip()
 
 _USED_SECTION_IMAGES: set[str] = set()
+_USED_COMMONS_TITLES: set[str] = set()
+
+def _fetch_unique_commons_image(title: str, book_index: int) -> str | None:
+    """Search Wikimedia Commons for a relevant reusable image and download it once."""
+    query = re.sub(r"[^A-Za-z0-9 ]+", " ", title).strip()
+    if not query:
+        return None
+    destination_dir = FINAL_BOOK_DIR / "assets" / f"book{book_index}" / "section_images"
+    destination_dir.mkdir(parents=True, exist_ok=True)
+    slug = re.sub(r"[^a-z0-9]+", "-", query.lower()).strip("-")[:54] or "topic"
+    api = "https://commons.wikimedia.org/w/api.php?"
+    params = {
+        "action": "query", "generator": "search",
+        "gsrsearch": f'filetype:bitmap "{query}"',
+        "gsrnamespace": "6", "gsrlimit": "12",
+        "prop": "imageinfo", "iiprop": "url|extmetadata",
+        "iiurlwidth": "1200", "format": "json"
+    }
+    try:
+        request = urllib.request.Request(
+            api + urllib.parse.urlencode(params),
+            headers={"User-Agent": "BooksEducationalTextbookBuilder/1.0 (image attribution included)"}
+        )
+        with urllib.request.urlopen(request, timeout=12) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+        pages = payload.get("query", {}).get("pages", {})
+        candidates = sorted(pages.values(), key=lambda page: page.get("title", "").lower())
+        # Prefer the search order returned by Commons by sorting on index when available.
+        candidates.sort(key=lambda page: page.get("index", 999))
+        for page in candidates:
+            file_title = page.get("title", "")
+            infos = page.get("imageinfo", [])
+            if not infos or file_title in _USED_COMMONS_TITLES:
+                continue
+            info = infos[0]
+            url = info.get("thumburl") or info.get("url", "")
+            ext = Path(urllib.parse.urlparse(url).path).suffix.lower()
+            if ext not in {".jpg", ".jpeg", ".png", ".webp"}:
+                continue
+            if not url:
+                continue
+            filename = f"{slug}-{len(_USED_SECTION_IMAGES)+1}{ext}"
+            destination = destination_dir / filename
+            req = urllib.request.Request(url, headers={"User-Agent": "BooksEducationalTextbookBuilder/1.0"})
+            with urllib.request.urlopen(req, timeout=18) as response:
+                data = response.read()
+            if len(data) < 5000:
+                continue
+            destination.write_bytes(data)
+            _USED_COMMONS_TITLES.add(file_title)
+            _USED_SECTION_IMAGES.add(destination.relative_to(FINAL_BOOK_DIR).as_posix())
+            _USED_SECTION_IMAGES.add(file_title)
+            return destination.relative_to(FINAL_BOOK_DIR).as_posix()
+    except Exception as exc:
+        print(f"Commons image search skipped for {title!r}: {exc}")
+    return None
 
 def add_section_illustrations(text: str, book_index: int) -> str:
-    """Add a topic-matched image only when it is not already used elsewhere in the book."""
+    """Give each section its own topic-relevant image; never reuse an image in a later section."""
     pattern = re.compile(r"(\\section\*?\{[^{}]*\})(.*?)(?=\\(?:section\*?|chapter\*?|part\*?)\{|\\appendix\b|$)", re.S)
-    # Topic-to-filename terms help select an actual image/diagram about the section.
-    topic_terms = {
-        "database": ("database", "mysql", "sql", "entity", "relationship", "query", "table", "form", "report"),
-        "data": ("data", "spreadsheet", "formula", "scenario", "goal", "quality", "record", "entry"),
-        "document": ("document", "style", "format", "writer", "copy", "paste", "image", "workflow"),
-        "web": ("html", "css", "javascript", "website", "web", "responsive", "browser", "php"),
-        "program": ("program", "python", "code", "software", "algorithm", "stack", "queue", "process"),
-        "network": ("network", "router", "lan", "server", "internet", "topology", "vlan"),
-        "system": ("operating", "ubuntu", "system", "motherboard", "permission", "security", "sdlc"),
-        "ai": ("artificial", "intelligence", "machine", "learning", "model", "robot", "assistant", "vision"),
-        "safety": ("emergency", "fire", "exit", "ergonomic", "workstation", "health", "safety", "recycling"),
-    }
-    # Discover all locally downloaded/committed images, not just three shared fallback photos.
-    all_assets: list[Path] = []
-    for folder in sorted(FINAL_BOOK_DIR.glob("assets/book*")):
-        for subdir in ("images", "book_illustrations"):
-            directory = folder / subdir
-            if directory.is_dir():
-                all_assets.extend(p for p in directory.rglob("*") if p.is_file() and p.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"})
-    def image_key(path: Path) -> str:
-        # Repeated generic human-photo filenames are deliberately excluded from section illustrations.
-        return path.name.lower()
     def update(match: re.Match[str]) -> str:
         heading, body = match.group(1), match.group(2)
         existing = re.findall(r"\\includegraphics(?:\[[^\]]*\])?\{([^{}]+)\}", body)
-        if any((FINAL_BOOK_DIR / p).is_file() for p in existing):
-            return heading + body
-        title = re.sub(r"\\section\*?\{|\}", "", heading).lower()
-        words = set(re.findall(r"[a-z]+", title))
-        terms: set[str] = set()
-        for topic, topic_words in topic_terms.items():
-            if topic in words or any(w in words for w in topic_words):
-                terms.update(topic_words)
-        ranked: list[tuple[int, str, Path]] = []
-        for path in all_assets:
-            name = path.name.lower()
-            if name.startswith("human-") or name == "people-photo.jpg":
-                continue
-            rel = path.relative_to(FINAL_BOOK_DIR).as_posix()
-            if rel in _USED_SECTION_IMAGES or name in _USED_SECTION_IMAGES:
-                continue
-            score = sum(1 for term in terms if term in name)
-            if score:
-                ranked.append((score, rel, path))
-        if not ranked:
-            # Do not recycle a generic photograph just to fill space. The source content remains intact.
-            return heading + body
-        ranked.sort(key=lambda item: (-item[0], item[1]))
-        score, rel, chosen = ranked[0]
-        _USED_SECTION_IMAGES.add(rel)
-        _USED_SECTION_IMAGES.add(chosen.name.lower())
+        for image_path in existing:
+            full = FINAL_BOOK_DIR / image_path
+            if full.is_file():
+                key = full.resolve().as_posix()
+                if key not in _USED_SECTION_IMAGES:
+                    _USED_SECTION_IMAGES.add(key)
+                    _USED_SECTION_IMAGES.add(full.name.lower())
+                    return heading + body
+        title = re.sub(r"\\section\*?\{|\}", "", heading).strip()
+        commons_path = _fetch_unique_commons_image(title, book_index)
+        if commons_path:
+            image_path = commons_path
+        else:
+            # Fall back to a previously committed, unused topic-specific image.
+            words = set(re.findall(r"[a-z]+", title.lower()))
+            assets = []
+            for folder in sorted((FINAL_BOOK_DIR / "assets").glob("book*")):
+                for subdir in ("images", "book_illustrations"):
+                    directory = folder / subdir
+                    if directory.is_dir():
+                        for path in directory.rglob("*"):
+                            if not path.is_file() or path.suffix.lower() not in {".jpg", ".jpeg", ".png", ".webp"}:
+                                continue
+                            if path.name.lower().startswith("human-") or path.name.lower() == "people-photo.jpg":
+                                continue
+                            rel = path.relative_to(FINAL_BOOK_DIR).as_posix()
+                            if rel in _USED_SECTION_IMAGES or path.name.lower() in _USED_SECTION_IMAGES:
+                                continue
+                            score = sum(1 for word in words if len(word) > 3 and word in path.name.lower())
+                            if score:
+                                assets.append((score, rel, path))
+            if not assets:
+                return heading + body
+            assets.sort(key=lambda item: (-item[0], item[1]))
+            _, image_path, chosen = assets[0]
+            _USED_SECTION_IMAGES.add(image_path)
+            _USED_SECTION_IMAGES.add(chosen.name.lower())
         image = (
             "\n\\begin{center}\\vspace{-2pt}"
             "\\includegraphics[width=.72\\textwidth,height=38mm,keepaspectratio]{"
-            + rel + "}"
-            "\\par{\\scriptsize\\textit{Image source and licence: see the original Wikimedia Commons file.}}"
+            + image_path + "}"
+            "\\par{\\scriptsize\\textit{Topic image sourced from Wikimedia Commons; check source licence and attribution.}}"
             "\\end{center}\n"
         )
         return heading + image + body
