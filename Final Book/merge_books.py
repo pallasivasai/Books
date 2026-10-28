@@ -49,13 +49,22 @@ def extract_body(path: Path) -> str:
     text = re.sub(r"\\thispagestyle\{[^}]*\}|\\pagestyle\{[^}]*\}", "", text)
     text = re.sub(r"\\markboth\{[^{}]*\}\{[^{}]*\}|\\markright\{[^{}]*\}", "", text)
     text = re.sub(r"\\fancy(?:head|foot)\s*(?:\[[^]]*\])?\s*\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}", "", text)
-    # Rewrite illustration paths to space-free aliases prepared by the workflow.
+    # Rewrite every source-book asset path (including \IfFileExists guards) to the
+    # copied, space-free assets/bookN tree. This prevents false "illustration unavailable"
+    # messages when the image exists in the repository/build workspace.
     book_index = next(i for i, item in enumerate(BOOKS, start=1) if item.folder == path.parent.name)
-    text = re.sub(
-        r"(\\includegraphics(?:\[[^\]]*\])?\{)([^{}]+)(\})",
-        lambda m: m.group(1) + f"assets/book{book_index}/" + m.group(2).replace(r"\ ", " ").lstrip("./") + m.group(3),
-        text,
-    )
+    source_prefix = re.escape("../" + path.parent.name + "/")
+    text = re.sub(source_prefix, f"assets/book{book_index}/", text)
+    # Keep photos and diagrams inside the page's vertical text area to prevent overlap.
+    def constrain_image(match: re.Match[str]) -> str:
+        options = match.group(1) or ""
+        image_path = match.group(2)
+        if not re.search(r"\bheight\s*=", options):
+            options = options.strip("[]")
+            options = (options + "," if options else "") + r"height=55mm,keepaspectratio"
+            options = "[" + options + "]"
+        return r"\includegraphics" + options + "{" + image_path + "}"
+    text = re.sub(r"\\includegraphics(\[[^\]]*\])?\{([^{}]+)\}", constrain_image, text)
     # Missing optional source illustrations must not abort the entire textbook build.
     # Keep every valid image; show a small fallback only when a referenced file is absent.
     def guard_image(match: re.Match[str]) -> str:
@@ -101,11 +110,11 @@ def render_main_tex(tex_path: Path) -> str:
 
     body_text = "\n\n".join(bodies)
     return r"""\documentclass[11pt,openany,oneside]{book}
-\usepackage[a4paper,top=20mm,bottom=20mm,left=22mm,right=22mm]{geometry}
+\usepackage[a4paper,top=25mm,bottom=23mm,left=25mm,right=22mm,headheight=22pt]{geometry}
 \usepackage{fontspec}
 \setmainfont{DejaVu Serif}
 \setsansfont{DejaVu Sans}
-\usepackage{amssymb,xcolor,graphicx,array,booktabs,longtable,tabularx,colortbl,enumitem,tikz,tcolorbox,titlesec,tocloft,hyperref,microtype,listings}
+\usepackage{amssymb,xcolor,graphicx,array,booktabs,longtable,tabularx,colortbl,enumitem,tikz,tcolorbox,fancyhdr,titlesec,tocloft,hyperref,eso-pic,microtype,listings}
 \lstdefinestyle{webcode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
 \lstdefinestyle{pythoncode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
 \lstdefinestyle{pythonstyle}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
@@ -148,8 +157,22 @@ def render_main_tex(tex_path: Path) -> str:
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{3pt}
 \setlength{\emergencystretch}{3em}
-% No running headers, footers, page numbers, or decorative page borders.
-\pagestyle{empty}
+% Consistent navy-teal-gold page border, running header, and continuous page number.
+\AddToShipoutPictureBG{\begin{tikzpicture}[remember picture,overlay]
+\draw[Navy!65,line width=.55pt] ([xshift=11mm,yshift=-11mm]current page.north west) rectangle ([xshift=-11mm,yshift=11mm]current page.south east);
+\draw[Teal,line width=1.6pt] ([xshift=11mm,yshift=-11mm]current page.north west)--([xshift=37mm,yshift=-11mm]current page.north west);
+\draw[Coral,line width=1.6pt] ([xshift=-11mm,yshift=11mm]current page.south east)--([xshift=-37mm,yshift=11mm]current page.south east);
+\fill[Gold] ([xshift=11mm,yshift=-11mm]current page.north west) circle (1.1mm);
+\fill[Violet] ([xshift=-11mm,yshift=11mm]current page.south east) circle (1.1mm);
+\end{tikzpicture}}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\bfseries\sffamily\color{Teal} VOCATIONAL EDUCATION}
+\fancyhead[R]{\small\sffamily\color{Navy} COMBINED HANDBOOK}
+\fancyfoot[C]{\tikz[baseline=(n.base)]\node[fill=Teal,draw=Gold,line width=.7pt,text=white,circle,minimum size=7mm,inner sep=1pt,font=\small\bfseries] (n) {\thepage};}
+\renewcommand{\headrulewidth}{.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{Gold}\leaders\hrule height \headrulewidth\hfill}}
+\fancypagestyle{plain}{\fancyhf{}\fancyhead[L]{\small\bfseries\sffamily\color{Teal} VOCATIONAL EDUCATION}\fancyhead[R]{\small\sffamily\color{Navy} COMBINED HANDBOOK}\fancyfoot[C]{\tikz[baseline=(n.base)]\node[fill=Teal,draw=Gold,line width=.7pt,text=white,circle,minimum size=7mm,inner sep=1pt,font=\small\bfseries] (n) {\thepage};}\renewcommand{\headrulewidth}{.5pt}}
 \titleformat{\chapter}[display]{\normalfont\sffamily\bfseries\color{Navy}}{\filleft\Large\color{Coral}\chaptername\ \thechapter}{.6ex}{\color{Teal}\LARGE\raggedright}
 \titlespacing*{\chapter}{0pt}{-2mm}{.8ex}
 \titleformat{\section}{\Large\sffamily\bfseries\color{Teal}}{\color{Coral}\thesection}{.7em}{}
@@ -168,8 +191,9 @@ def render_main_tex(tex_path: Path) -> str:
 \newcommand{\review}[1]{\par\smallskip\reviewtitle\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,itemsep=1pt,topsep=2pt]\small #1\end{enumerate}\smallskip}
 \newcommand{\photo}[3]{\begin{center}\begin{tcolorbox}[colback=white,colframe=Teal!70,boxrule=.8pt,arc=1mm,left=2mm,right=2mm,top=2mm,bottom=2mm,width=.88\textwidth]\centering\IfFileExists{../Junior software developer-11th/images/#1}{\includegraphics[width=.92\linewidth,height=46mm,keepaspectratio]{../Junior software developer-11th/images/#1}}{\textbf{#2}}\end{tcolorbox}\end{center}{\small\textit{#3}}}
 \begin{document}
+\pagenumbering{arabic}
 \begin{titlepage}
-\thispagestyle{empty}
+\thispagestyle{plain}
 \centering
 \vspace*{25mm}
 {\Huge\bfseries VOCATIONAL EDUCATION\par}
@@ -182,7 +206,6 @@ def render_main_tex(tex_path: Path) -> str:
 \vspace{4mm}
 {\normalsize A continuous learning volume\par}
 \end{titlepage}
-\pagenumbering{arabic}
 \tableofcontents
 \clearpage
 """ + body_text + r"""
