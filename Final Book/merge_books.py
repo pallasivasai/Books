@@ -94,6 +94,8 @@ def render_main_tex(tex_path: Path) -> str:
 \lstdefinestyle{webcode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
 \lstdefinestyle{pythoncode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
 \lstdefinestyle{sqlcode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
+\lstdefinelanguage{HTML}{sensitive=false,morecomment=[s]{<!--}{-->},morestring=[b]",morestring=[b]',morekeywords={html,head,title,body,div,span,p,h1,h2,h3,a,img,ul,ol,li,table,tr,td,th,form,input,button,script,style,meta,link,header,footer,section,article,nav,main}}
+\lstdefinelanguage{CSS}{sensitive=false,morecomment=[s]{/*}{*/},morestring=[b]",morestring=[b]',morekeywords={color,background,display,position,margin,padding,border,width,height,font,font-size,font-family,flex,grid,justify-content,align-items,content,selector,px,rem,em,none,block,inline,solid,relative,absolute,hover,media}}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
 \definecolor{Navy}{HTML}{17365D}
 \definecolor{Teal}{HTML}{007F86}
