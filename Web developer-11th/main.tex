@@ -492,13 +492,14 @@ Object-oriented design organises a system around objects that combine data and b
 When a visitor enters a website address, the browser uses network services to locate the destination server and request resources. The server returns a response, often containing HTML, CSS, JavaScript, images, fonts, or data. The browser interprets these resources and constructs the visible page. This process may involve many requests rather than a single file.
 
 \begin{center}
-\begin{tikzpicture}[node distance=8mm,>=Latex]
-\node[draw=Teal,fill=Pale,rounded corners,minimum width=30mm,minimum height=10mm,align=center] (u) {User and browser};
-\node[draw=Gold,fill=LightGold,rounded corners,minimum width=30mm,minimum height=10mm,align=center,right=of u] (n) {Network request};
-\node[draw=Violet,fill=Violet!10,rounded corners,minimum width=30mm,minimum height=10mm,align=center,right=of n] (s) {Web server};
-\draw[->,thick,Teal] (u)--node[above,font=\small]{HTTP request}(n);
-\draw[->,thick,Teal] (n)--(s);
-\draw[<-,thick,Coral] (n) to[bend right=28] node[below,font=\small]{response}(u);
+\begin{tikzpicture}[>=Latex]
+% Keep message labels in their own lanes so they never collide with node text.
+\node[draw=Teal,fill=Pale,rounded corners,minimum width=34mm,minimum height=12mm,align=center] (u) at (0,0) {User and browser};
+\node[draw=Violet,fill=Violet!10,rounded corners,minimum width=34mm,minimum height=12mm,align=center] (s) at (10,0) {Web server};
+\draw[->,line width=1pt,Teal] ([yshift=2mm]u.east) -- ([yshift=2mm]s.west)
+  node[midway,above=3mm,font=\small\bfseries,text=Teal,fill=white,inner sep=2pt] {HTTP request};
+\draw[->,line width=1pt,Coral] ([yshift=-2mm]s.west) -- ([yshift=-2mm]u.east)
+  node[midway,below=3mm,font=\small\bfseries,text=Coral,fill=white,inner sep=2pt] {HTTP response};
 \end{tikzpicture}
 \end{center}
 \textit{Figure 7.1.} A simplified browser-to-server request and response.
