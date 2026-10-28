@@ -32,7 +32,7 @@ jobs:
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20workstation%20while%20out%20of%20use.jpg" -o "Junior software developer-11th/images/workstation.jpg"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20server%20rack.jpg" -o "Junior software developer-11th/images/server-rack.jpg"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming.jpg" -o "Junior software developer-11th/images/python-code.jpg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Responsive-web-design-devices.jpg" -o "Junior software developer-11th/images/network-cables.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ethernet%20cable%20closeup.JPG" -o "Junior software developer-11th/images/network-cables.jpg"
           file "Junior software developer-11th/images/"*
           cat > "Junior software developer-11th/IMAGE-CREDITS.txt" <<'EOF'
           Image credits and source links
@@ -46,8 +46,8 @@ jobs:
              https://commons.wikimedia.org/wiki/File:Computer_server_rack.jpg
           5. python-code.jpg — Lorenzo Cafaro, Wikimedia Commons, CC0 1.0.
              https://commons.wikimedia.org/wiki/File:Programming.jpg
-          6. network-cables.jpg — Muhammad Rafizeldi, Wikimedia Commons, CC BY-SA 3.0.
-             https://commons.wikimedia.org/wiki/File:Responsive-web-design-devices.jpg
+          6. network-cables.jpg — Dmitry "EthernetCable" Bulatović, Wikimedia Commons, CC BY-SA 3.0.
+             https://commons.wikimedia.org/wiki/File:Ethernet_cable_closeup.JPG
           EOF
 
       - name: Compile textbook with XeLaTeX
