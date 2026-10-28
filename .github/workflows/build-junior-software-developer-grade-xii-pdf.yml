@@ -27,21 +27,36 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "Junior software developer-12th/images"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20Motherboard%20Closeup.jpg" -o "Junior software developer-12th/images/motherboard.jpg"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Entity%20Relationship%20Diagram.jpg" -o "Junior software developer-12th/images/database-er.jpg"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Mysql%20database%20design.png" -o "Junior software developer-12th/images/mysql-design.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Python%20code%20example.png" -o "Junior software developer-12th/images/programming-code.png"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/QUEUE%20VS%20STACK.png" -o "Junior software developer-12th/images/stack-queue.png"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Screen-python-code-matplotlib-physics-simulation.jpg" -o "Junior software developer-12th/images/python-simulation.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Router%20on%20a%20stick.png" -o "Junior software developer-12th/images/router-vlan.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/LAN-physicalTopology.png" -o "Junior software developer-12th/images/lan-topology.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ubuntu%2025.04%20default%20desktop%20-%20English.png" -o "Junior software developer-12th/images/ubuntu-desktop.png"
           file "Junior software developer-12th/images/"*
           cat > "Junior software developer-12th/IMAGE-CREDITS.txt" <<'EOF'
           Image credits and source links
-          1. database-er.jpg — U.S. Department of Transportation, Wikimedia Commons, public domain (U.S. government work).
+          1. motherboard.jpg — Lenharth Systems, Wikimedia Commons, CC0 1.0.
+             https://commons.wikimedia.org/wiki/File:Computer_Motherboard_Closeup.jpg
+          2. database-er.jpg — U.S. Department of Transportation, Wikimedia Commons, public domain (U.S. government work).
              https://commons.wikimedia.org/wiki/File:Entity_Relationship_Diagram.jpg
-          2. mysql-design.png — Ahriman, Wikimedia Commons, CC BY-SA 3.0.
+          3. mysql-design.png — Ahriman, Wikimedia Commons, CC BY-SA 3.0.
              https://commons.wikimedia.org/wiki/File:Mysql_database_design.png
-          3. stack-queue.png — Choteseeworld, Wikimedia Commons, CC BY-SA 4.0.
+          4. programming-code.png — Zhanjack822, Wikimedia Commons, CC0 1.0.
+             https://commons.wikimedia.org/wiki/File:Python_code_example.png
+          5. stack-queue.png — Choteseeworld, Wikimedia Commons, CC BY-SA 4.0.
              https://commons.wikimedia.org/wiki/File:QUEUE_VS_STACK.png
-          4. python-simulation.jpg — MikeRun, Wikimedia Commons, CC BY-SA 4.0.
+          6. python-simulation.jpg — MikeRun, Wikimedia Commons, CC BY-SA 4.0.
              https://commons.wikimedia.org/wiki/File:Screen-python-code-matplotlib-physics-simulation.jpg
+          7. router-vlan.png — Anatoly099, Wikimedia Commons, CC BY-SA 4.0.
+             https://commons.wikimedia.org/wiki/File:Router_on_a_stick.png
+          8. lan-topology.png — Mattias.Campe, Wikimedia Commons, CC BY-SA 3.0.
+             https://commons.wikimedia.org/wiki/File:LAN-physicalTopology.png
+          9. ubuntu-desktop.png — Canonical Limited, Wikimedia Commons, GPL.
+             https://commons.wikimedia.org/wiki/File:Ubuntu_25.04_default_desktop_-_English.png
           EOF
 
       - name: Compile textbook with XeLaTeX
