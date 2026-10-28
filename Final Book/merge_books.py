@@ -37,11 +37,13 @@ def get_body(path: Path) -> str:
 
 def main():
     sections = []
+    seen_titles = set()
     for folder, label in BOOKS:
         src = ROOT / folder / "main.tex"
         if not src.exists():
             raise SystemExit(f"Missing source file: {src}")
-        sections.append(r"\part{" + label + "}" + "\n\n" + get_body(src))
+        body = get_body(src)
+        sections.append(r"\part{" + label + "}" + "\n\n" + body)
 
     preamble = r"""\documentclass[11pt,openany,oneside]{book}
 \usepackage[a4paper,top=25mm,bottom=23mm,left=25mm,right=22mm,headheight=22pt]{geometry}
