@@ -22,15 +22,11 @@ def get_body(path: Path) -> str:
     elif r"\begin{document}" in text:
         text = text.split(r"\begin{document}", 1)[1]
     text = re.sub(r"\\end\{document\}.*$", "", text, flags=re.S)
-    # The combined volume has one cover and one contents page; discard any residual
-    # front matter and individual book cover material.
     text = re.sub(r"\\begin\{titlepage\}.*?\\end\{titlepage\}", "", text, flags=re.S)
     text = re.sub(r"\\frontmatter|\\mainmatter|\\backmatter|\\tableofcontents", "", text)
-    # Make image paths unique while preserving each book's original image directory.
-    text = text.replace(r"\includegraphics", r"\includegraphics")
     text = re.sub(r"\{book_illustrations/", "{../" + path.parent.name + r"/book_illustrations/", text)
     text = re.sub(r"\{images/", "{../" + path.parent.name + r"/images/", text)
-    # Keep the source compile-safe when a remote image cannot be fetched.
+
     def guarded(match):
         options = match.group(1) or ""
         image_path = match.group(2)
@@ -41,8 +37,6 @@ def get_body(path: Path) -> str:
                 "{" + image_path + "}}{\\begin{center}\\fbox{\\parbox[c][28mm][c]{.76\\textwidth}{\\centering\\small Illustration not available: " +
                 label + "}}\\end{center}}")
     text = re.sub(r"\\includegraphics(\[[^\]]*\])?\{([^}]+)\}", guarded, text)
-    # Photo helper commands in source books expect a local images/ directory.
-    # Prefix the path argument passed into \photo so the original image remains discoverable.
     text = re.sub(r"\\photo\{([^}]+)\}", lambda m: r"\photo{../" + path.parent.name + "/images/" + m.group(1) + "}", text)
     return text.strip()
 
