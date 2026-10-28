@@ -110,7 +110,7 @@ def render_main_tex(tex_path: Path) -> str:
 
     body_text = "\n\n".join(bodies)
     return r"""\documentclass[11pt,openany,oneside]{book}
-\usepackage[a4paper,top=25mm,bottom=23mm,left=25mm,right=22mm,headheight=22pt]{geometry}
+\usepackage[a4paper,top=25mm,bottom=25mm,left=25mm,right=22mm,headheight=22pt,footskip=14mm]{geometry}
 \usepackage{fontspec}
 \setmainfont{DejaVu Serif}
 \setsansfont{DejaVu Sans}
@@ -152,6 +152,13 @@ def render_main_tex(tex_path: Path) -> str:
 \definecolor{Sky}{HTML}{DCEEFF}
 \definecolor{Rose}{HTML}{FCEBE8}
 \hypersetup{colorlinks=true,linkcolor=Teal,urlcolor=Teal,pdftitle={Combined Vocational Education Textbook},pdfauthor={Vocational Education}}
+% Reserve enough room for three-digit chapter numbers in the single continuous contents list.
+\setlength{\cftchapindent}{0em}
+\setlength{\cftchapnumwidth}{4.2em}
+\setlength{\cftsecindent}{1.8em}
+\setlength{\cftsecnumwidth}{3.0em}
+\setlength{\cftsubsecindent}{3.8em}
+\setlength{\cftsubsecnumwidth}{3.6em}
 \setlist[itemize]{leftmargin=1.5em,itemsep=1.5pt,topsep=2pt,parsep=0pt}
 \setlist[enumerate]{leftmargin=1.7em,itemsep=2pt,topsep=2pt,parsep=0pt}
 \setlength{\parindent}{0pt}
@@ -159,11 +166,12 @@ def render_main_tex(tex_path: Path) -> str:
 \setlength{\emergencystretch}{3em}
 % Consistent navy-teal-gold page border, running header, and continuous page number.
 \AddToShipoutPictureBG{\begin{tikzpicture}[remember picture,overlay]
-\draw[Navy!65,line width=.55pt] ([xshift=11mm,yshift=-11mm]current page.north west) rectangle ([xshift=-11mm,yshift=11mm]current page.south east);
-\draw[Teal,line width=1.6pt] ([xshift=11mm,yshift=-11mm]current page.north west)--([xshift=37mm,yshift=-11mm]current page.north west);
-\draw[Coral,line width=1.6pt] ([xshift=-11mm,yshift=11mm]current page.south east)--([xshift=-37mm,yshift=11mm]current page.south east);
-\fill[Gold] ([xshift=11mm,yshift=-11mm]current page.north west) circle (1.1mm);
-\fill[Violet] ([xshift=-11mm,yshift=11mm]current page.south east) circle (1.1mm);
+\draw[Navy,line width=1.15pt] ([xshift=9mm,yshift=-9mm]current page.north west) rectangle ([xshift=-9mm,yshift=9mm]current page.south east);
+\draw[Teal,line width=.55pt] ([xshift=11.5mm,yshift=-11.5mm]current page.north west) rectangle ([xshift=-11.5mm,yshift=11.5mm]current page.south east);
+\draw[Teal,line width=2pt] ([xshift=9mm,yshift=-9mm]current page.north west)--([xshift=35mm,yshift=-9mm]current page.north west);
+\draw[Coral,line width=2pt] ([xshift=-9mm,yshift=9mm]current page.south east)--([xshift=-35mm,yshift=9mm]current page.south east);
+\fill[Gold] ([xshift=9mm,yshift=-9mm]current page.north west) circle (1.2mm);
+\fill[Violet] ([xshift=-9mm,yshift=9mm]current page.south east) circle (1.2mm);
 \end{tikzpicture}}
 \pagestyle{fancy}
 \fancyhf{}
