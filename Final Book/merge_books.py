@@ -56,6 +56,14 @@ def extract_body(path: Path) -> str:
         lambda m: m.group(1) + f"assets/book{book_index}/" + m.group(2).replace(r"\ ", " ").lstrip("./") + m.group(3),
         text,
     )
+    # Missing optional source illustrations must not abort the entire textbook build.
+    # Keep every valid image; show a small fallback only when a referenced file is absent.
+    def guard_image(match: re.Match[str]) -> str:
+        options = match.group(1) or ""
+        image_path = match.group(2)
+        original = f"\\includegraphics{options}{{{image_path}}}"
+        return f"\\IfFileExists{{{image_path}}}{{{original}}}{{\\fbox{{Illustration unavailable}}}}"
+    text = re.sub(r"\\includegraphics(\[[^\]]*\])?\{([^{}]+)\}", guard_image, text)
     # The book parts are stitched together without creating separate books or cover pages.
     return text.strip()
 
