@@ -128,6 +128,7 @@ def main():
 % Prevent LaTeX's alphabetic Appendix numbering from overflowing after Appendix Z.
 \renewcommand{\appendixname}{Appendix}
 \renewcommand{\thechapter}{\arabic{chapter}}
+\makeatletter\renewcommand{\@chapapp}{\chaptername}\makeatother
 """
     cover = r"""\begin{document}
 \begin{titlepage}\thispagestyle{empty}
