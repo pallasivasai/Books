@@ -372,7 +372,6 @@ def add_section_illustrations(text: str, book_index: int) -> str:
             "\n\\begin{center}\\vspace{-2pt}"
             "\\includegraphics[width=.72\\textwidth,height=38mm,keepaspectratio]{"
             + image_path + "}"
-            "\\par{\\scriptsize\\textit{Topic-relevant image from an external source.}}"
             "\\end{center}\n"
         )
         return heading + image + body
