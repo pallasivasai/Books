@@ -126,7 +126,7 @@ def _fetch_web_image(title: str, book_index: int, context: str = "") -> str | No
     # Prefer a licensed-image index with descriptive titles and source metadata.
     try:
         api = "https://api.openverse.org/v1/images/?" + urllib.parse.urlencode({
-            "q": query, "page_size": 30, "license": "cc0,by,by-sa,pdm"
+            "q": query + " person working", "page_size": 40, "license": "cc0,by,by-sa,pdm", "category": "photograph", "size": "large", "aspect_ratio": "wide"
         })
         req = urllib.request.Request(api, headers=headers)
         with urllib.request.urlopen(req, timeout=15) as response:
@@ -137,15 +137,17 @@ def _fetch_web_image(title: str, book_index: int, context: str = "") -> str | No
             result_title = (item.get("title") or "").lower()
             result_tags = " ".join(tag.get("name", "") for tag in item.get("tags", []) if isinstance(tag, dict)).lower()
             combined = result_title + " " + result_tags
-            score = sum(3 for word in set(re.findall(r"[a-z]{3,}", title_clean.lower())) if word in combined)
-            score += sum(1 for word in keywords[:8] if word in combined)
+            score = sum(4 for word in set(re.findall(r"[a-z]{3,}", title_clean.lower())) if word in combined)
+            score += sum(2 for word in keywords[:8] if word in combined)
+            if any(term in combined for term in ("person", "people", "student", "teacher", "worker", "computer", "office", "classroom", "workplace", "hands")):
+                score += 2
             url = item.get("url") or item.get("thumbnail")
             if url and item.get("id") not in _USED_COMMONS_TITLES:
                 candidates.append((score, item, url))
         candidates.sort(key=lambda row: (-row[0], (row[1].get("title") or "").lower()))
         for score, item, url in candidates:
             # Avoid weak matches; never use a generic image just to fill the page.
-            if score < 2:
+            if score < 4:
                 continue
             try:
                 req = urllib.request.Request(url, headers=headers)
