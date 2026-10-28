@@ -21,8 +21,6 @@ jobs:
           python-version: '3.12'
       - name: Install image tools
         run: |
-          sudo apt-get update
-          sudo apt-get install -y librsvg2-bin
           python -m pip install --upgrade Pillow
       - name: Generate Class X diagrams
         working-directory: Domestic data entry operator-10th
@@ -66,8 +64,7 @@ jobs:
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Python%20code%20example.png" "Junior software developer-11th/images/programming-code.png"
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ubuntu%2025.04%20default%20desktop%20-%20English.png" "Junior software developer-11th/images/ubuntu-desktop.png"
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20abstraction%20layers%20separated%20OS.svg" "Junior software developer-11th/images/os-abstraction-source.svg"
-          if test -s "Junior software developer-11th/images/os-abstraction-source.svg"; then rsvg-convert -o "Junior software developer-11th/images/os-abstraction.png" "Junior software developer-11th/images/os-abstraction-source.svg" || true; fi
-          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/ProcessStates.png" "Junior software developer-11th/images/process-states.png"
+                    fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/ProcessStates.png" "Junior software developer-11th/images/process-states.png"
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Diagram%20of%20a%20security%20descriptor%20for%20a%20file%20on%20Windows.png" "Junior software developer-11th/images/file-permissions.png"
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Screen-python-code-matplotlib-physics-simulation.jpg" "Junior software developer-11th/images/python-simulation.jpg"
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Router%20on%20a%20stick.png" "Junior software developer-11th/images/router-vlan.png"
