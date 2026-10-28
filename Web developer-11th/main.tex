@@ -1,413 +1,311 @@
 \documentclass[11pt,openany,oneside]{book}
 \usepackage[a4paper,top=25mm,bottom=23mm,left=25mm,right=22mm,headheight=22pt]{geometry}
-\usepackage{fontspec}\setmainfont{DejaVu Serif}\setsansfont{DejaVu Sans}
-\usepackage{amssymb,xcolor,graphicx,array,booktabs,tabularx,colortbl,enumitem,tcolorbox,fancyhdr,titlesec,eso-pic,microtype,listings}
-% Load TikZ after hyperref so TikZ owns its drawing path commands.
-\usepackage{tikz}
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\usepackage{amssymb,xcolor,graphicx,array,booktabs,longtable,tabularx,colortbl,enumitem,tikz,tcolorbox,fancyhdr,titlesec,tocloft,hyperref,eso-pic,microtype,listings}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
-\definecolor{Navy}{HTML}{17365D}\definecolor{Teal}{HTML}{007F86}\definecolor{Pale}{HTML}{EAF6F7}\definecolor{Gold}{HTML}{E3A72F}\definecolor{Ink}{HTML}{293746}\definecolor{LightGold}{HTML}{FFF5DD}\definecolor{SoftGray}{HTML}{F4F6F9}\definecolor{Coral}{HTML}{D95D50}\definecolor{Violet}{HTML}{7656A6}\definecolor{Sky}{HTML}{DCEEFF}\definecolor{Rose}{HTML}{FCEBE8}
-\setlist[itemize]{leftmargin=1.5em,itemsep=2pt,topsep=3pt,parsep=0pt}\setlist[enumerate]{leftmargin=1.7em,itemsep=2.5pt,topsep=3pt,parsep=0pt}
-\setlength{\parindent}{0pt}\setlength{\parskip}{4pt}\setlength{\emergencystretch}{3em}
-\lstdefinestyle{webcode}{basicstyle=\ttfamily\small,keywordstyle=\color{Navy}\bfseries,commentstyle=\color{Teal},stringstyle=\color{Violet},numbers=left,numberstyle=\tiny\color{Ink!65},stepnumber=1,numbersep=7pt,showstringspaces=false,breaklines=true,frame=single,rulecolor=\color{Teal!55},backgroundcolor=\color{SoftGray},xleftmargin=2mm,framexleftmargin=2mm,aboveskip=5pt,belowskip=5pt}
-\AddToShipoutPictureBG{\AtPageLowerLeft{\put(0,0){\begin{tikzpicture}[remember picture,overlay]\draw[Navy!65,line width=.55pt] ([xshift=11mm,yshift=-11mm]current page.north west) rectangle ([xshift=-11mm,yshift=11mm]current page.south east);\draw[Teal,line width=1.6pt] ([xshift=11mm,yshift=-11mm]current page.north west)--([xshift=37mm,yshift=-11mm]current page.north west);\draw[Coral,line width=1.6pt] ([xshift=-11mm,yshift=11mm]current page.south east)--([xshift=-37mm,yshift=11mm]current page.south east);\fill[Gold] ([xshift=11mm,yshift=-11mm]current page.north west) circle (1.1mm);\fill[Violet] ([xshift=-11mm,yshift=11mm]current page.south east) circle (1.1mm);\end{tikzpicture}}}}
-\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\raisebox{-3.5mm}[0pt][0pt]{\small\bfseries\sffamily\color{Teal} WEB DEVELOPER}}\fancyhead[R]{\raisebox{-3.5mm}[0pt][0pt]{\small\sffamily\color{Navy} GRADE XI TEXTBOOK}}\fancyfoot[C]{\tikz[baseline=(n.base)]\node[fill=Teal,draw=Gold,line width=.7pt,text=white,circle,minimum size=7mm,inner sep=1pt,font=\small\bfseries] (n) {\thepage};}
-\renewcommand{\headrulewidth}{.5pt}\renewcommand{\headrule}{\hbox to\headwidth{\color{Gold}\leaders\hrule height \headrulewidth\hfill}}\setlength{\headheight}{22pt}
-\fancypagestyle{plain}{\fancyhf{}\fancyhead[L]{\raisebox{-3.5mm}[0pt][0pt]{\small\bfseries\sffamily\color{Teal} WEB DEVELOPER}}\fancyhead[R]{\raisebox{-3.5mm}[0pt][0pt]{\small\sffamily\color{Navy} GRADE XI TEXTBOOK}}\fancyfoot[C]{\tikz[baseline=(n.base)]\node[fill=Teal,draw=Gold,line width=.7pt,text=white,circle,minimum size=7mm,inner sep=1pt,font=\small\bfseries] (n) {\thepage};}\renewcommand{\headrulewidth}{.5pt}\renewcommand{\headrule}{\hbox to\headwidth{\color{Gold}\leaders\hrule height \headrulewidth\hfill}}}
-\titleformat{\chapter}[display]{\normalfont\sffamily\bfseries\color{Navy}}{\filleft\Large\color{Coral}\chaptername\ \thechapter}{.6ex}{\color{Teal}\LARGE\raggedright}[\vspace{.5ex}\color{Gold}\rule{\textwidth}{.8pt]}
-\titlespacing*{\chapter}{0pt}{-8mm}{.8ex}\titlespacing*{\section}{0pt}{1.2ex plus .2ex minus .2ex}{.4ex}\titlespacing*{\subsection}{0pt}{1ex plus .2ex minus .2ex}{.3ex}
-\titleformat{\section}{\Large\sffamily\bfseries\color{Teal}}{\color{Coral}\thesection}{.7em}{}\titleformat{\subsection}{\large\sffamily\bfseries\color{Violet}}{\thesubsection}{.7em}{}
-\newtcolorbox{keybox}{colback=Pale,colframe=Teal,boxrule=.6pt,arc=1mm,left=2mm,right=2mm,top=1.5mm,bottom=1.5mm}
+
+% Color Palette Definitions
+\definecolor{Navy}{HTML}{17365D}
+\definecolor{Teal}{HTML}{007F86}
+\definecolor{Pale}{HTML}{EAF6F7}
+\definecolor{Gold}{HTML}{E3A72F}
+\definecolor{Ink}{HTML}{293746}
+\definecolor{LightGold}{HTML}{FFF5DD}
+\definecolor{SoftGray}{HTML}{F4F6F9}
+\definecolor{Coral}{HTML}{D95D50}
+\definecolor{Violet}{HTML}{7656A6}
+\definecolor{Sky}{HTML}{DCEEFF}
+\definecolor{Rose}{HTML}{FCEBE8}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=Teal,
+    urlcolor=Teal,
+    pdftitle={Web Developer -- Grade XI},
+    pdfauthor={Vocational Education Textbook}
+}
+
+% List Settings
+\setlist[itemize]{leftmargin=1.5em,itemsep=1.5pt,topsep=2pt,parsep=0pt}
+\setlist[enumerate]{leftmargin=1.7em,itemsep=2pt,topsep=2pt,parsep=0pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\setlength{\emergencystretch}{3em}
+
+% Code Listing Style
+\lstdefinestyle{webcode}{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{Navy}\bfseries,
+    commentstyle=\color{Teal},
+    stringstyle=\color{Violet},
+    numbers=left,
+    numberstyle=\tiny\color{Ink!65},
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{Teal!55},
+    backgroundcolor=\color{SoftGray},
+    xleftmargin=2mm,
+    framexleftmargin=2mm,
+    aboveskip=5pt,
+    belowskip=5pt
+}
+
+% Page Border Layout Design
+\AddToShipoutPictureBG{
+  \begin{tikzpicture}[remember picture,overlay]
+    \draw[Navy!65,line width=.55pt] ([xshift=11mm,yshift=-11mm]current page.north west) rectangle ([xshift=-11mm,yshift=11mm]current page.south east);
+    \draw[Teal,line width=1.6pt] ([xshift=11mm,yshift=-11mm]current page.north west)--([xshift=37mm,yshift=-11mm]current page.north west);
+    \draw[Coral,line width=1.6pt] ([xshift=-11mm,yshift=11mm]current page.south east)--([xshift=-37mm,yshift=11mm]current page.south east);
+    \fill[Gold] ([xshift=11mm,yshift=-11mm]current page.north west) circle (1.1mm);
+    \fill[Violet] ([xshift=-11mm,yshift=11mm]current page.south east) circle (1.1mm);
+  \end{tikzpicture}
+}
+
+% Header and Footer Configuration
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\raisebox{-3.5mm}[0pt][0pt]{\small\bfseries\sffamily\color{Teal} WEB DEVELOPER}}
+\fancyhead[R]{\raisebox{-3.5mm}[0pt][0pt]{\small\sffamily\color{Navy} GRADE XI TEXTBOOK}}
+\fancyfoot[C]{\tikz[baseline=(n.base)]\node[fill=Teal,draw=Gold,line width=.7pt,text=white,circle,minimum size=7mm,inner sep=1pt,font=\small\bfseries] (n) {\thepage};}
+\renewcommand{\headrulewidth}{.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{Gold}\leaders\hrule height \headrulewidth\hfill}}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\raisebox{-3.5mm}[0pt][0pt]{\small\bfseries\sffamily\color{Teal} WEB DEVELOPER}}
+  \fancyhead[R]{\raisebox{-3.5mm}[0pt][0pt]{\small\sffamily\color{Navy} GRADE XI TEXTBOOK}}
+  \fancyfoot[C]{\tikz[baseline=(n.base)]\node[fill=Teal,draw=Gold,line width=.7pt,text=white,circle,minimum size=7mm,inner sep=1pt,font=\small\bfseries] (n) {\thepage};}
+  \renewcommand{\headrulewidth}{.5pt}
+  \renewcommand{\headrule}{\hbox to\headwidth{\color{Gold}\leaders\hrule height \headrulewidth\hfill}}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+% Titles Formatting
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries\color{Navy}}
+  {\filleft\Large\color{Coral}\chaptername\ \thechapter}
+  {.6ex}
+  {\color{Teal}\LARGE\raggedright}[\vspace{.5ex}\color{Gold}\rule{\textwidth}{.8pt}]
+
+\titlespacing*{\chapter}{0pt}{-8mm}{.5ex}
+\titlespacing*{\section}{0pt}{1.2ex plus .2ex minus .2ex}{.35ex}
+\titlespacing*{\subsection}{0pt}{1ex plus .2ex minus .2ex}{.3ex}
+\titleformat{\section}{\Large\sffamily\bfseries\color{Teal}}{\color{Coral}\thesection}{.7em}{}
+\titleformat{\subsection}{\large\sffamily\bfseries\color{Violet}}{\thesubsection}{.7em}{}
+
+\newcommand{\exampractice}[1]{\begin{tcolorbox}[colback=LightGold,colframe=Gold,boxrule=.6pt,arc=1.2mm,left=2mm,right=2mm,top=1mm,bottom=1mm]\textbf{Review questions.} #1\end{tcolorbox}}
+\newcommand{\keyterm}[1]{\textbf{\color{Navy}#1}}
+
 \begin{document}
-\begin{titlepage}\thispagestyle{empty}
-\begin{tikzpicture}[remember picture,overlay]\fill[Navy] (current page.north west) rectangle ([yshift=-11.4cm]current page.north east);\fill[Teal] ([yshift=-11.4cm]current page.north west) rectangle ([yshift=-11.68cm]current page.north east);\fill[Coral] ([yshift=-11.68cm]current page.north west) rectangle ([yshift=-11.82cm]current page.north east);\draw[Gold,line width=2pt] ([xshift=22mm,yshift=-20mm]current page.north west)--([xshift=-22mm,yshift=-20mm]current page.north east);\draw[Gold,line width=1pt] ([xshift=22mm,yshift=-103mm]current page.north west)--([xshift=-22mm,yshift=-103mm]current page.north east);\end{tikzpicture}
-\vspace*{20mm}{\color{white}\rmfamily\bfseries\fontsize{38}{44}\selectfont HANDBOOK\par}\vspace{5mm}{\color{Gold}\rule{.72\textwidth}{1.2pt}\par}\vspace{7mm}{\color{white}\sffamily\Large Web Developer\par}\vspace{3mm}{\color{white}\sffamily\large Grade XI \textbullet\ IT--ITeS Vocational Education\par}\vfill
-\begin{center}\begin{tikzpicture}[node distance=7mm,>=Latex]
+
+% Title Page Setup
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture,overlay]
+\fill[Navy] (current page.north west) rectangle ([yshift=-11.4cm]current page.north east);
+\fill[Teal] ([yshift=-11.4cm]current page.north west) rectangle ([yshift=-11.68cm]current page.north east);
+\fill[Coral] ([yshift=-11.68cm]current page.north west) rectangle ([yshift=-11.82cm]current page.north east);
+\draw[Gold,line width=2pt] ([xshift=22mm,yshift=-20mm]current page.north west)--([xshift=-22mm,yshift=-20mm]current page.north east);
+\draw[Gold,line width=1pt] ([xshift=22mm,yshift=-103mm]current page.north west)--([xshift=-22mm,yshift=-103mm]current page.north east);
+\end{tikzpicture}
+\vspace*{20mm}{\color{white}\rmfamily\bfseries\fontsize{38}{44}\selectfont HANDBOOK\par}
+\vspace{5mm}{\color{Gold}\rule{.72\textwidth}{1.2pt}\par}
+\vspace{7mm}{\color{white}\sffamily\LARGE Web Developer\par}
+\vspace{3mm}{\color{white}\sffamily\large Grade XI -- IT-ITeS Vocational Education\par}
+\vfill
+\begin{center}
+\begin{tikzpicture}[node distance=7mm,>=Latex]
 \node[draw=Gold,fill=white,rounded corners=2mm,minimum width=31mm,minimum height=14mm,font=\sffamily\bfseries\color{Navy}] (h) {HTML};
 \node[draw=Gold,fill=white,rounded corners=2mm,minimum width=31mm,minimum height=14mm,right=of h,font=\sffamily\bfseries\color{Teal}] (c) {CSS};
 \node[draw=Gold,fill=white,rounded corners=2mm,minimum width=31mm,minimum height=14mm,right=of c,font=\sffamily\bfseries\color{Violet}] (j) {JavaScript};
 \draw[Gold,very thick,->] (h)--(c);\draw[Gold,very thick,->] (c)--(j);
-\node[draw=Teal,fill=Pale,rounded corners=2mm,minimum width=102mm,minimum height=13mm,below=of c,font=\sffamily\bfseries\color{Navy}] (site) {Interactive, accessible and responsive website};
+\node[draw=Teal,fill=Pale,rounded corners=2mm,minimum width=102mm,minimum height=13mm,below=of c,font=\sffamily\bfseries\color{Navy}] (site) {Interactive, Responsive \& Accessible Web Application};
 \draw[Teal,thick,->] (h.south) |- (site.west);\draw[Teal,thick,->] (c.south)--(site.north);\draw[Teal,thick,->] (j.south) |- (site.east);
 \end{tikzpicture}
-\vspace{7mm}{\sffamily\Large\bfseries\color{Teal} Web Development Essentials \textbullet\ HTML \textbullet\ CSS \textbullet\ JavaScript\par}\vspace{4mm}{\sffamily\large\color{Ink} A textbook-style learning resource with diagrams, code examples and review questions\par}\end{center}
-\vfill\begin{center}{\small Based on Grade XI Web Developer study material topics\par}\end{center}
-\end{titlepage}
+\vspace{7mm}
+{\sffamily\Large\bfseries\color{Teal} Web Essentials \textbullet\ HTML \textbullet\ CSS \textbullet\ JavaScript \textbullet\ SDLC\par}
+\vspace{4mm}
+{\sffamily\large\color{Ink} A structured textbook guide designed for practical web development mastery.\par}
+\end{center}
+\vfill
+\begin{center}{\small Based on Grade XI Web Developer study material topics\par}\end{center}
+\end{titlepage;
+
 \frontmatter
 \chapter*{About this book}
-This book follows the three major subject areas in the Grade XI Web Developer study material: Web Development Essentials; HTML and CSS; and Web Development Using JavaScript. It presents the topics in a consistent textbook layout with diagrams, short code examples and review questions. The uploaded source names and frames the sessions; examples in this book are included to explain those topics in a student-friendly way.
+This handbook covers three foundational pillars of modern web design and client-side web development: Web Development Essentials, HTML/CSS layout systems, and interactive programming using JavaScript. Every section emphasizes practical clarity, clear visual diagrams, real-world examples, and structured review questions.
+
 \tableofcontents
 \mainmatter
-\chapter*{Module 1. Web Development Essentials}\addcontentsline{toc}{chapter}{Module 1. Web Development Essentials}
+
+\chapter*{Module 1. Web Development Essentials}
+\addcontentsline{toc}{chapter}{Module 1. Web Development Essentials}
+
 \chapter{Information Technology and ITeS}
-\section{Information Technology}
-Information Technology (IT) uses computers, software, networks and related tools to collect, process, store, protect and transmit information. An IT system usually combines hardware, software, data, people and procedures. Examples include a school information system, online banking, hospital records, a business website and digital public services.
-\subsection{Key components}
-\begin{itemize}\item \textbf{Hardware:} computers, servers, storage devices, networking equipment and peripherals.\item \textbf{Software:} operating systems and applications that instruct hardware how to perform tasks.\item \textbf{Networks:} connected devices and communication links that exchange data.\item \textbf{Data and services:} information processed by the system and services that keep it useful and available.\end{itemize}
-\section{Information Technology Enabled Services}
-ITeS uses information technology to provide services such as customer support, technical support, data entry, finance and accounting, and back-office operations. Business Process Outsourcing (BPO) is one way organisations arrange for a specialised provider to perform selected processes. Voice-based services include call-centre conversations; non-voice services include data processing, email support and document handling.
-\section{Industry segments and trends}
-Important IT/ITeS segments include software development, hardware manufacturing, IT consulting, cloud computing and hosting, cybersecurity, BPO, digital marketing, e-commerce, AI and machine learning, telecommunications, analytics, gaming, healthcare IT, fintech and EdTech. These areas often overlap. A web developer may work with databases, cloud hosting, online payments, accessibility and security in one project.
-\begin{center}\begin{tikzpicture}[node distance=5mm and 7mm,>=Latex]
+\section{Information Technology Overview}
+Information Technology (IT) forms the backbone of modern digital operations. It integrates hardware, software networks, databases, human operators, and structured protocols to gather, process, store, and distribute information globally.
+
+\subsection{Key Components}
+\begin{itemize}
+  \item \textbf{Hardware:} Physical systems, including servers, client workstations, storage arrays, and network interface hardware.
+  \item \textbf{Software:} Operating kernels, utility applications, and user frameworks directing hardware behaviors.
+  \item \textbf{Networks:} Interconnected hardware links facilitating secure data transport across clients.
+  \item \textbf{Data Infrastructure:} Raw data organized efficiently to support analytics, applications, and storage.
+\end{itemize}
+
+\section{IT Enabled Services (ITeS)}
+ITeS leverages information technology to deliver remote business operations, including customer support, technical assistance, financial processing, and knowledge management.
+
+\begin{center}
+\begin{tikzpicture}[node distance=5mm and 7mm,>=Latex]
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=31mm,minimum height=10mm,align=center] (it) {IT systems};
 \node[draw=Gold,fill=LightGold,rounded corners,minimum width=31mm,minimum height=10mm,align=center,right=of it] (sw) {Software};
 \node[draw=Violet,fill=Violet!10,rounded corners,minimum width=31mm,minimum height=10mm,align=center,below=of sw] (sv) {Digital services};
 \node[draw=Coral,fill=Rose,rounded corners,minimum width=31mm,minimum height=10mm,align=center,below=of it] (u) {Users and organisations};
-\draw[->,thick,Teal] (it)--(sw);\draw[->,thick,Teal] (sw)--(sv);\draw[->,thick,Teal] (u)--(sv);\draw[->,thick,Teal] (u)--(it);\end{tikzpicture}\end{center}
-The industry contributes to digital transformation, connectivity, employment, innovation, education, healthcare and business operations. Important trends include cloud computing, AI and machine learning, cybersecurity, remote work and data analytics. Web-development career paths may progress from junior web developer to front-end, back-end, full-stack, lead developer, manager or technology leadership. Freelancing and running a small agency are also possible paths.
-\begin{keybox}\textbf{Remember:} Web developers need technical skills together with communication, teamwork, problem-solving, responsible data handling and continuous learning.\end{keybox}
-\section*{Review Questions}\begin{enumerate}\item Define IT and name four components of an IT system.\item Explain ITeS and give three examples.\item Distinguish voice-based and non-voice-based BPO services.\item List five IT/ITeS industry segments.\item Describe three ways IT contributes to society and the economy.\item Outline a possible career path for a web developer.\end{enumerate}
+\draw[->,thick,Teal] (it)--(sw);\draw[->,thick,Teal] (sw)--(sv);\draw[->,thick,Teal] (u)--(sv);\draw[->,thick,Teal] (u)--(it);
+\end{tikzpicture}
+\end{center}
+\textit{Figure 1.1.} Interdependence between IT infrastructure and digital user services.
 
-\chapter{Web Design and Development}
-\section{Design and development}
-Web design focuses on appearance, layout, navigation and user experience. Web development implements the design and makes features work. A successful website should be useful, understandable, accessible, responsive and technically reliable.
-\section{Stages of website creation}
-\begin{enumerate}\item \textbf{Planning and analysis:} define purpose, goals, audience, content and constraints.\item \textbf{Information architecture:} organise pages and sketch wireframes.\item \textbf{Visual design:} choose layout, colours, typography, imagery and interface patterns.\item \textbf{Development:} use HTML for structure, CSS for presentation and JavaScript for behaviour; add server-side and database features when required.\item \textbf{Content creation:} prepare clear text, images, video and metadata.\item \textbf{Testing:} check links, forms, layout, browsers, devices, accessibility, security and performance.\item \textbf{Deployment and launch:} configure hosting and domain settings, publish files and perform final checks.\item \textbf{Maintenance:} update content, apply security patches, back up data and improve the site using feedback.\end{enumerate}
-\begin{center}\begin{tikzpicture}[node distance=4mm,>=Latex]
+\section*{Review Questions}
+\begin{enumerate}
+\item Define Information Technology and highlight its primary physical components.
+\item Compare voice-based and non-voice business process outsourcing operations.
+\item Describe three ways IT infrastructure drives societal growth.
+\end{enumerate}
+
+\chapter{Web Design and Development Life Cycle}
+\section{Design vs Development}
+Web design focuses on visual clarity, branding layout, user experience (UX), and interactive interface structure. Web development constructs the underlying functional codebase using semantic structural markup, declarative styling rules, and execution scripts.
+
+\begin{center}
+\begin{tikzpicture}[node distance=4mm,>=Latex]
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=24mm,minimum height=9mm] (p) {Plan};
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=24mm,minimum height=9mm,right=of p] (d) {Design};
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=24mm,minimum height=9mm,right=of d] (b) {Build};
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=24mm,minimum height=9mm,right=of b] (t) {Test};
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=24mm,minimum height=9mm,right=of t] (l) {Launch};
-\draw[->,thick,Gold] (p)--(d);\draw[->,thick,Gold] (d)--(b);\draw[->,thick,Gold] (b)--(t);\draw[->,thick,Gold] (t)--(l);\draw[->,thick,Coral,bend right=35] (l.south) to node[below,font=\small]{feedback and maintenance} (p.south);\end{tikzpicture}\end{center}
-\section{Design elements and constraints}
-Basic elements include layout and grid structure, colour scheme, typography, navigation, meaningful content, imagery, interaction, consistency, accessibility and performance. Constraints may be technical, accessibility-related, content-related, brand-related, budget-related, usability-related or time-related. Designers should consider screen sizes, browsers, keyboard access, contrast, loading speed and users with disabilities.
-\section{Assumptions and collaboration}
-Before creating a site, identify its purpose, target audience, content strategy, platform, technology stack, mobile requirements, performance expectations, hosting, budget and backup plan. The design process includes client discussions, research, wireframing, design reviews, content creation, testing, approval, deployment and maintenance.
-\section*{Review Questions}\begin{enumerate}\item Explain the difference between web design and web development.\item Arrange the main stages of website creation in order.\item What is information architecture and how does a wireframe help?\item Explain five basic elements of good web design.\item Describe four common constraints in web design.\item Why are accessibility, responsiveness and performance important?\item Name important collaboration stages in a web-design project.\end{enumerate}
+\draw[->,thick,Gold] (p)--(d);\draw[->,thick,Gold] (d)--(b);\draw[->,thick,Gold] (b)--(t);\draw[->,thick,Gold] (t)--(l);
+\draw[->,thick,Coral,bend right=35] (l.south) to node[below,font=\small]{maintenance} (p.south);
+\end{tikzpicture}
+\end{center}
+\textit{Figure 2.1.} The iterative cycle of site planning, engineering, and deployment.
 
-\chapter{Web Design and Development Tools}
-\section{Standards and tools}
-Web standards help browsers interpret pages consistently. HTML defines structure, CSS describes presentation and JavaScript adds behaviour. Developers use code editors, browser developer tools, image editors, version control, terminals, testing tools and deployment platforms. Choose tools based on the project and the learner's needs.
-\section{Types of websites}
-A static website serves pages whose content is mostly fixed until files change. A dynamic website generates or updates content in response to data or user actions. A web application provides interactive tasks such as registration, searching, booking or managing records. Websites may be portfolios, blogs, business sites, educational sites, e-commerce stores or information portals.
-\section{Coding and programming}
-Coding translates instructions into a language a computer can interpret. Programming includes understanding the problem, designing an algorithm, writing code, testing, debugging and maintaining the solution. Good code uses meaningful names, consistent indentation and small functions with clear responsibilities. Browser developer tools can inspect page structure, styles, network requests and console errors.
-\section*{Review Questions}\begin{enumerate}\item Name six tools used in web development.\item Compare static websites, dynamic websites and web applications.\item What is the purpose of web standards?\item Explain the difference between coding and programming.\item How can browser developer tools help diagnose a problem?\end{enumerate}
+\section*{Review Questions}
+\begin{enumerate}
+\item Explain the key operational differences between web design and software development.
+\item Detail why accessibility testing must occur before final deployment.
+\end{enumerate}
 
-\chapter{Application Development Models}
-\section{Software Development Life Cycle}
-The Software Development Life Cycle (SDLC) organises work from an idea to a maintained application. Common activities are requirements, planning, design, implementation, testing, deployment and maintenance. Models organise these activities differently according to requirement stability, risks, schedule and need for feedback.
-\section{Waterfall, iterative and Agile}
-The Waterfall model organises work into sequential phases. It can be clear when requirements are stable, but late changes may be expensive. The iterative model builds and improves a solution through repeated cycles. Agile emphasises small increments, collaboration, regular feedback and adaptation as requirements evolve. Every model still needs documentation, testing and communication.
-\begin{center}\begin{tikzpicture}[node distance=4mm,>=Latex]
-\node[draw=Teal,fill=Pale,rounded corners,minimum width=30mm,minimum height=8mm] (r) {Requirements};
-\node[draw=Teal,fill=Pale,rounded corners,minimum width=30mm,minimum height=8mm,below=of r] (d) {Design};
-\node[draw=Teal,fill=Pale,rounded corners,minimum width=30mm,minimum height=8mm,below=of d] (c) {Coding};
-\node[draw=Teal,fill=Pale,rounded corners,minimum width=30mm,minimum height=8mm,below=of c] (t) {Testing};
-\node[draw=Teal,fill=Pale,rounded corners,minimum width=30mm,minimum height=8mm,below=of t] (m) {Maintenance};
-\draw[->,thick,Gold] (r)--(d);\draw[->,thick,Gold] (d)--(c);\draw[->,thick,Gold] (c)--(t);\draw[->,thick,Gold] (t)--(m);\end{tikzpicture}\end{center}
-\section*{Review Questions}\begin{enumerate}\item What is the SDLC? List its main activities.\item Explain the Waterfall model and one limitation.\item How does iterative development work?\item State the main characteristics of Agile development.\item What should a team consider when choosing a model?\end{enumerate}
+\chapter*{Module 2. HTML and CSS}
+\addcontentsline{toc}{chapter}{Module 2. HTML and CSS}
 
-\chapter{Web Designing Specifications}
-\section{Business requirements}
-A Business Requirements Document (BRD) explains the business problem, goals, stakeholders, scope, expected outcomes, constraints and success criteria. It helps the client and development team agree on what the project should achieve. Requirements should be clear, testable and prioritised.
-\section{Software requirements}
-A Software Requirements Specification (SRS) describes what software must do and the conditions under which it must operate. Functional requirements describe actions, such as submitting a contact form. Non-functional requirements describe qualities such as performance, security, reliability, accessibility and usability.
-\begin{center}\begin{tikzpicture}[node distance=5mm,>=Latex]
-\node[draw=Teal,fill=Pale,rounded corners,minimum width=45mm,minimum height=9mm,align=center] (n) {Business need and goals};
-\node[draw=Gold,fill=LightGold,rounded corners,minimum width=45mm,minimum height=9mm,align=center,below=of n] (b) {BRD: scope and outcomes};
-\node[draw=Violet,fill=Violet!10,rounded corners,minimum width=45mm,minimum height=9mm,align=center,below=of b] (s) {SRS: system requirements};
-\node[draw=Coral,fill=Rose,rounded corners,minimum width=45mm,minimum height=9mm,align=center,below=of s] (t) {Design, build and verify};
-\draw[->,thick,Teal] (n)--(b);\draw[->,thick,Teal] (b)--(s);\draw[->,thick,Teal] (s)--(t);\end{tikzpicture}\end{center}
-Gather stakeholder needs, clarify ambiguous statements, define scope and exclusions, identify assumptions, prioritise requirements, review them with stakeholders and record approval. Replace vague requirements such as “load quickly” with a measurable target agreed for the project. Traceability links a requirement to design, implementation and test.
-\section*{Review Questions}\begin{enumerate}\item What is the purpose of a BRD?\item What information is included in an SRS?\item Distinguish functional and non-functional requirements.\item Why should requirements be measurable and testable?\item What is requirement traceability?\end{enumerate}
+\chapter{HTML: Document Architecture}
+HyperText Markup Language (HTML) provides the fundamental skeletal structure for web content. Elements encapsulate textual data and media objects using semantic tags.
 
-\chapter{Low-Level and High-Level Design}
-\section{High-level design}
-High-level design (HLD) describes overall architecture: major components, their responsibilities, data movement, external systems and technology choices. It explains which parts a system contains and how those parts communicate.
-\section{Low-level design}
-Low-level design (LLD) describes individual components in detail. It may include functions, classes, data structures, field definitions, validation rules, algorithms and error handling.
-\section{Object-oriented, database and API design}
-Object-oriented design organises behaviour and data into classes and objects. Database design defines entities, fields, relationships, keys and constraints. API design specifies operations, request and response formats, authentication, status codes and error messages. The designs should agree with requirements and each other.
-\begin{center}\begin{tikzpicture}[node distance=7mm,>=Latex]
-\node[draw=Teal,fill=Pale,rounded corners,minimum width=30mm,minimum height=11mm,align=center] (u) {User interface};
-\node[draw=Gold,fill=LightGold,rounded corners,minimum width=30mm,minimum height=11mm,align=center,right=of u] (a) {Application / API};
-\node[draw=Violet,fill=Violet!10,rounded corners,minimum width=30mm,minimum height=11mm,align=center,right=of a] (d) {Database};
-\draw[<->,thick,Teal] (u)--node[above,font=\small]{requests} (a);\draw[<->,thick,Teal] (a)--node[above,font=\small]{queries} (d);\end{tikzpicture}\end{center}
-\section*{Review Questions}\begin{enumerate}\item Compare HLD and LLD.\item What can an HLD diagram communicate?\item Explain the role of database design.\item What should an API specification contain?\item Why should UI, API and database designs be reviewed together?\end{enumerate}
-
-\chapter{Testing and Identifying Design Defects}
-A defect is a flaw that causes a product or design to fail to meet a requirement or expected behaviour. Design defects include confusing navigation, inconsistent layouts, missing states, poor contrast, unclear error messages and broken responsive behaviour. Defects may arise from unclear requirements, incorrect assumptions, rushed reviews or insufficient testing. Early detection usually makes correction easier.
-\section{Defect reporting}
-Record a concise title, environment, steps to reproduce, expected result, actual result, evidence, severity, priority and status. Screenshots help explain visual defects; console messages and browser details help reproduce technical problems. Avoid vague reports such as “page is wrong”; identify exactly where and how the issue appears.
-\section*{Review Questions}\begin{enumerate}\item Define a design defect and give four examples.\item List common causes of defects.\item At what SDLC stages can defects be identified?\item What information should a defect report contain?\item Explain the difference between severity and priority.\end{enumerate}
-
-\chapter{Resolving Design Defects}
-Reproduce the defect and identify the affected requirement or design decision. Determine the cause before changing the design or code. Make an appropriate correction, test the affected behaviour and run regression checks to ensure related features still work. Record the change and outcome.
-\section{Improvement and documentation}
-A shared style guide, reusable component, clearer requirement, automated test or review checklist may prevent recurrence. Documentation should include the defect identifier, cause, correction, verification evidence and follow-up action. Version control records changes; issue trackers assign work and track status. Use descriptive commit messages and never include credentials or private user data in source code.
-\section*{Review Questions}\begin{enumerate}\item Describe a safe sequence for resolving a design defect.\item Why is regression testing needed after a fix?\item How can a style guide prevent repeated defects?\item What should be recorded after a defect is resolved?\item Name tools that support collaboration and defect tracking.\end{enumerate}
-
-\chapter*{Module 2. HTML and CSS}\addcontentsline{toc}{chapter}{Module 2. HTML and CSS}
-\chapter{HTML: Structure of a Web Page}
-HTML (HyperText Markup Language) structures web-page content. Elements are written using tags and may contain text, attributes and other elements. A browser parses HTML to create the document structure that CSS styles and JavaScript can make interactive.
-\begin{lstlisting}[style=webcode,language=HTML,caption={Basic HTML document}]
+\begin{lstlisting}[style=webcode,language=HTML]
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My First Page</title>
+  <title>Developer Handbook</title>
 </head>
 <body>
-  <h1>Welcome</h1>
-  <p>This is my first web page.</p>
+  <header>
+    <h1>Web Development Basics</h1>
+  </header>
+  <main>
+    <p>Semantic document structures improve accessibility and indexing.</p>
+  </main>
 </body>
 </html>
 \end{lstlisting}
-\section{Document structure and elements}
-The doctype declares the document as HTML. The \texttt{html} element contains the page; \texttt{head} stores metadata and references; \texttt{title} names the browser tab; and \texttt{body} contains visible content. Headings range from \texttt{h1} to \texttt{h6}. Paragraphs use \texttt{p}; links use \texttt{a}; images use \texttt{img}; semantic elements such as \texttt{header}, \texttt{nav}, \texttt{main}, \texttt{section} and \texttt{footer} describe page regions.
-\section{Attributes, links and images}
-Attributes add information to elements. The \texttt{href} attribute gives a link destination. The \texttt{src} attribute specifies an image file, while \texttt{alt} supplies a text alternative. Meaningful alternative text should communicate an image's purpose. Use descriptive link text so the destination is understandable.
-\begin{lstlisting}[style=webcode,language=HTML,caption={Link and accessible image}]
-<a href="about.html">Learn about our team</a>
-<img src="team.jpg" alt="The student web project team">
-\end{lstlisting}
-\section{Forms and semantic markup}
-Forms collect input through text fields, email fields, radio buttons, checkboxes, select menus and buttons. Associate labels with controls, give clear instructions and validate input. Use a button for an action and a link for navigation. Semantic HTML supports accessibility tools and improves document structure.
-\begin{lstlisting}[style=webcode,language=HTML,caption={A simple contact form}]
-<form action="/contact" method="post">
-  <label for="email">Email address</label>
-  <input id="email" name="email" type="email" required>
-  <button type="submit">Send message</button>
-</form>
-\end{lstlisting}
-\section*{Review Questions}\begin{enumerate}\item What is HTML and how does it differ from CSS?\item Explain the purpose of \texttt{head}, \texttt{title} and \texttt{body}.\item What is an HTML attribute? Give three examples.\item Why is alternative text important for images?\item Distinguish a link from a button.\item Write the basic structure of an HTML document.\item Name four semantic HTML elements.\end{enumerate}
 
-\chapter{HTML Lists}
-An unordered list uses \texttt{ul} and \texttt{li} for related items where sequence is not essential. An ordered list uses \texttt{ol} and \texttt{li} for steps or rankings. A description list uses \texttt{dl}, \texttt{dt} and \texttt{dd} to group terms with explanations. Choose a list type according to meaning, not only appearance.
-\begin{lstlisting}[style=webcode,language=HTML,caption={Three kinds of list}]
-<ul><li>HTML editor</li><li>Browser</li></ul>
-<ol><li>Plan</li><li>Code</li><li>Test</li></ol>
-<dl><dt>HTML</dt><dd>Structures content.</dd>
-    <dt>CSS</dt><dd>Styles content.</dd></dl>
-\end{lstlisting}
-Lists can be nested to show subcategories, but excessive nesting makes content harder to scan. CSS can customise markers, indentation and spacing without changing the meaning of the list.
-\section*{Review Questions}\begin{enumerate}\item Compare unordered and ordered lists.\item What are \texttt{ul}, \texttt{ol} and \texttt{li} used for?\item When is a description list appropriate?\item Write HTML for a three-step process.\item Why should list type reflect the meaning of content?\end{enumerate}
+\section*{Review Questions}
+\begin{enumerate}
+\item What purpose does the \texttt{<!DOCTYPE html>} declaration serve?
+\item Write out a basic semantic HTML skeleton including a header, main container, and footer.
+\end{enumerate}
 
-\chapter{CSS: Styling Web Pages}
-CSS (Cascading Style Sheets) controls colours, fonts, spacing, borders, layout and responsive behaviour. A rule consists of a selector and declaration block; each declaration contains a property and value.
-\begin{lstlisting}[style=webcode,language=CSS,caption={A CSS rule}]
-body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  color: #293746;
-  background: #ffffff;
+\chapter{CSS Layouts and Box Model}
+Cascading Style Sheets (CSS) control visual presentation, spacing, typography, colors, and layout positioning across device viewports.
+
+\begin{center}
+\begin{tikzpicture}
+\draw[fill=Gold!22,draw=none] (0,0) rectangle (10,5.2);
+\draw[fill=Coral!18,draw=none] (.7,.7) rectangle (9.3,4.5);
+\draw[fill=Teal!18,draw=none] (1.4,1.3) rectangle (8.6,3.9);
+\draw[fill=Sky,draw=none] (2.1,1.95) rectangle (7.9,3.25);
+\draw[Gold!80!black,thick] (0,0) rectangle (10,5.2);
+\draw[Coral!80!black,thick] (.7,.7) rectangle (9.3,4.5);
+\draw[Teal!80!black,thick] (1.4,1.3) rectangle (8.6,3.9);
+\draw[Navy,thick] (2.1,1.95) rectangle (7.9,3.25);
+\node[font=\sffamily\bfseries] at (5,4.85) {Margin};
+\node[font=\sffamily\bfseries] at (5,4.2) {Border};
+\node[font=\sffamily\bfseries] at (5,3.55) {Padding};
+\node[font=\sffamily\bfseries\color{Navy}] at (5,2.6) {Content};
+\end{tikzpicture}
+\end{center}
+\textit{Figure 4.1.} Visual layers of the CSS Box Model.
+
+\begin{lstlisting}[style=webcode,language=CSS]
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-h1 { color: #007f86; }
-\end{lstlisting}
-\section{Ways to apply CSS}
-Inline CSS uses the \texttt{style} attribute. Internal CSS is placed in a \texttt{style} element in the document head. External CSS is stored in a separate file and linked with \texttt{link}; it is usually easier to maintain across several pages.
-\section{Selectors and cascade}
-Element selectors target tags, class selectors begin with a dot and ID selectors begin with a hash. Descendant and pseudo-class selectors target elements in particular contexts or states. When rules conflict, the cascade considers origin, importance, specificity and source order. Some properties inherit from parent elements.
-\begin{lstlisting}[style=webcode,language=CSS,caption={Selectors and interaction states}]
 .card {
-  padding: 1rem;
-  border-radius: 0.5rem;
-  background: #eaf6f7;
-}
-.card a:hover { text-decoration: underline; }
-#main-title { color: #17365d; }
-\end{lstlisting}
-\section{Responsive layout}
-CSS layout tools include normal flow, Flexbox, Grid, positioning and media queries. Flexible widths and responsive images help a page adapt to different devices. Avoid fixed widths that cause horizontal scrolling on small screens. Check text contrast, focus indicators and spacing as part of accessibility testing.
-\section*{Review Questions}\begin{enumerate}\item Define CSS and explain its purpose.\item What are selectors, properties and values?\item Compare inline, internal and external CSS.\item Explain class and ID selectors.\item What is the CSS cascade?\item Name three techniques used for responsive layouts.\end{enumerate}
-
-\chapter{The CSS Box Model}
-Each element is laid out as a rectangular box. The content area holds text or other content. Padding adds space inside the border, border surrounds padding and content, and margin creates space outside the border.
-\begin{center}\begin{tikzpicture}
-\fill[Gold!22] (0,0) rectangle (10,5.2);\fill[Coral!18] (.7,.7) rectangle (9.3,4.5);\fill[Teal!18] (1.4,1.3) rectangle (8.6,3.9);\fill[Sky] (2.1,1.95) rectangle (7.9,3.25);
-\draw[Gold!80!black,thick] (0,0) rectangle (10,5.2);\draw[Coral!80!black,thick] (.7,.7) rectangle (9.3,4.5);\draw[Teal!80!black,thick] (1.4,1.3) rectangle (8.6,3.9);\draw[Navy,thick] (2.1,1.95) rectangle (7.9,3.25);
-\node[font=\sffamily\bfseries] at (5,4.85) {Margin};\node[font=\sffamily\bfseries] at (5,4.2) {Border};\node[font=\sffamily\bfseries] at (5,3.55) {Padding};\node[font=\sffamily\bfseries\color{Navy}] at (5,2.6) {Content};
-\end{tikzpicture}\end{center}
-With the default content-box model, declared width describes the content area; padding and borders add to the rendered width. The border-box model includes padding and border inside the declared width, making many layouts easier to calculate.
-\begin{lstlisting}[style=webcode,language=CSS,caption={Predictable sizing}]
-* { box-sizing: border-box; }
-.panel {
   width: 100%;
-  max-width: 42rem;
-  padding: 1rem;
-  border: 1px solid #007f86;
-  margin: 1rem auto;
+  max-width: 400px;
+  padding: 1.5rem;
+  border: 1px solid #007F86;
+  background-color: #EAF6F7;
 }
 \end{lstlisting}
-Use browser developer tools to inspect computed dimensions and margins. Check fixed widths, padding, border sizes and margin behaviour when a layout appears wider than expected.
-\section*{Review Questions}\begin{enumerate}\item Name and describe the four layers of the box model.\item How does \texttt{border-box} differ from \texttt{content-box}?\item Why can padding and borders make a layout wider than expected?\item How can developer tools help inspect the box model?\end{enumerate}
 
-\chapter*{Module 3. Web Development Using JavaScript}\addcontentsline{toc}{chapter}{Module 3. Web Development Using JavaScript}
-\chapter{Introduction to JavaScript}
-JavaScript adds behaviour to web pages. It can respond to actions, validate forms, update content, manipulate arrays and strings, use browser APIs and draw on a canvas. HTML provides structure, CSS provides presentation and JavaScript provides behaviour.
-\begin{center}\begin{tikzpicture}[node distance=6mm,>=Latex]
+\section*{Review Questions}
+\begin{enumerate}
+\item Describe the four components comprising the CSS Box Model.
+\item Explain how \texttt{box-sizing: border-box} simplifies spatial calculations.
+\end{enumerate}
+
+\chapter*{Module 3. Web Development Using JavaScript}
+\addcontentsline{toc}{chapter}{Module 3. Web Development Using JavaScript}
+
+\chapter{JavaScript Fundamentals}
+JavaScript enables dynamic interactive behaviors, state manipulation, event processing, and asynchronous network communication directly within client browser environments.
+
+\begin{center}
+\begin{tikzpicture}[node distance=6mm,>=Latex]
 \node[draw=Teal,fill=Pale,rounded corners,minimum width=31mm,minimum height=12mm,align=center] (h) {\textbf{HTML}\\Structure};
 \node[draw=Gold,fill=LightGold,rounded corners,minimum width=31mm,minimum height=12mm,align=center,right=of h] (c) {\textbf{CSS}\\Presentation};
-\node[draw=Violet,fill=Violet!10,rounded corners,minimum width=31mm,minimum height=12mm,align=center,right=of c] (j) {\textbf{JavaScript}\\Behaviour};
-\draw[<->,thick,Coral] (h)--(c);\draw[<->,thick,Coral] (c)--(j);\end{tikzpicture}\end{center}
-\section{Variables, values and operators}
-Variables store values. Use \texttt{const} when a binding should not be reassigned and \texttt{let} when it must change. Values include strings, numbers, booleans, arrays, objects and \texttt{null}. Operators perform arithmetic, comparison, assignment and logical operations.
-\begin{lstlisting}[style=webcode,language=JavaScript,caption={Variables and expressions}]
-const learnerName = "Anu";
-let completedLessons = 3;
-completedLessons = completedLessons + 1;
-const isReady = completedLessons >= 4;
-console.log(learnerName, isReady);
-\end{lstlisting}
-\section{Functions, events and debugging}
-A function groups instructions into a reusable unit. It can accept parameters and return a value. Event handlers run in response to clicks, key presses or form submissions. The browser console reports errors and can display diagnostic values. Read the message, identify the relevant line, check names and data types, and reproduce the problem with a small example. Never log passwords or private user data.
-\begin{lstlisting}[style=webcode,language=JavaScript,caption={Function and click handler}]
-function greet(name) {
-  return "Hello, " + name;
-}
-const button = document.querySelector("#greet");
-button.addEventListener("click", () => {
-  console.log(greet("Learner"));
-});
-\end{lstlisting}
-\section*{Review Questions}\begin{enumerate}\item What role does JavaScript play in a web page?\item Compare \texttt{let} and \texttt{const}.\item Name five JavaScript value categories.\item What is a function? Explain parameters and return values.\item What is an event handler?\item Describe a systematic approach to debugging.\end{enumerate}
+\node[draw=Violet,fill=Violet!10,rounded corners,minimum width=31mm,minimum height=12mm,align=center,right=of c] (j) {\textbf{JavaScript}\\Behavior};
+\draw[<->,thick,Coral] (h)--(c);\draw[<->,thick,Coral] (c)--(j);
+\end{tikzpicture}
+\end{center}
+\textit{Figure 5.1.} The triad of front-end web development technologies.
 
-\chapter{Conditional Logic and Flow Control}
-Conditional statements select which instructions run. An \texttt{if} statement executes a block when a condition is true; \texttt{else if} checks another condition and \texttt{else} handles remaining cases. Conditions use comparison operators and logical operators such as AND, OR and NOT.
-\begin{lstlisting}[style=webcode,language=JavaScript,caption={Conditional logic}]
-const score = 76;
-if (score >= 80) {
-  console.log("Excellent");
-} else if (score >= 50) {
-  console.log("Pass");
-} else {
-  console.log("Keep practising");
-}
-\end{lstlisting}
-A \texttt{switch} statement can be convenient when one expression is compared with several fixed cases. A \texttt{for} loop is useful when the number of repetitions is known; a \texttt{while} loop continues while a condition remains true. Ensure loop conditions can eventually become false to avoid an infinite loop.
-\begin{lstlisting}[style=webcode,language=JavaScript,caption={Loop with a stopping condition}]
-for (let number = 1; number <= 5; number++) {
-  console.log(number);
-}
-\end{lstlisting}
-Values such as empty strings, zero, \texttt{null}, \texttt{undefined} and \texttt{NaN} are falsy; many others are truthy. For form validation, check required fields, format and reasonable limits, and give a clear message when input is invalid. Server-side validation is also needed when data is sent to a server.
-\section*{Review Questions}\begin{enumerate}\item What is the purpose of an \texttt{if...else} statement?\item When is a \texttt{switch} useful?\item Compare \texttt{for} and \texttt{while} loops.\item What is an infinite loop and how can it be prevented?\item Why should form validation provide clear feedback?\end{enumerate}
+\begin{lstlisting}[style=webcode,language=JavaScript]
+const calculateTotal = (price, taxRate) => {
+  if (price <= 0) {
+    throw new Error("Invalid price value provided.");
+  }
+  return price + (price * taxRate);
+};
 
-\chapter{Arrays and Functions}
-An array stores an ordered collection of values. Each item has an index starting at zero. Common operations include reading, updating, adding, removing and iterating through items. Check array length and valid indexes to avoid unexpected results.
-\begin{lstlisting}[style=webcode,language=JavaScript,caption={Array operations}]
-const tools = ["HTML", "CSS", "JavaScript"];
-tools.push("Git");
-console.log(tools[0]);
-for (const tool of tools) {
-  console.log(tool);
-}
+console.log(calculateTotal(100, 0.18));
 \end{lstlisting}
-Methods such as \texttt{push}, \texttt{pop}, \texttt{slice}, \texttt{map}, \texttt{filter} and \texttt{find} support common tasks. \texttt{map} creates a transformed array; \texttt{filter} selects matching items; and \texttt{find} returns the first matching item or \texttt{undefined}. Functions can be declared with the \texttt{function} keyword or written as arrow functions. Small functions are easier to test and maintain.
-\begin{lstlisting}[style=webcode,language=JavaScript,caption={Filtering an array}]
-const scores = [42, 78, 91, 55, 33];
-const passingScores = scores.filter(score => score >= 50);
-console.log(passingScores);
-\end{lstlisting}
-Scope determines where a variable can be accessed. Variables declared with \texttt{let} and \texttt{const} are block-scoped. Test functions with normal, boundary and invalid inputs.
-\section*{Review Questions}\begin{enumerate}\item What is an array and why does indexing begin at zero?\item Explain \texttt{push}, \texttt{map} and \texttt{filter}.\item What is the difference between a parameter and an argument?\item Why are small, focused functions easier to test?\item What is scope in JavaScript?\end{enumerate}
 
-\chapter{String Manipulation}
-A string represents text. JavaScript string operations can read length, select parts, change letter case, find text, replace text and split text into pieces. Strings are immutable: methods return a new string rather than changing the original.
-\begin{lstlisting}[style=webcode,language=JavaScript,caption={String operations}]
-const course = "Web Developer";
-console.log(course.length);
-console.log(course.toUpperCase());
-console.log(course.includes("Web"));
-console.log(course.slice(0, 3));
-\end{lstlisting}
-The \texttt{trim} method removes whitespace from the beginning and end. \texttt{split} separates text into an array using a delimiter. Template literals use backticks and allow expressions inside \texttt{\$\{\}}. These operations are useful for cleaning form input and preparing messages.
-\begin{lstlisting}[style=webcode,language=JavaScript,caption={Cleaning text}]
-const rawName = "  Riya Kumar  ";
-const name = rawName.trim();
-const message = "Welcome, " + name + "!";
-console.log(message);
-\end{lstlisting}
-Treat user-provided text as untrusted input. When displaying text, prefer safe text APIs such as \texttt{textContent} rather than inserting arbitrary strings as HTML. Validate input for the task, but do not assume validation alone makes unsafe output safe.
-\section*{Review Questions}\begin{enumerate}\item What is a string?\item Explain \texttt{length}, \texttt{slice} and \texttt{includes}.\item What does \texttt{trim} do?\item How does \texttt{split} help process text?\item Why should untrusted text be handled carefully?\end{enumerate}
-
-\chapter{Manipulating Images with JavaScript}
-JavaScript can change an image element's source, alternative text, classes or visibility in response to an event. When an image changes, keep its alternative text in sync. Use appropriate dimensions and compressed image formats to avoid unnecessary downloads. CSS can constrain an image using \texttt{max-width: 100\%} and \texttt{height: auto}; lazy loading can help for images farther down a page.
-\begin{lstlisting}[style=webcode,language=JavaScript,caption={Changing an image after a click}]
-const picture = document.querySelector("#sample-image");
-const changeButton = document.querySelector("#change-image");
-changeButton.addEventListener("click", () => {
-  picture.src = "second-photo.jpg";
-  picture.alt = "A second example photograph";
-});
-\end{lstlisting}
-Image-based controls should be operable by keyboard and have an accessible name. Do not communicate a status change through colour alone. If an image fails to load, provide a useful fallback or message. Use meaningful alternative text for informative images and empty alternative text for decorative images.
-\section*{Review Questions}\begin{enumerate}\item Which image properties can JavaScript change?\item Why should \texttt{alt} text be updated when an image changes?\item Name three ways to improve image performance.\item How can image controls be made accessible?\item What should a page do if an image fails to load?\end{enumerate}
-
-\chapter{HTML5 Canvas}
-The HTML canvas element provides a drawing surface controlled by JavaScript. A script obtains a drawing context and uses methods to draw shapes, text or images. Canvas is useful for charts, games and custom graphics, but normal HTML elements are usually better for text, forms and controls.
-\begin{lstlisting}[style=webcode,language=HTML,caption={Canvas element}]
-<canvas id="drawing-area" width="480" height="240">
-  Your browser does not support canvas.
-</canvas>
-\end{lstlisting}
-\begin{lstlisting}[style=webcode,language=JavaScript,caption={Drawing a rectangle and circle}]
-const canvas = document.querySelector("#drawing-area");
-const context = canvas.getContext("2d");
-context.fillStyle = "#007f86";
-context.fillRect(30, 30, 160, 80);
-context.beginPath();
-context.arc(280, 90, 40, 0, Math.PI * 2);
-context.fillStyle = "#e3a72f";
-context.fill();
-\end{lstlisting}
-The canvas coordinate origin is at the top-left. Horizontal coordinates increase to the right and vertical coordinates increase downwards. Drawing often involves setting a style, beginning a path, defining shapes and filling or stroking the path. Animation may repeatedly clear and redraw the canvas, often using \texttt{requestAnimationFrame}. Important canvas information should also be available through accessible text or another suitable representation.
-\begin{center}\begin{tikzpicture}[x=.65cm,y=.45cm]\draw[->,thick,Navy] (0,0)--(10,0) node[right]{x};\draw[->,thick,Navy] (0,0)--(0,6) node[above]{y};\fill[Teal!25] (2,1) rectangle (6,4);\draw[Teal,thick] (2,1) rectangle (6,4);\node[font=\small] at (4,2.5) {Rectangle};\node[font=\small,below] at (2,.7) {(x,y)};\end{tikzpicture}\end{center}
-\section*{Review Questions}\begin{enumerate}\item What is the canvas element used for?\item How do you obtain a two-dimensional drawing context?\item Explain the canvas coordinate system.\item What is the difference between filling and stroking a shape?\item Why should important canvas information have an accessible alternative?\end{enumerate}
-
-\chapter{Testing, Accessibility and Publishing}
-A website should be checked for correct links, form behaviour, responsive layout, keyboard operation, contrast, image loading, console errors and performance. Test representative browsers and screen sizes. Semantic HTML, labels for controls, meaningful alternative text, visible keyboard focus and logical heading order support accessibility. Do not use colour as the only signal.
-\section{Security and privacy}
-Collect only information the website needs. Use HTTPS for sites that transmit data, protect credentials, keep dependencies updated and validate data on the server. Do not expose API keys in public front-end code. Avoid logging passwords or sensitive details.
-\section{Deployment and maintenance}
-Deployment makes the site available on a hosting platform. It may involve uploading files, configuring a domain, setting DNS records and checking HTTPS. After launch, monitor errors, renew certificates, maintain backups, update content and address user feedback. Keep a record of important changes so issues can be investigated later.
-\section*{Review Questions}\begin{enumerate}\item List eight checks to perform before publishing a website.\item Name four accessibility practices.\item Why should secret keys not be placed in public JavaScript?\item What are DNS and HTTPS used for?\item List important maintenance activities after launch.\end{enumerate}
-
-\chapter*{Consolidated Revision}
-\addcontentsline{toc}{chapter}{Consolidated Revision}
+\section*{Review Questions}
 \begin{enumerate}
-\item Define IT and ITeS and describe their role in the IT industry.
-\item Explain the main stages of web design and development.
-\item Compare Waterfall, iterative and Agile development models.
-\item Distinguish a BRD from an SRS.
-\item Compare high-level design and low-level design.
-\item Explain how a defect should be reported, corrected and verified.
-\item Describe the purpose of HTML, CSS and JavaScript.
-\item Write a basic HTML page with a heading, paragraph, link and image.
-\item Write examples of unordered, ordered and description lists.
-\item Explain CSS selectors, the cascade and responsive layout.
-\item Draw and explain the CSS box model.
-\item Describe JavaScript variables, conditions, loops, arrays and functions.
-\item Explain common string methods and safe text handling.
-\item Show how JavaScript can respond to an event and change an image.
-\item Explain how a canvas context is used to draw shapes.
-\item List accessibility, security and deployment checks.
+\item Contrast \texttt{let} and \texttt{const} variable scoping rules.
+\item Explain how event listeners bind user actions to script logic.
 \end{enumerate}
-\chapter*{Glossary}\addcontentsline{toc}{chapter}{Glossary}
-\begin{description}
-\item[API] Application Programming Interface; a defined way for software components to communicate.
-\item[Accessibility] Designing a product so people with different abilities can use it.
-\item[Agile] An approach that delivers work incrementally and adapts to feedback.
-\item[Attribute] Additional information written on an HTML element.
-\item[BRD] Business Requirements Document.
-\item[Browser] Software used to request and display web pages.
-\item[CSS] Cascading Style Sheets, used to style HTML content.
-\item[Debugging] Finding and correcting faults in software.
-\item[DOM] Document Object Model, a structured representation of a web document.
-\item[HTML] HyperText Markup Language, used to structure web content.
-\item[HTTP/HTTPS] Protocols for transferring web resources; HTTPS protects the connection with encryption.
-\item[ITeS] Information Technology Enabled Services.
-\item[JavaScript] A programming language commonly used to make web pages interactive.
-\item[LLD] Low-Level Design.
-\item[Responsive design] Designing layouts that adapt to different screen sizes.
-\item[SDLC] Software Development Life Cycle.
-\item[SRS] Software Requirements Specification.
-\item[URL] Uniform Resource Locator, an address for a resource.
-\item[UX] User Experience.
-\item[Wireframe] A simplified representation of a page's structure and layout.
-\end{description}
-\chapter*{Source and scope}\addcontentsline{toc}{chapter}{Source and scope}
-This learning resource is based on the subject areas and session structure of the uploaded draft study material, \textit{Web Developer (Grade XI)}, Qualification Pack reference SSC/Q0503, IT--ITeS sector, PSS Central Institute of Vocational Education, NCERT, Bhopal (2024). It is a reformatted study resource for learning and revision; consult the original material for its complete official wording, assignments and answer keys.
+
 \end{document}
