@@ -175,12 +175,10 @@ def render_main_tex(tex_path: Path) -> str:
 \end{tikzpicture}}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\bfseries\sffamily\color{Teal} VOCATIONAL EDUCATION}
-\fancyhead[R]{\small\sffamily\color{Navy} COMBINED HANDBOOK}
-\fancyfoot[C]{\tikz[baseline=(n.base)]\node[fill=Teal,draw=Gold,line width=.7pt,text=white,circle,minimum size=7mm,inner sep=1pt,font=\small\bfseries] (n) {\thepage};}
-\renewcommand{\headrulewidth}{.5pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{Gold}\leaders\hrule height \headrulewidth\hfill}}
-\fancypagestyle{plain}{\fancyhf{}\fancyhead[L]{\small\bfseries\sffamily\color{Teal} VOCATIONAL EDUCATION}\fancyhead[R]{\small\sffamily\color{Navy} COMBINED HANDBOOK}\fancyfoot[C]{\tikz[baseline=(n.base)]\node[fill=Teal,draw=Gold,line width=.7pt,text=white,circle,minimum size=7mm,inner sep=1pt,font=\small\bfseries] (n) {\thepage};}\renewcommand{\headrulewidth}{.5pt}}
+% No added running headers; keep only one continuous page number throughout the volume.
+\fancyfoot[C]{\small\bfseries\color{Navy}\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\bfseries\color{Navy}\thepage}\renewcommand{\headrulewidth}{0pt}}
 \titleformat{\chapter}[display]{\normalfont\sffamily\bfseries\color{Navy}}{\filleft\Large\color{Coral}\chaptername\ \thechapter}{.6ex}{\color{Teal}\LARGE\raggedright}
 \titlespacing*{\chapter}{0pt}{-2mm}{.8ex}
 \titleformat{\section}{\Large\sffamily\bfseries\color{Teal}}{\color{Coral}\thesection}{.7em}{}
