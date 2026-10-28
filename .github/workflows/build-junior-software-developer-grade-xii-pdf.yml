@@ -27,6 +27,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "Junior software developer-12th/images"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/System%20Development%20Life-cycle%20diagram.png" -o "Junior software developer-12th/images/software-sdlc.png"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20Motherboard%20Closeup.jpg" -o "Junior software developer-12th/images/motherboard.jpg"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Entity%20Relationship%20Diagram.jpg" -o "Junior software developer-12th/images/database-er.jpg"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Mysql%20database%20design.png" -o "Junior software developer-12th/images/mysql-design.png"
@@ -38,6 +39,8 @@ jobs:
           file "Junior software developer-12th/images/"*
           cat > "Junior software developer-12th/IMAGE-CREDITS.txt" <<'EOF'
           Image credits and source links
+          1. software-sdlc.png — John Yeung, Wikimedia Commons, CC BY-SA 3.0.
+             https://commons.wikimedia.org/wiki/File:System_Development_Life-cycle_diagram.png
           1. motherboard.jpg — Lenharth Systems, Wikimedia Commons, CC0 1.0.
              https://commons.wikimedia.org/wiki/File:Computer_Motherboard_Closeup.jpg
           2. database-er.jpg — U.S. Department of Transportation, Wikimedia Commons, public domain (U.S. government work).
