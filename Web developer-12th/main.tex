@@ -1,5 +1,5 @@
 \documentclass[11pt,openany,oneside]{book}
-\usepackage[a4paper,top=25mm,bottom=23mm,left=25mm,right=22mm,headheight=22pt]{geometry}
+\usepackage[a4paper,top=25mm,bottom=23mm,left=25mm,right=22mm,headheight=24pt]{geometry}
 \usepackage{fontspec}
 \setmainfont{DejaVu Serif}
 \setsansfont{DejaVu Sans}
@@ -13,6 +13,7 @@
 \definecolor{LightGold}{HTML}{FFF5DD}
 \definecolor{SoftGray}{HTML}{F4F6F9}
 \definecolor{Coral}{HTML}{D95D50}
+\definecolor{Rose}{HTML}{FCE8E6}
 \definecolor{Violet}{HTML}{7656A6}
 \definecolor{Sky}{HTML}{DCEEFF}
 \hypersetup{colorlinks=true,linkcolor=Teal,urlcolor=Teal,pdftitle={Web Developer -- Grade XII},pdfauthor={Vocational Education Textbook}}
@@ -215,7 +216,7 @@ FROM students;
 ABS returns a non-negative magnitude, ROUND rounds a number to a specified precision, and CEIL/FLOOR round upward/downward to integer boundaries. Check the effect of rounding before using it in financial or assessment calculations; the displayed value and stored value are not always the same.
 
 \section{Date and time functions}
-Date functions can extract parts of a date, compare dates, format a value or calculate intervals. MySQL provides functions such as CURDATE(), NOW(), YEAR() and DATE_FORMAT(). Other SQL systems may use different names or arguments. Store dates using date/time types when possible, rather than ambiguous strings such as 03/04/25.
+Date functions can extract parts of a date, compare dates, format a value or calculate intervals. MySQL provides functions such as CURDATE(), NOW(), YEAR() and \texttt{DATE\_FORMAT()}. Other SQL systems may use different names or arguments. Store dates using date/time types when possible, rather than ambiguous strings such as 03/04/25.
 
 \section{Aggregate functions and NULL values}
 COUNT counts rows or non-NULL values depending on its argument; SUM totals numeric values; AVG computes a mean; MIN and MAX return the smallest and largest values. NULL means that a value is unknown or absent, not zero and not an empty string. Queries should handle missing values intentionally.
