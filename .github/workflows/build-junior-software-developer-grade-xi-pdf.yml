@@ -33,7 +33,7 @@ jobs:
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Screen-python-code-matplotlib-physics-simulation.jpg" -o "Junior software developer-11th/images/python-simulation.jpg"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Router%20on%20a%20stick.png" -o "Junior software developer-11th/images/router-vlan.png"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/LAN-physicalTopology.png" -o "Junior software developer-11th/images/lan-topology.png"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Atx%20computer%20motherboard%20with%20cpu%20and%20fan.jpg" -o "Junior software developer-11th/images/cpu-motherboard.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/QUEUE%20VS%20STACK.png" -o "Junior software developer-11th/images/stack-queue.png"
           file "Junior software developer-11th/images/"*
           cat > "Junior software developer-11th/IMAGE-CREDITS.txt" <<'EOF'
           Image credits and source links
@@ -47,10 +47,10 @@ jobs:
              https://commons.wikimedia.org/wiki/File:Router_on_a_stick.png
           5. lan-topology.png — Mattias.Campe, Wikimedia Commons, CC BY-SA 3.0.
              https://commons.wikimedia.org/wiki/File:LAN-physicalTopology.png
-          6. cpu-motherboard.jpg — Leon Brooks, Wikimedia Commons, public domain.
-             https://commons.wikimedia.org/wiki/File:Atx_computer_motherboard_with_cpu_and_fan.jpg
-          7. ubuntu-desktop.png — Canonical Limited, Wikimedia Commons, GPL.
+          6. ubuntu-desktop.png — Canonical Limited, Wikimedia Commons, GPL.
              https://commons.wikimedia.org/wiki/File:Ubuntu_25.04_default_desktop_-_English.png
+          7. stack-queue.png — Choteseeworld, Wikimedia Commons, CC BY-SA 4.0.
+             https://commons.wikimedia.org/wiki/File:QUEUE_VS_STACK.png
           EOF
 
       - name: Compile textbook with XeLaTeX
