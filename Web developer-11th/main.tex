@@ -144,15 +144,7 @@
 \vspace{3mm}{\color{white}\sffamily\large Grade XI -- IT-ITeS Vocational Education\par}
 \vfill
 \begin{center}
-\begin{tikzpicture}[node distance=7mm,>=Latex]
-\node[draw=Gold,fill=white,rounded corners=2mm,minimum width=31mm,minimum height=14mm,font=\sffamily\bfseries\color{Navy}] (h) {HTML};
-\node[draw=Gold,fill=white,rounded corners=2mm,minimum width=31mm,minimum height=14mm,right=of h,font=\sffamily\bfseries\color{Teal}] (c) {CSS};
-\node[draw=Gold,fill=white,rounded corners=2mm,minimum width=31mm,minimum height=14mm,right=of c,font=\sffamily\bfseries\color{Violet}] (j) {JavaScript};
-\draw[Gold,very thick,->] (h)--(c);\draw[Gold,very thick,->] (c)--(j);
-\node[draw=Teal,fill=Pale,rounded corners=2mm,minimum width=102mm,minimum height=13mm,below=of c,font=\sffamily\bfseries\color{Navy}] (site) {Interactive, Responsive \& Accessible Web Application};
-\draw[Teal,thick,->] (h.south) |- (site.west);\draw[Teal,thick,->] (c.south)--(site.north);\draw[Teal,thick,->] (j.south) |- (site.east);
-\end{tikzpicture}
-\vspace{7mm}
+
 {\sffamily\Large\bfseries\color{Teal} Web Essentials \textbullet\ HTML \textbullet\ CSS \textbullet\ JavaScript \textbullet\ SDLC\par}
 \vspace{4mm}
 {\sffamily\large\color{Ink} A structured textbook guide designed for practical web development mastery.\par}
@@ -331,6 +323,421 @@ console.log(calculateTotal(100, 0.18));
 \begin{enumerate}
 \item Contrast \texttt{let} and \texttt{const} variable scoping rules.
 \item Explain how event listeners bind user actions to script logic.
+\end{enumerate}
+
+
+
+% Additional textbook chapters for a fuller Grade XI learning resource.
+\chapter{Requirements, Planning and Project Documents}
+\section{Understanding the Need}
+A web project begins by understanding the problem it is expected to solve. A website for a school, a small shop, a public service office, and an online learning platform may all use a browser, but each has different users, content, rules, and success measures. Clear requirements prevent avoidable rework and help a team agree on what must be delivered.
+
+\subsection{Stakeholders and Users}
+A stakeholder is a person or group affected by the project. Stakeholders may include the customer, website visitors, content editors, administrators, support staff, and the organisation responsible for maintaining the site. Users should be described by their goals rather than by assumptions about their age, device, or technical knowledge.
+
+\subsection{Functional and Non-functional Requirements}
+Functional requirements describe what the system must do: display a product catalogue, validate a form, search for an article, or allow an authorised editor to update content. Non-functional requirements describe qualities and constraints, such as response time, accessibility, security, browser support, reliability, and ease of maintenance.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{.24\textwidth}X}
+\toprule
+Requirement type & Example for a school website\\
+\midrule
+Functional & A visitor can view announcements and download the academic calendar.\\
+Usability & Navigation labels are understandable to first-time visitors.\\
+Accessibility & Content can be navigated using a keyboard and read by assistive technology.\\
+Performance & Pages avoid unnecessarily large images and scripts.\\
+Security & Administrative editing features require authentication.\\
+Maintainability & Repeated page elements use consistent templates and styles.\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Brief Requirements Document}
+A simple project brief should record the purpose, target audience, main pages, required functions, content owner, constraints, and acceptance criteria. Acceptance criteria are observable conditions used to decide whether a feature is complete. For example, “the contact form is finished” is vague; “the form identifies missing required fields and displays a clear confirmation after valid submission” is testable.
+
+\section{Planning and Scope}
+Scope defines what is included and what is excluded. A small first release may include a home page, about page, services page, and contact form. A payment system or user account feature may be planned for a later release. A scope list helps the team manage time and avoid adding unplanned work without reviewing its impact.
+
+\section*{Review Questions}
+\begin{enumerate}
+\item Distinguish functional requirements from non-functional requirements.
+\item Name four stakeholders who may be involved in a website project.
+\item Write three acceptance criteria for a school announcements page.
+\item Why is it useful to define project scope before coding begins?
+\end{enumerate}
+
+\chapter{Web Technologies, Browsers and HTTP}
+\section{How a Web Page Reaches a Browser}
+When a visitor enters a website address, the browser uses network services to locate the destination server and request resources. The server returns a response, often containing HTML, CSS, JavaScript, images, fonts, or data. The browser interprets these resources and constructs the visible page. This process may involve many requests rather than a single file.
+
+\begin{center}
+\begin{tikzpicture}[node distance=8mm,>=Latex]
+\node[draw=Teal,fill=Pale,rounded corners,minimum width=30mm,minimum height=10mm,align=center] (u) {User and browser};
+\node[draw=Gold,fill=LightGold,rounded corners,minimum width=30mm,minimum height=10mm,align=center,right=of u] (n) {Network request};
+\node[draw=Violet,fill=Violet!10,rounded corners,minimum width=30mm,minimum height=10mm,align=center,right=of n] (s) {Web server};
+\draw[->,thick,Teal] (u)--node[above,font=\small]{HTTP request}(n);
+\draw[->,thick,Teal] (n)--(s);
+\draw[<-,thick,Coral] (n) to[bend right=28] node[below,font=\small]{response}(u);
+\end{tikzpicture}
+\end{center}
+\textit{Figure 7.1.} A simplified browser-to-server request and response.
+
+\section{HTTP and HTTPS}
+HTTP is a protocol used for communication between clients and web servers. A request commonly identifies a method, a resource path, headers, and sometimes a body. A response contains a status code, headers, and usually content. HTTPS protects HTTP communication using TLS, helping protect data from interception or alteration while it travels across the network.
+
+\subsection{Common Status Codes}
+\begin{itemize}
+\item \textbf{200 OK:} The request was processed successfully.
+\item \textbf{301 or 302:} The resource has been redirected.
+\item \textbf{400 Bad Request:} The server could not process the request as sent.
+\item \textbf{401 Unauthorized:} Authentication is required or has not succeeded.
+\item \textbf{403 Forbidden:} The server refuses access to the requested resource.
+\item \textbf{404 Not Found:} The requested resource could not be found.
+\item \textbf{500 Internal Server Error:} The server encountered an unexpected condition.
+\end{itemize}
+
+\section{Browser Developer Tools}
+Developer tools help inspect HTML elements, view computed CSS, monitor network requests, read console messages, and test responsive layouts. They are useful for learning because a developer can change a style temporarily, observe the result, and then apply a tested correction to the source code.
+
+\section*{Review Questions}
+\begin{enumerate}
+\item Describe the basic request-and-response cycle of a web page.
+\item Why is HTTPS preferred when information is sent between a browser and server?
+\item Explain the difference between a 404 response and a 500 response.
+\item Name three tasks that browser developer tools can support.
+\end{enumerate}
+
+\chapter{Semantic HTML and Accessible Structure}
+\section{Meaningful HTML Elements}
+Semantic HTML uses elements that communicate the role of content. Elements such as \texttt{header}, \texttt{nav}, \texttt{main}, \texttt{article}, \texttt{section}, and \texttt{footer} provide more meaning than using generic containers for every part of a page. Clear structure can improve maintainability and help assistive technologies interpret the document.
+
+\begin{lstlisting}[style=webcode,language=HTML]
+<header>
+  <h1>Community Learning Centre</h1>
+  <nav aria-label="Main navigation">
+    <a href="#courses">Courses</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+<main>
+  <section id="courses">
+    <h2>Available courses</h2>
+    <p>Explore the current learning options.</p>
+  </section>
+</main>
+<footer>
+  <p>Contact the centre for further information.</p>
+</footer>
+\end{lstlisting}
+
+\section{Headings and Content Hierarchy}
+Headings should describe the topic beneath them and follow a logical hierarchy. A page usually has one main heading, followed by section headings and, where necessary, subheadings. Heading levels should not be selected merely to obtain a desired font size; visual appearance belongs in CSS, while the heading element communicates structure.
+
+\section{Links, Images and Alternative Text}
+Link text should tell users what will happen when it is selected. Phrases such as “Read the admission requirements” are more informative than repeated “click here” links. Images that communicate information should have concise alternative text. Decorative images can use empty alternative text so that assistive technologies do not announce unnecessary details.
+
+\section{Forms and Labels}
+A form control should have a clear label. Placeholder text is not a replacement for a label because it disappears when the user enters a value and may be difficult to read. Required fields should be indicated clearly, and error messages should explain how to correct a problem.
+
+\begin{lstlisting}[style=webcode,language=HTML]
+<form>
+  <label for="email">Email address</label>
+  <input id="email" name="email" type="email" required>
+  <button type="submit">Send request</button>
+</form>
+\end{lstlisting}
+
+\section*{Review Questions}
+\begin{enumerate}
+\item What is the purpose of semantic HTML?
+\item Explain why heading levels should follow a meaningful order.
+\item What makes alternative text useful?
+\item Why should a form input have an associated label?
+\end{enumerate}
+
+\chapter{CSS Selectors, Cascade and Responsive Layout}
+\section{Selectors}
+CSS selectors identify the elements to which a rule applies. Element selectors target a tag name, class selectors target a reusable class, and ID selectors target an element with a specific identifier. Selectors should be chosen to make styles understandable and easy to maintain.
+
+\begin{lstlisting}[style=webcode,language=CSS]
+/* Element selector */
+p { line-height: 1.6; }
+
+/* Reusable class selector */
+.notice {
+  border-left: 4px solid #007F86;
+  padding: 1rem;
+}
+
+/* Layout for a group of cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+\end{lstlisting}
+
+\section{Cascade, Specificity and Inheritance}
+When more than one CSS rule can apply to an element, the cascade determines which declaration wins. Origin, importance, specificity, and source order affect the result. Inherited properties such as text colour may pass from a parent to its children, while properties such as margin do not normally inherit. Overusing highly specific selectors can make future changes difficult.
+
+\section{Responsive Design}
+Responsive design helps a layout adapt to different screen sizes. Flexible widths, relative units, CSS Grid, Flexbox, and media queries can be combined to create interfaces that work on phones, tablets, laptops, and larger screens. A responsive page should not merely shrink; content must remain readable and controls must remain usable.
+
+\begin{lstlisting}[style=webcode,language=CSS]
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+@media (max-width: 700px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+\end{lstlisting}
+
+\section{Flexbox and Grid}
+Flexbox is useful for arranging items along one primary axis, such as a navigation row. Grid is useful when a layout needs rows and columns together, such as a card gallery. Choosing the simpler layout model usually makes the code easier to understand.
+
+\section*{Review Questions}
+\begin{enumerate}
+\item Compare class selectors and ID selectors.
+\item What does CSS specificity help determine?
+\item Explain one practical difference between Flexbox and Grid.
+\item How can a media query improve mobile usability?
+\end{enumerate}
+
+\chapter{JavaScript Variables, Types and Operators}
+\section{Storing Values}
+Variables give names to values used by a program. JavaScript provides \texttt{const} for bindings that should not be reassigned and \texttt{let} for bindings that may change. \texttt{var} is part of the language but has different scoping behaviour and is usually avoided in new beginner examples.
+
+\begin{lstlisting}[style=webcode,language=JavaScript]
+const courseName = "Web Development";
+let completedLessons = 3;
+completedLessons = completedLessons + 1;
+
+const isReady = completedLessons >= 4;
+console.log(courseName, completedLessons, isReady);
+\end{lstlisting}
+
+\section{Common Data Types}
+Strings represent text, numbers represent numeric values, booleans represent true or false, and arrays hold ordered collections. Objects group related properties. The value \texttt{null} can represent an intentional absence of a value, while \texttt{undefined} commonly indicates that a value has not been assigned or is missing.
+
+\section{Operators and Comparisons}
+Arithmetic operators perform calculations. Comparison operators produce Boolean results, and logical operators combine conditions. Strict equality (\texttt{===}) compares values without automatically converting different types, which makes it a good default for most comparisons.
+
+\section{Readable and Safe Code}
+Descriptive variable names, consistent indentation, and small expressions make code easier to review. Validate user-provided data before relying on it. Never treat browser-side validation as the only protection for a system that stores sensitive data; server-side checks are also required when a server is involved.
+
+\section*{Review Questions}
+\begin{enumerate}
+\item Compare \texttt{let} and \texttt{const}.
+\item Name four JavaScript data types and give an example of each.
+\item Why is strict equality often preferred?
+\item Why should important validation not rely only on browser-side code?
+\end{enumerate}
+
+\chapter{Conditions, Loops, Functions and Arrays}
+\section{Conditional Decisions}
+Conditional statements allow a program to choose an action based on a condition. An \texttt{if}/\texttt{else} statement can validate input, choose a message, or control which content is shown. Conditions should be written clearly and tested for both expected and unexpected values.
+
+\begin{lstlisting}[style=webcode,language=JavaScript]
+const score = 76;
+if (score >= 80) {
+  console.log("Excellent");
+} else if (score >= 50) {
+  console.log("Pass");
+} else {
+  console.log("Needs more practice");
+}
+\end{lstlisting}
+
+\section{Loops}
+Loops repeat an operation while a condition is true or for each item in a collection. A loop needs a clear stopping condition; otherwise it may continue indefinitely. For arrays, methods such as \texttt{forEach}, \texttt{map}, and \texttt{filter} can express common operations when used appropriately.
+
+\section{Functions}
+A function groups instructions into a reusable unit. Parameters receive input, and a return value provides a result. Small functions are easier to test than one long block of mixed responsibilities.
+
+\begin{lstlisting}[style=webcode,language=JavaScript]
+function calculateAverage(values) {
+  if (values.length === 0) return 0;
+  const total = values.reduce((sum, value) => sum + value, 0);
+  return total / values.length;
+}
+console.log(calculateAverage([70, 80, 90]));
+\end{lstlisting}
+
+\section{Arrays and Objects}
+Arrays are suitable for ordered lists such as course names. Objects are suitable for related attributes such as a course title, duration, and level. Choosing an appropriate data structure reduces repetition and helps the program represent information clearly.
+
+\section*{Review Questions}
+\begin{enumerate}
+\item Explain how an \texttt{if}/\texttt{else} statement makes a decision.
+\item What is the purpose of a loop's stopping condition?
+\item Define function parameters and return values.
+\item Give one example of information that is better represented by an object than by separate variables.
+\end{enumerate}
+
+\chapter{DOM, Events and Form Interaction}
+\section{The Document Object Model}
+The Document Object Model (DOM) represents a page as a tree of objects. JavaScript can select elements, read or update text, change classes, and respond to events. Changes should be made deliberately so that the page remains understandable and accessible.
+
+\begin{lstlisting}[style=webcode,language=JavaScript]
+const button = document.querySelector("#show-message");
+const message = document.querySelector("#message");
+
+button.addEventListener("click", () => {
+  message.textContent = "Your action was received.";
+});
+\end{lstlisting}
+
+\section{Events}
+Events describe interactions such as clicks, keyboard input, form submission, and changes to a field. An event listener connects an event to a function. For forms, listening to the submit event makes it possible to validate data before displaying a result or sending a request.
+
+\section{Validation and Feedback}
+Good validation explains what needs correction. It should preserve user input where possible, identify the field with an issue, and avoid relying on colour alone to communicate errors. A successful action should also provide clear confirmation.
+
+\section{Safe DOM Updates}
+When displaying untrusted text, prefer \texttt{textContent} rather than inserting arbitrary HTML with \texttt{innerHTML}. This reduces the risk of interpreting user input as markup or script. More complex applications need additional security controls appropriate to their data and architecture.
+
+\section*{Review Questions}
+\begin{enumerate}
+\item What does the DOM represent?
+\item Describe how an event listener works.
+\item Give two characteristics of helpful form validation.
+\item Why is \texttt{textContent} a safer default for displaying plain user input?
+\end{enumerate}
+
+\chapter{Testing, Debugging and Quality Assurance}
+\section{Why Testing Matters}
+Testing checks whether a website behaves as expected and helps detect defects before release. Testing should cover more than whether a page appears on one developer's computer. Different screen sizes, keyboard use, input errors, navigation paths, and browser behaviours can reveal problems that are otherwise missed.
+
+\subsection{Useful Test Categories}
+\begin{itemize}
+\item \textbf{Functional testing:} Confirms links, forms, buttons, and core features behave correctly.
+\item \textbf{Visual testing:} Checks alignment, spacing, contrast, and layout consistency.
+\item \textbf{Responsive testing:} Checks content at narrow and wide viewport sizes.
+\item \textbf{Accessibility testing:} Checks keyboard navigation, labels, headings, and alternative text.
+\item \textbf{Compatibility testing:} Checks behaviour in supported browsers and devices.
+\item \textbf{Regression testing:} Rechecks existing features after a change.
+\end{itemize}
+
+\section{A Practical Debugging Method}
+First reproduce the issue and record the steps. Next inspect the relevant element, console message, network response, or source code. Form a small hypothesis, change one thing at a time, and repeat the test. Once fixed, check nearby features to make sure the correction did not introduce another defect.
+
+\section{Test Case Example}
+\begin{tabularx}{\textwidth}{p{.23\textwidth}X}
+\toprule
+Field & Example\\
+\midrule
+Test objective & Verify required email input.\\
+Starting condition & Contact form is open.\\
+Action & Submit without entering an email address.\\
+Expected result & The form identifies the missing required field and does not report a successful submission.\\
+Observed result & Record what actually happened.\\
+Status & Pass or fail after comparison with the expected result.\\
+\bottomrule
+\end{tabularx}
+
+\section*{Review Questions}
+\begin{enumerate}
+\item Why is responsive testing important?
+\item Distinguish functional testing from regression testing.
+\item List the steps in a systematic debugging process.
+\item What information should a useful test case record?
+\end{enumerate}
+
+\chapter{Accessibility, Performance and Secure Publishing}
+\section{Accessibility Essentials}
+Accessible design helps people with different abilities use a website. Provide clear headings, descriptive links, form labels, sufficient colour contrast, keyboard access, and useful alternative text. Interactive controls should show a visible focus indicator. Automated checks can help, but manual keyboard and content checks remain valuable.
+
+\section{Performance Basics}
+Large images, unnecessary scripts, repeated network requests, and complex layouts can slow a page. Resize images appropriately, use modern image formats where supported, avoid loading resources that are not needed, and keep code organised. Performance should be evaluated with measurements rather than guesses.
+
+\section{Security Awareness}
+Use HTTPS for published sites. Do not place passwords, private API keys, or confidential tokens in public HTML, CSS, JavaScript, or source repositories. Client-side code is visible to visitors. If a feature requires a secret credential, it generally belongs in a protected server-side environment. Keep software dependencies maintained and collect only the information a site actually needs.
+
+\section{Publishing Checklist}
+Before publishing, verify that links work, page titles are meaningful, images have suitable alternative text, forms give clear feedback, layouts work on mobile screens, and no test credentials or private data remain in the repository. Confirm the correct files are deployed and keep a copy of the source so that later updates can be made safely.
+
+\section*{Review Questions}
+\begin{enumerate}
+\item List five practices that improve accessibility.
+\item Name three common causes of slow web pages.
+\item Why should secret API keys not be stored in browser-side JavaScript?
+\item Create a short checklist for publishing a small informational website.
+\end{enumerate}
+
+\chapter{Integrated Mini Project: Learning Centre Website}
+\section{Project Brief}
+Create a small informational website for a learning centre. The website should display the centre name, a list of courses, basic contact information, and a contact form interface. The project demonstrates the combined roles of HTML for structure, CSS for presentation, and JavaScript for interaction.
+
+\section{Suggested Page Structure}
+\begin{itemize}
+\item Header containing the site name and primary navigation.
+\item Main section describing the centre and its courses.
+\item Course cards with titles, brief descriptions, and duration.
+\item Contact section with labelled form fields.
+\item Footer containing non-sensitive contact and copyright information.
+\end{itemize}
+
+\section{Implementation Plan}
+Begin by creating semantic HTML. Add CSS rules for typography, colour, spacing, and a responsive card layout. Add JavaScript only where it improves the user experience, such as providing a clear message after a valid client-side form submission. If the project is later connected to a real service, server-side validation and secure handling of submitted information will be required.
+
+\section{Evaluation Rubric}
+\begin{tabularx}{\textwidth}{p{.52\textwidth}r}
+\toprule
+Criterion & Marks\\
+\midrule
+Semantic structure and meaningful headings & 20\\
+Readable and consistent visual design & 20\\
+Responsive layout & 20\\
+Working interaction and useful feedback & 15\\
+Accessibility checks & 15\\
+Code organisation and testing notes & 10\\
+\midrule
+Total & 100\\
+\bottomrule
+\end{tabularx}
+
+\section*{Review Questions}
+\begin{enumerate}
+\item Identify the HTML, CSS, and JavaScript responsibilities in the project.
+\item Describe how you would test the site on a narrow mobile screen.
+\item What security changes would be required before collecting real contact details?
+\item Suggest two improvements that could be included in a future version.
+\end{enumerate}
+
+\chapter*{Glossary and Quick Revision}
+\addcontentsline{toc}{chapter}{Glossary and Quick Revision}
+\begin{description}[leftmargin=3.2cm,style=nextline]
+\item[Accessibility] Designing and building digital content so that people with varied abilities can use it.
+\item[API] A defined way for software components to communicate.
+\item[Browser] Software that requests and displays web resources.
+\item[CSS] A language used to style and lay out web documents.
+\item[DOM] An object representation of a document that scripts can inspect and modify.
+\item[HTML] The markup language used to structure web content.
+\item[HTTP/HTTPS] Protocols for web communication, with HTTPS protecting the connection using TLS.
+\item[JavaScript] A programming language commonly used to add behaviour to web pages.
+\item[Responsive design] A design approach that adapts content and layout to different viewport sizes.
+\item[Semantic HTML] Markup whose elements describe the role and meaning of content.
+\item[Server] A system that responds to requests from clients.
+\item[Testing] A process for checking software behaviour against expected results.
+\end{description}
+
+\section*{Final Revision Questions}
+\begin{enumerate}
+\item Explain the relationship between HTML, CSS, and JavaScript.
+\item Describe the main stages of a website development life cycle.
+\item Compare a functional requirement with a non-functional requirement.
+\item Explain how the browser and server communicate using HTTP.
+\item Describe semantic HTML and name four semantic elements.
+\item Explain the CSS box model and responsive design.
+\item Give examples of JavaScript variables, conditions, functions, and arrays.
+\item Describe how the DOM and event listeners support interaction.
+\item Outline a practical method for testing and debugging a website.
+\item List key accessibility, performance, and security checks before publishing.
 \end{enumerate}
 
 \end{document}
