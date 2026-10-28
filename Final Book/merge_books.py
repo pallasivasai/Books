@@ -55,7 +55,7 @@ def extract_body(path: Path) -> str:
     book_index = next(i for i, item in enumerate(BOOKS, start=1) if item.folder == path.parent.name)
     source_prefix = re.escape("../" + path.parent.name + "/")
     text = re.sub(source_prefix, f"assets/book{book_index}/", text)
-    # Keep photos and diagrams inside the page's vertical text area to prevent overlap.
+    # Source books also contain paths relative to their own folder (for example,\n    # {book_illustrations/example.jpg}). Redirect those to the copied asset tree too.\n    text = re.sub(r"(?<![A-Za-z0-9_./-])(images|book_illustrations)/", rf"assets/book{book_index}/\\1/", text)\n    # Keep photos and diagrams inside the page's vertical text area to prevent overlap.
     def constrain_image(match: re.Match[str]) -> str:
         options = match.group(1) or ""
         image_path = match.group(2)
