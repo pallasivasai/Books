@@ -30,8 +30,11 @@ jobs:
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20Motherboard%20Closeup.jpg" -o "Junior software developer-11th/images/motherboard.jpg"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Python%20code%20example.png" -o "Junior software developer-11th/images/programming-code.png"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ubuntu%2025.04%20default%20desktop%20-%20English.png" -o "Junior software developer-11th/images/ubuntu-desktop.png"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20abstraction%20layers%20separated%20OS.svg" -o "Junior software developer-11th/images/os-abstraction.svg"
-          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Process%20state.svg" -o "Junior software developer-11th/images/process-states.svg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20abstraction%20layers%20separated%20OS.svg" -o "Junior software developer-11th/images/os-abstraction-source.svg"
+          sudo apt-get update
+          sudo apt-get install -y librsvg2-bin
+          rsvg-convert -o "Junior software developer-11th/images/os-abstraction.png" "Junior software developer-11th/images/os-abstraction-source.svg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/ProcessStates.png" -o "Junior software developer-11th/images/process-states.png"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Diagram%20of%20a%20security%20descriptor%20for%20a%20file%20on%20Windows.png" -o "Junior software developer-11th/images/file-permissions.png"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Screen-python-code-matplotlib-physics-simulation.jpg" -o "Junior software developer-11th/images/python-simulation.jpg"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Router%20on%20a%20stick.png" -o "Junior software developer-11th/images/router-vlan.png"
