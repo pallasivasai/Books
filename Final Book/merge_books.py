@@ -94,6 +94,17 @@ def render_main_tex(tex_path: Path) -> str:
 \lstdefinestyle{webcode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
 \lstdefinestyle{pythoncode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
 \lstdefinestyle{sqlcode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
+\lstdefinestyle{htmlcode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
+\lstdefinestyle{csscode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
+\lstdefinestyle{js code}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
+\lstdefinestyle{code}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
+\lstdefinestyle{bashcode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
+\lstdefinestyle{javacode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
+\lstdefinestyle{jsoncode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
+\lstdefinestyle{phpcode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
+\lstdefinestyle{typescriptcode}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
+\lstdefinestyle{sqlstyle}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
+\lstdefinestyle{terminal}{basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,columns=fullflexible,frame=single}
 \lstdefinelanguage{HTML}{sensitive=false,morecomment=[s]{<!--}{-->},morestring=[b]",morestring=[b]',morekeywords={html,head,title,body,div,span,p,h1,h2,h3,a,img,ul,ol,li,table,tr,td,th,form,input,button,script,style,meta,link,header,footer,section,article,nav,main}}
 \lstdefinelanguage{CSS}{sensitive=false,morecomment=[s]{/*}{*/},morestring=[b]",morestring=[b]',morekeywords={color,background,display,position,margin,padding,border,width,height,font,font-size,font-family,flex,grid,justify-content,align-items,content,selector,px,rem,em,none,block,inline,solid,relative,absolute,hover,media}}
 \lstdefinelanguage{JavaScript}{sensitive=false,morecomment=[l]{//},morecomment=[s]{/*}{*/},morestring=[b]",morestring=[b]',morekeywords={const,let,var,function,return,if,else,for,while,class,new,import,export,from,async,await,document,window,console,log,true,false,null,undefined}}
