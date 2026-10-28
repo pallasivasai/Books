@@ -1,10 +1,14 @@
 \documentclass[11pt,openany,oneside]{book}
 \usepackage[a4paper,top=25mm,bottom=23mm,left=25mm,right=22mm,headheight=22pt]{geometry}
 \usepackage{fontspec}\setmainfont{DejaVu Serif}\setsansfont{DejaVu Sans}
-\usepackage{amssymb,xcolor,graphicx,array,booktabs,tabularx,enumitem,fancyhdr,titlesec,hyperref,eso-pic,microtype,listings}
+\usepackage{amssymb,xcolor,graphicx,array,booktabs,tabularx,enumitem,fancyhdr,titlesec,eso-pic,microtype,listings}
 \usepackage{tikz}
 \usepackage{tcolorbox}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+% Keep TikZ's drawing path command intact when hyperref is loaded.
+\let\TikZPath\path
+\usepackage{hyperref}
+\let\path\TikZPath
 \definecolor{Navy}{HTML}{17365D}\definecolor{Teal}{HTML}{007F86}\definecolor{Pale}{HTML}{EAF6F7}\definecolor{Gold}{HTML}{E3A72F}\definecolor{Ink}{HTML}{293746}\definecolor{LightGold}{HTML}{FFF5DD}\definecolor{SoftGray}{HTML}{F4F6F9}\definecolor{Coral}{HTML}{D95D50}\definecolor{Violet}{HTML}{7656A6}\definecolor{Sky}{HTML}{DCEEFF}\definecolor{Rose}{HTML}{FCEBE8}
 \hypersetup{colorlinks=true,linkcolor=Teal,urlcolor=Teal,pdftitle={Web Developer -- Grade XI},pdfauthor={Web Developer Learning Handbook}}
 \setlist[itemize]{leftmargin=1.5em,itemsep=2pt,topsep=3pt,parsep=0pt}\setlist[enumerate]{leftmargin=1.7em,itemsep=2.5pt,topsep=3pt,parsep=0pt}
