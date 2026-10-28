@@ -53,6 +53,17 @@ jobs:
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20education%20girls%20Gujarat.jpg" "Junior software developer-12th/images/people-photo.jpg" &
           # Domestic Data Entry Operator IX committed illustrations are already present; generated Class X figures fall back safely when missing.
           # Domestic Data Entry Operator X: real photographs from Wikimedia Commons.
+          # Class X diagrams: fetch from Wikimedia Commons/remote image URLs at build time when missing locally.
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Document%20structure%20styles.png" "Domestic data entry operator-10th/book_illustrations/style_categories.png" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Copy%20Paste%20and%20Drag%20Drop.jpg" "Domestic data entry operator-10th/book_illustrations/image_workflow.png" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Scenario%20Manager%20LibreOffice%20Calc.png" "Domestic data entry operator-10th/book_illustrations/scenario_goal_seek.png" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Spreadsheet.png" "Domestic data entry operator-10th/book_illustrations/spreadsheet_formula.png" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/LibreOffice%20Basic.png" "Domestic data entry operator-10th/book_illustrations/macro_safety.png" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Database.png" "Domestic data entry operator-10th/book_illustrations/database_relationships.png" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/SQL%20query.png" "Domestic data entry operator-10th/book_illustrations/query_process.png" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/LibreOffice%20Base.png" "Domestic data entry operator-10th/book_illustrations/forms_reports.png" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20workstation.jpg" "Domestic data entry operator-10th/book_illustrations/healthy_workstation.png" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Data%20quality.png" "Domestic data entry operator-10th/book_illustrations/data_quality_check.png" &
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Fire%20Drill.%20Workers%20leaving%20Building%205.%20%28d7f0d5ca616b4597ba62d1c48725a989%29.jpg" "Domestic data entry operator-10th/book_illustrations/emergency_preparedness.jpg" &
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/An%20emergency%20exit%20sign.jpg" "Domestic data entry operator-10th/book_illustrations/emergency_route.jpg" &
           # Web Developer XI images
