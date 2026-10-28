@@ -2,6 +2,8 @@
 \usepackage[a4paper,top=25mm,bottom=23mm,left=25mm,right=22mm,headheight=22pt]{geometry}
 \usepackage{fontspec}\setmainfont{DejaVu Serif}\setsansfont{DejaVu Sans}
 \usepackage{amssymb,xcolor,graphicx,array,booktabs,tabularx,enumitem,fancyhdr,titlesec,hyperref,eso-pic,microtype,listings}
+% hyperref defines a URL command named \path; free the name before TikZ defines its drawing command.
+\let\path\relax
 \usepackage{tikz}
 \usepackage{tcolorbox}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
