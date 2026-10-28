@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 FINAL_BOOK_DIR = ROOT / "Final Book"
 DEFAULT_OUTPUT = FINAL_BOOK_DIR / "main.tex"
+INCLUDE_OPTIONS = r"pages=-,pagecommand={\thispagestyle{mergedbook}}"
 
 
 @dataclass(frozen=True)
@@ -84,7 +85,7 @@ def render_main_tex(sources: list[tuple[SourceBook, Path]], tex_path: Path) -> s
         )
         include_entries.append(
             f"% {book.title}\n"
-            f"\\includepdf[pages=-,pagecommand={{}}]{{\\detokenize{{{relative_path}}}}}"
+            f"\\includepdf[{INCLUDE_OPTIONS}]{{\\detokenize{{{relative_path}}}}}"
         )
 
     toc_block = "\n\n".join(toc_entries)
@@ -92,9 +93,25 @@ def render_main_tex(sources: list[tuple[SourceBook, Path]], tex_path: Path) -> s
 
     return (
         "\\documentclass[11pt,openany,oneside]{book}\n"
-        "\\usepackage[a4paper,margin=20mm]{geometry}\n"
+        "\\usepackage[a4paper,top=20mm,bottom=22mm,left=20mm,right=20mm,headheight=14pt]{geometry}\n"
         "\\usepackage{pdfpages}\n"
+        "\\usepackage{fancyhdr}\n"
         "\\usepackage[hidelinks]{hyperref}\n\n"
+        "\\pagestyle{fancy}\n"
+        "\\fancyhf{}\n"
+        "\\fancyhead[L]{\\small\\textsf{Final Combined Handbook}}\n"
+        "\\fancyhead[R]{\\small\\textsf{Vocational Education}}\n"
+        "\\fancyfoot[C]{\\thepage}\n"
+        "\\renewcommand{\\headrulewidth}{0.4pt}\n"
+        "\\renewcommand{\\footrulewidth}{0pt}\n"
+        "\\fancypagestyle{mergedbook}{%\n"
+        "  \\fancyhf{}\n"
+        "  \\fancyhead[L]{\\small\\textsf{Final Combined Handbook}}\n"
+        "  \\fancyhead[R]{\\small\\textsf{Vocational Education}}\n"
+        "  \\fancyfoot[C]{\\thepage}\n"
+        "  \\renewcommand{\\headrulewidth}{0.4pt}\n"
+        "  \\renewcommand{\\footrulewidth}{0pt}\n"
+        "}\n\n"
         "\\begin{document}\n"
         "\\begin{titlepage}\n"
         "\\centering\n"
@@ -121,15 +138,19 @@ def validate_generated_structure(tex_text: str, sources: list[tuple[SourceBook, 
 
     if "\\usepackage{pdfpages}" not in tex_text:
         errors.append("main.tex is missing \\usepackage{pdfpages}.")
+    if "\\usepackage{fancyhdr}" not in tex_text:
+        errors.append("main.tex is missing \\usepackage{fancyhdr}.")
+    if "\\fancypagestyle{mergedbook}" not in tex_text:
+        errors.append("main.tex is missing mergedbook page style definition.")
 
     include_pattern = re.compile(
-        r"\\includepdf\[pages=-,pagecommand=\{\}\]\{\\detokenize\{([^}]*)\}\}"
+        r"\\includepdf\[pages=-,pagecommand=\{\\thispagestyle\{mergedbook\}\}\]\{\\detokenize\{([^}]*)\}\}"
     )
     included_paths = include_pattern.findall(tex_text)
 
     if len(included_paths) != len(sources):
         errors.append(
-            f"Expected {len(sources)} include entries with pages=- and pagecommand={{}}, found {len(included_paths)}."
+            f"Expected {len(sources)} include entries with mergedbook pagecommand, found {len(included_paths)}."
         )
 
     expected_paths = [rel_pdf_path(pdf, tex_path) for _, pdf in sources]

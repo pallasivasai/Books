@@ -1,7 +1,24 @@
 \documentclass[11pt,openany,oneside]{book}
-\usepackage[a4paper,margin=20mm]{geometry}
+\usepackage[a4paper,top=20mm,bottom=22mm,left=20mm,right=20mm,headheight=14pt]{geometry}
 \usepackage{pdfpages}
+\usepackage{fancyhdr}
 \usepackage[hidelinks]{hyperref}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textsf{Final Combined Handbook}}
+\fancyhead[R]{\small\textsf{Vocational Education}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{mergedbook}{%
+  \fancyhf{}
+  \fancyhead[L]{\small\textsf{Final Combined Handbook}}
+  \fancyhead[R]{\small\textsf{Vocational Education}}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
 
 \begin{document}
 \begin{titlepage}
@@ -53,26 +70,26 @@
 
 \cleardoublepage
 % Domestic Data Entry Operator — Class IX
-\includepdf[pages=-,pagecommand={}]{\detokenize{../Domestic data entry operator-9th/Domestic data entry operator-9th.pdf}}
+\includepdf[pages=-,pagecommand={\thispagestyle{mergedbook}}]{\detokenize{../Domestic data entry operator-9th/Domestic data entry operator-9th.pdf}}
 
 % Domestic Data Entry Operator — Class X
-\includepdf[pages=-,pagecommand={}]{\detokenize{../Domestic data entry operator-10th/Domestic data entry operator-10th.pdf}}
+\includepdf[pages=-,pagecommand={\thispagestyle{mergedbook}}]{\detokenize{../Domestic data entry operator-10th/Domestic data entry operator-10th.pdf}}
 
 % Web Developer — Grade XI
-\includepdf[pages=-,pagecommand={}]{\detokenize{../Web developer-11th/Web developer-11th.pdf}}
+\includepdf[pages=-,pagecommand={\thispagestyle{mergedbook}}]{\detokenize{../Web developer-11th/Web developer-11th.pdf}}
 
 % Web Developer — Grade XII
-\includepdf[pages=-,pagecommand={}]{\detokenize{../Web developer-12th/Web developer-12th.pdf}}
+\includepdf[pages=-,pagecommand={\thispagestyle{mergedbook}}]{\detokenize{../Web developer-12th/Web developer-12th.pdf}}
 
 % Artificial Intelligence Assistant — Grade IX
-\includepdf[pages=-,pagecommand={}]{\detokenize{../Artificial intelligence assistant-9th/Artificial intelligence assistant-9th.pdf}}
+\includepdf[pages=-,pagecommand={\thispagestyle{mergedbook}}]{\detokenize{../Artificial intelligence assistant-9th/Artificial intelligence assistant-9th.pdf}}
 
 % Artificial Intelligence Assistant — Grade X
-\includepdf[pages=-,pagecommand={}]{\detokenize{../Artificial intelligence assistant-10th/Artificial intelligence assistant-10th.pdf}}
+\includepdf[pages=-,pagecommand={\thispagestyle{mergedbook}}]{\detokenize{../Artificial intelligence assistant-10th/Artificial intelligence assistant-10th.pdf}}
 
 % Junior Software Developer — Grade XI
-\includepdf[pages=-,pagecommand={}]{\detokenize{../Junior software developer-11th/Junior software developer-11th.pdf}}
+\includepdf[pages=-,pagecommand={\thispagestyle{mergedbook}}]{\detokenize{../Junior software developer-11th/Junior software developer-11th.pdf}}
 
 % Junior Software Developer — Grade XII
-\includepdf[pages=-,pagecommand={}]{\detokenize{../Junior software developer-12th/Junior software developer-12th.pdf}}
+\includepdf[pages=-,pagecommand={\thispagestyle{mergedbook}}]{\detokenize{../Junior software developer-12th/Junior software developer-12th.pdf}}
 \end{document}

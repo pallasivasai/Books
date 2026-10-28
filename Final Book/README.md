@@ -1,6 +1,7 @@
 # Final Book — Combined Handbook
 
 This folder builds one continuous final handbook PDF by merging the eight source-book PDFs in a fixed order.
+The generated merge uses a shared `fancyhdr` page style so header, footer, and page numbers continue across all included books in one final output.
 
 ## Input order (8 source PDFs)
 1. `../Domestic data entry operator-9th/Domestic data entry operator-9th.pdf`
@@ -22,7 +23,7 @@ From repository root (`/home/runner/work/Books/Books`):
 
 ```bash
 python "Final Book/merge_books.py"
-latexmk -xelatex -cd "Final Book/main.tex"
+cd "Final Book" && latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex
 ```
 
 Output PDF:
