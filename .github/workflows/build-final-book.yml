@@ -118,6 +118,10 @@ jobs:
           \lstdefinestyle{csscode}{language=CSS,basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,frame=single}
           \lstdefinestyle{javascriptstyle}{language=JavaScript,basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,frame=single}
           \lstdefinestyle{bashstyle}{language=bash,basicstyle=\ttfamily\small,breaklines=true,showstringspaces=false,frame=single}
+          % Shared callout environments referenced by imported source chapters.
+          \newtcolorbox{keybox}{colback=Pale,colframe=Teal,boxrule=.6pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm}
+          \newtcolorbox{warningbox}{colback=Rose,colframe=Coral,boxrule=.6pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm}
+          \newtcolorbox{examplebox}{colback=SoftGray,colframe=Navy,boxrule=.6pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm}
           EOF
       - name: Compile combined handbook
         uses: xu-cheng/latex-action@v3
