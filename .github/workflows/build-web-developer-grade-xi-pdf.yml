@@ -21,6 +21,12 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+      - name: Download licensed textbook photographs
+        shell: bash
+        run: |
+          mkdir -p "Web developer-11th/images"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Woman_sitting_in_her_workspace_and_typing_on_laptop.jpg" -o "Web developer-11th/images/web-developer-workspace.jpg"
+          file "Web developer-11th/images/web-developer-workspace.jpg"
       - name: Compile Web Developer Grade XI textbook
         uses: xu-cheng/latex-action@v3
         with:
