@@ -10,6 +10,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: final-combined-handbook
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,12 +23,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install image tools
-        run: |
-          python -m pip install --upgrade Pillow
-      - name: Generate Class X diagrams
-        working-directory: Domestic data entry operator-10th
-        run: python make_diagrams.py
       - name: Download original book image assets
         shell: bash
         run: |
@@ -77,35 +75,6 @@ jobs:
           for f in programming-code.png stack-queue.png python-simulation.jpg router-vlan.png lan-topology.png; do
             test ! -s "Junior software developer-11th/images/$f" || cp "Junior software developer-11th/images/$f" "Junior software developer-12th/images/$f"
           done
-      - name: Create fallback figures for unavailable direct image references
-        run: |
-          python - <<'PY'
-          import re
-          from pathlib import Path
-          from PIL import Image, ImageDraw
-          tex = Path("Final Book/main.tex").read_text(encoding="utf-8")
-          names = re.findall(r"\\includegraphics(?:\[[^]]*\])?\s*\{([^}]+)\}", tex)
-          made = []
-          for name in names:
-              if "#" in name or "\\" in name:
-                  continue
-              target = (Path("Final Book") / name).resolve()
-              if target.is_file():
-                  continue
-              target.parent.mkdir(parents=True, exist_ok=True)
-              suffix = target.suffix.lower()
-              if suffix not in {".png", ".jpg", ".jpeg"}:
-                  continue
-              image = Image.new("RGB", (1200, 700), "#f2f5f9")
-              draw = ImageDraw.Draw(image)
-              title = target.stem.replace("-", " ").replace("_", " ").title()
-              draw.rectangle((35, 35, 1165, 665), outline="#17365d", width=8)
-              draw.text((65, 90), title, fill="#17365d")
-              draw.text((65, 145), "Illustration placeholder — source image unavailable", fill="#475569")
-              image.save(target, format="PNG" if suffix == ".png" else "JPEG", quality=90)
-              made.append(str(target))
-          print(f"Created {len(made)} fallback figures.")
-          PY
       - name: Compile combined handbook
         uses: xu-cheng/latex-action@v3
         with:
