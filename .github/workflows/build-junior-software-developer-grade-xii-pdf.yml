@@ -1,0 +1,92 @@
+name: Build Junior Software Developer Grade XII PDF
+
+on:
+  push:
+    paths:
+      - 'Junior software developer-12th/**'
+      - '.github/workflows/build-junior-software-developer-grade-xii-pdf.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: junior-software-developer-grade-xii-pdf
+  cancel-in-progress: true
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Download topic-matched licensed Wikimedia Commons images
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "Junior software developer-12th/images"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20Motherboard%20Closeup.jpg" -o "Junior software developer-12th/images/motherboard.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Python%20code%20example.png" -o "Junior software developer-12th/images/programming-code.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/QUEUE%20VS%20STACK.png" -o "Junior software developer-12th/images/stack-queue.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Screen-python-code-matplotlib-physics-simulation.jpg" -o "Junior software developer-12th/images/python-simulation.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Router%20on%20a%20stick.png" -o "Junior software developer-12th/images/router-vlan.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/LAN-physicalTopology.png" -o "Junior software developer-12th/images/lan-topology.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ubuntu%2025.04%20default%20desktop%20-%20English.png" -o "Junior software developer-12th/images/ubuntu-desktop.png"
+          file "Junior software developer-12th/images/"*
+          cat > "Junior software developer-12th/IMAGE-CREDITS.txt" <<'EOF'
+          Image credits and source links
+          1. motherboard.jpg — Lenharth Systems, Wikimedia Commons, CC0 1.0.
+             https://commons.wikimedia.org/wiki/File:Computer_Motherboard_Closeup.jpg
+          2. programming-code.png — Zhanjack822, Wikimedia Commons, CC0 1.0.
+             https://commons.wikimedia.org/wiki/File:Python_code_example.png
+          3. stack-queue.png — Choteseeworld, Wikimedia Commons, CC BY-SA 4.0.
+             https://commons.wikimedia.org/wiki/File:QUEUE_VS_STACK.png
+          4. python-simulation.jpg — MikeRun, Wikimedia Commons, CC BY-SA 4.0.
+             https://commons.wikimedia.org/wiki/File:Screen-python-code-matplotlib-physics-simulation.jpg
+          5. router-vlan.png — Anatoly099, Wikimedia Commons, CC BY-SA 4.0.
+             https://commons.wikimedia.org/wiki/File:Router_on_a_stick.png
+          6. lan-topology.png — Mattias.Campe, Wikimedia Commons, CC BY-SA 3.0.
+             https://commons.wikimedia.org/wiki/File:LAN-physicalTopology.png
+          7. ubuntu-desktop.png — Canonical Limited, Wikimedia Commons, GPL.
+             https://commons.wikimedia.org/wiki/File:Ubuntu_25.04_default_desktop_-_English.png
+          EOF
+
+      - name: Compile textbook with XeLaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: 'Junior software developer-12th'
+          latexmk_use_xelatex: true
+
+      - name: Package Overleaf-ready source and images
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > "Junior software developer-12th/README-OVERLEAF.txt" <<'EOF'
+          Overleaf import instructions
+          1. Choose New Project > Upload Project and upload this ZIP.
+          2. Select main.tex as the main document if needed.
+          3. Compile with XeLaTeX.
+          4. The images/ folder, IMAGE-CREDITS.txt and this guide are included.
+          5. The source compiles without downloading images again.
+          EOF
+          cd "Junior software developer-12th"
+          zip -r "../Junior-Software-Developer-Grade-XII-Overleaf-Source.zip" main.tex images IMAGE-CREDITS.txt README-OVERLEAF.txt
+
+      - name: Upload Overleaf source ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: Junior-Software-Developer-Grade-XII-Overleaf-Source
+          path: 'Junior-Software-Developer-Grade-XII-Overleaf-Source.zip'
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Junior-Software-Developer-Grade-XII-PDF
+          path: 'Junior software developer-12th/main.pdf'
+          if-no-files-found: error
+          retention-days: 30
