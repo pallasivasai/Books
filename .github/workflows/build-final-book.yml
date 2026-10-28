@@ -1,0 +1,90 @@
+name: Build Final Combined Handbook
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'Final Book/**'
+      - '.github/workflows/build-final-book.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install image tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y librsvg2-bin
+          python -m pip install --upgrade Pillow
+      - name: Generate Class X diagrams
+        working-directory: Domestic data entry operator-10th
+        run: python make_diagrams.py
+      - name: Download original book image assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Web Developer XI
+          mkdir -p "Web developer-11th/images"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Woman_sitting_in_her_workspace_and_typing_on_laptop.jpg" -o "Web developer-11th/images/web-developer-workspace.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Website%20Coding.jpg" -o "Web developer-11th/images/html-coding.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Responsive-web-design-devices.jpg" -o "Web developer-11th/images/responsive-devices.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming_code.jpg" -o "Web developer-11th/images/programming-code.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/ComputerProgrammer.jpg" -o "Web developer-11th/images/programmer-work.jpg"
+          # Web Developer XII
+          mkdir -p "Web developer-12th/images"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20room.jpg" -o "Web developer-12th/images/computer-room.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming.jpg" -o "Web developer-12th/images/sql-programming.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Programming_code.jpg" -o "Web developer-12th/images/php-code.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20server%20rack.jpg" -o "Web developer-12th/images/server-rack.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20workstation%20while%20out%20of%20use.jpg" -o "Web developer-12th/images/workstation.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ergonomic%20Workstation.png" -o "Web developer-12th/images/ergonomic-workstation.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Recycling%20Bins.jpg" -o "Web developer-12th/images/recycling-bins.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/A%20wheelchair%20beside%20a%20desk.jpg" -o "Web developer-12th/images/wheelchair-access.jpg"
+          # Junior Software Developer XI
+          mkdir -p "Junior software developer-11th/images"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20Motherboard%20Closeup.jpg" -o "Junior software developer-11th/images/motherboard.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Python%20code%20example.png" -o "Junior software developer-11th/images/programming-code.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ubuntu%2025.04%20default%20desktop%20-%20English.png" -o "Junior software developer-11th/images/ubuntu-desktop.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20abstraction%20layers%20separated%20OS.svg" -o "Junior software developer-11th/images/os-abstraction-source.svg"
+          rsvg-convert -o "Junior software developer-11th/images/os-abstraction.png" "Junior software developer-11th/images/os-abstraction-source.svg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/ProcessStates.png" -o "Junior software developer-11th/images/process-states.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Diagram%20of%20a%20security%20descriptor%20for%20a%20file%20on%20Windows.png" -o "Junior software developer-11th/images/file-permissions.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Screen-python-code-matplotlib-physics-simulation.jpg" -o "Junior software developer-11th/images/python-simulation.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Router%20on%20a%20stick.png" -o "Junior software developer-11th/images/router-vlan.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/LAN-physicalTopology.png" -o "Junior software developer-11th/images/lan-topology.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/QUEUE%20VS%20STACK.png" -o "Junior software developer-11th/images/stack-queue.png"
+          # Junior Software Developer XII
+          mkdir -p "Junior software developer-12th/images"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/System%20Development%20Life-cycle%20diagram.png" -o "Junior software developer-12th/images/software-sdlc.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Entity%20Relationship%20Diagram.jpg" -o "Junior software developer-12th/images/database-er.jpg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Mysql%20database%20design.png" -o "Junior software developer-12th/images/mysql-design.png"
+          cp "Junior software developer-11th/images/programming-code.png" "Junior software developer-12th/images/programming-code.png"
+          cp "Junior software developer-11th/images/stack-queue.png" "Junior software developer-12th/images/stack-queue.png"
+          cp "Junior software developer-11th/images/python-simulation.jpg" "Junior software developer-12th/images/python-simulation.jpg"
+          cp "Junior software developer-11th/images/router-vlan.png" "Junior software developer-12th/images/router-vlan.png"
+          cp "Junior software developer-11th/images/lan-topology.png" "Junior software developer-12th/images/lan-topology.png"
+      - name: Generate merged LaTeX source
+        run: python "Final Book/merge_books.py"
+      - name: Compile combined handbook
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: 'Final Book'
+          latexmk_use_xelatex: true
+      - name: Upload final PDF and merged source
+        uses: actions/upload-artifact@v4
+        with:
+          name: Final-Combined-Handbook-PDF
+          path: |
+            Final Book/main.pdf
+            Final Book/main.tex
+          if-no-files-found: error
+          retention-days: 30
