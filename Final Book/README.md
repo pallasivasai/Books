@@ -1,7 +1,7 @@
 # Final Book — Combined Handbook
 
 This folder builds one continuous final handbook PDF by merging the eight source-book PDFs in a fixed order.
-The generated merge uses a shared `fancyhdr` page style so header, footer, and page numbers continue across all included books in one final output.
+The generated output is a **just-merge** file (no extra cover page or TOC): only the eight source PDFs are included in sequence, with continuous header, footer, and page numbers.
 
 ## Input order (8 source PDFs)
 1. `../Domestic data entry operator-9th/Domestic data entry operator-9th.pdf`

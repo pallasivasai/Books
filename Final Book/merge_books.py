@@ -73,26 +73,19 @@ def rel_pdf_path(pdf_path: Path, tex_path: Path) -> str:
 
 
 def render_main_tex(sources: list[tuple[SourceBook, Path]], tex_path: Path) -> str:
-    toc_entries: list[str] = []
     include_entries: list[str] = []
 
     for book, pdf in sources:
         relative_path = rel_pdf_path(pdf, tex_path)
-        toc_entries.append(
-            f"\\chapter*{{{book.title}}}\n"
-            f"\\addcontentsline{{toc}}{{chapter}}{{{book.title}}}\n"
-            f"\\noindent\\texttt{{{relative_path}}}\\par"
-        )
         include_entries.append(
             f"% {book.title}\n"
             f"\\includepdf[{INCLUDE_OPTIONS}]{{\\detokenize{{{relative_path}}}}}"
         )
 
-    toc_block = "\n\n".join(toc_entries)
     include_block = "\n\n".join(include_entries)
 
     return (
-        "\\documentclass[11pt,openany,oneside]{book}\n"
+        "\\documentclass[11pt,oneside]{book}\n"
         "\\usepackage[a4paper,top=20mm,bottom=22mm,left=20mm,right=20mm,headheight=14pt]{geometry}\n"
         "\\usepackage{pdfpages}\n"
         "\\usepackage{fancyhdr}\n"
@@ -113,21 +106,7 @@ def render_main_tex(sources: list[tuple[SourceBook, Path]], tex_path: Path) -> s
         "  \\renewcommand{\\footrulewidth}{0pt}\n"
         "}\n\n"
         "\\begin{document}\n"
-        "\\begin{titlepage}\n"
-        "\\centering\n"
-        "{\\LARGE\\bfseries HANDBOOK\\par}\n"
-        "\\vspace{8mm}\n"
-        "{\\Large Combined Vocational Education Textbooks\\par}\n"
-        "\\vspace{3mm}\n"
-        "{\\large Classes IX--XII\\par}\n"
-        "\\vfill\n"
-        "{\\large Data Entry $\\bullet$ Web Development $\\bullet$ Artificial Intelligence $\\bullet$ Software Development\\par}\n"
-        "\\end{titlepage}\n\n"
-        "\\frontmatter\n"
-        "\\tableofcontents\n"
-        "\\mainmatter\n\n"
-        f"{toc_block}\n\n"
-        "\\cleardoublepage\n"
+        "\\setcounter{page}{1}\n"
         f"{include_block}\n"
         "\\end{document}\n"
     )
@@ -142,6 +121,10 @@ def validate_generated_structure(tex_text: str, sources: list[tuple[SourceBook, 
         errors.append("main.tex is missing \\usepackage{fancyhdr}.")
     if "\\fancypagestyle{mergedbook}" not in tex_text:
         errors.append("main.tex is missing mergedbook page style definition.")
+    if "\\tableofcontents" in tex_text:
+        errors.append("main.tex should not include a table of contents for just-merge output.")
+    if "\\begin{titlepage}" in tex_text:
+        errors.append("main.tex should not include an extra title page for just-merge output.")
 
     include_pattern = re.compile(
         r"\\includepdf\[pages=-,pagecommand=\{\\thispagestyle\{mergedbook\}\}\]\{\\detokenize\{([^}]*)\}\}"
