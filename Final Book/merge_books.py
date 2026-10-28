@@ -119,7 +119,7 @@ def render_main_tex(tex_path: Path) -> str:
             + "}}\\end{center}\n"
         )
         # Place the photograph after the first chapter heading, not on a separate page.
-        body = re.sub(r"(\\chapter(?:\\*?)\\s*\\{[^{}]*\\})", r"\1" + photo_block, body, count=1)
+        body = re.sub(r"(\\chapter(?:\\*?)\\s*\\{[^{}]*\\})", lambda match: match.group(1) + photo_block, body, count=1)
         # Keep the source chapter text and illustrations; only mark transitions between source curricula.
         bodies.append(
             "\n% ============================================================\n"
