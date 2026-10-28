@@ -93,11 +93,11 @@ jobs:
             "Junior software developer-12th"
           )
           i=1
-          for folder in "\${folders[@]}"; do
-            mkdir -p "Final Book/assets/book\${i}"
+          for folder in "${folders[@]}"; do
+            mkdir -p "Final Book/assets/book${i}"
             for subdir in images book_illustrations; do
-              if [ -d "\${folder}/\${subdir}" ]; then
-                cp -a "\${folder}/\${subdir}" "Final Book/assets/book\${i}/"
+              if [ -d "${folder}/${subdir}" ]; then
+                cp -a "${folder}/${subdir}" "Final Book/assets/book${i}/"
               fi
             done
             i=$((i+1))
