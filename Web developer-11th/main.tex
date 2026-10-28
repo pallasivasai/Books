@@ -157,60 +157,169 @@
 \tableofcontents
 \mainmatter
 
-\chapter{Information Technology and ITeS}
-\section{Information Technology Overview}
-Information Technology (IT) forms the backbone of modern digital operations. It integrates hardware, software networks, databases, human operators, and structured protocols to gather, process, store, and distribute information globally.
+\chapter{Web Design and Development}
+Web design and web development are closely connected activities that turn a need or idea into a website people can understand and use. A successful site is not simply a collection of attractive pages or a program that runs without errors. It should present information clearly, support the tasks of its intended audience, work on different devices, protect user data, and remain practical to maintain. These outcomes are achieved through planning, design, implementation, testing, publishing, and continuous improvement.
 
-\subsection{Key Components}
-\begin{itemize}
-  \item \textbf{Hardware:} Physical systems, including servers, client workstations, storage arrays, and network interface hardware.
-  \item \textbf{Software:} Operating kernels, utility applications, and user frameworks directing hardware behaviors.
-  \item \textbf{Networks:} Interconnected hardware links facilitating secure data transport across clients.
-  \item \textbf{Data Infrastructure:} Raw data organized efficiently to support analytics, applications, and storage.
-\end{itemize}
+\section{Understanding Web Design}
+Web design concerns the organisation and presentation of information on a website. It includes page layout, colour, typography, images, navigation, spacing, and the way a visitor moves from one task to another. Good design makes the purpose of each page clear and helps users find what they need without unnecessary effort.
 
-\section{IT Enabled Services (ITeS)}
-ITeS leverages information technology to deliver remote business operations, including customer support, technical assistance, financial processing, and knowledge management.
+A designer begins by asking who will use the website, what those people need to do, and what information they expect to find. A school website, for example, may need clear links to admissions, courses, notices, and contact details. An online shop needs product information, prices, search and filtering, a cart, and a clear checkout path. The design should reflect the real purpose of the site rather than decorative trends alone.
+
+\subsection{User Interface and User Experience}
+The user interface (UI) is the part of the system with which a person interacts: menus, buttons, links, forms, headings, and visual controls. User experience (UX) is the broader experience of using the site, including how easy it is to learn, how quickly a task can be completed, and whether the process feels predictable and trustworthy.
+
+A visually attractive interface can still provide a poor experience if its navigation is confusing or its forms give unclear errors. Similarly, a simple interface can provide a strong experience when the content is well organised, controls are labelled clearly, and users receive helpful feedback after an action.
 
 \begin{center}
-\begin{tikzpicture}[node distance=5mm and 7mm,>=Latex]
-\node[draw=Teal,fill=Pale,rounded corners,minimum width=31mm,minimum height=10mm,align=center] (it) {IT systems};
-\node[draw=Gold,fill=LightGold,rounded corners,minimum width=31mm,minimum height=10mm,align=center,right=of it] (sw) {Software};
-\node[draw=Violet,fill=Violet!10,rounded corners,minimum width=31mm,minimum height=10mm,align=center,below=of sw] (sv) {Digital services};
-\node[draw=Coral,fill=Rose,rounded corners,minimum width=31mm,minimum height=10mm,align=center,below=of it] (u) {Users and organisations};
-\draw[->,thick,Teal] (it)--(sw);\draw[->,thick,Teal] (sw)--(sv);\draw[->,thick,Teal] (u)--(sv);\draw[->,thick,Teal] (u)--(it);
+\begin{tikzpicture}[node distance=7mm and 9mm,>=Latex]
+\node[draw=Navy,fill=Sky,rounded corners,minimum width=37mm,minimum height=11mm,align=center] (need) {\textbf{User need}\\What must be done?};
+\node[draw=Teal,fill=Pale,rounded corners,minimum width=37mm,minimum height=11mm,align=center,right=of need] (ui) {\textbf{Interface}\\Pages and controls};
+\node[draw=Gold,fill=LightGold,rounded corners,minimum width=37mm,minimum height=11mm,align=center,below=of ui] (ux) {\textbf{Experience}\\Ease and confidence};
+\node[draw=Violet,fill=Violet!10,rounded corners,minimum width=37mm,minimum height=11mm,align=center,below=of need] (result) {\textbf{Outcome}\\Task completed};
+\draw[->,thick,Teal] (need)--(ui);
+\draw[->,thick,Teal] (ui)--(ux);
+\draw[->,thick,Teal] (ux)--(result);
+\draw[->,thick,Gold] (result)--(need);
 \end{tikzpicture}
 \end{center}
-\textit{Figure 1.1.} Interdependence between IT infrastructure and digital user services.
+\textit{Figure 1.1.} UI elements support a user experience that should lead to a clear outcome.
 
-\section*{Review Questions}
-\begin{enumerate}
-\item Define Information Technology and highlight its primary physical components.
-\item Compare voice-based and non-voice business process outsourcing operations.
-\item Describe three ways IT infrastructure drives societal growth.
-\end{enumerate}
+\section{Understanding Web Development}
+Web development is the process of building and maintaining the website's structure, appearance, behaviour, and supporting services. Front-end development creates the part that runs in the browser. HTML describes the content and its meaning, CSS controls presentation and layout, and JavaScript adds behaviour such as menu interaction, input validation, and dynamic updates.
 
-\chapter{Web Design and Development Life Cycle}
-\section{Design vs Development}
-Web design focuses on visual clarity, branding layout, user experience (UX), and interactive interface structure. Web development constructs the underlying functional codebase using semantic structural markup, declarative styling rules, and execution scripts.
+Back-end development, when required, handles server-side tasks such as business rules, user authentication, data storage, and communication with other services. A database stores information in an organised form. An application programming interface (API) can provide a defined way for the browser or another application to request data or perform an operation. A small static information site may not need a back end; a learning portal with student accounts and saved results usually does.
+
+\begin{center}
+\begin{tikzpicture}[node distance=6mm and 8mm,>=Latex]
+\node[draw=Navy,fill=Sky,rounded corners,minimum width=34mm,minimum height=11mm,align=center] (user) {Visitor\\Browser};
+\node[draw=Teal,fill=Pale,rounded corners,minimum width=36mm,minimum height=11mm,align=center,right=of user] (front) {Front end\\HTML + CSS + JS};
+\node[draw=Gold,fill=LightGold,rounded corners,minimum width=36mm,minimum height=11mm,align=center,right=of front] (server) {Server / API\\Application logic};
+\node[draw=Violet,fill=Violet!10,rounded corners,minimum width=30mm,minimum height=11mm,align=center,below=of server] (db) {Database};
+\draw[<->,thick,Teal] (user)--node[above,font=\scriptsize]{requests / pages}(front);
+\draw[<->,thick,Teal] (front)--node[above,font=\scriptsize]{HTTP requests}(server);
+\draw[<->,thick,Gold] (server)--node[right,font=\scriptsize]{queries}(db);
+\end{tikzpicture}
+\end{center}
+\textit{Figure 1.2.} A common website architecture. A simple static site may use only the browser and front-end files.
+
+\subsection{Static and Dynamic Websites}
+A static website serves pages whose content is mainly prepared in files such as HTML, CSS, JavaScript, and images. It is suitable for portfolios, simple information pages, event announcements, and small documentation sites. A dynamic website can change its output based on user input, stored data, permissions, or other conditions. Examples include online banking, booking systems, shopping sites, and student portals.
+
+The distinction is about how the content is produced, not whether the page has styling or animation. A static page can be visually rich and interactive in the browser. A dynamic service often combines browser code with server-side processing and a database.
+
+\section{The Web Design and Development Life Cycle}
+The development life cycle provides a sequence of activities that helps a team move from an idea to a reliable website. The stages may overlap, and teams often return to earlier decisions after testing or feedback. The purpose of a life cycle is not to create paperwork for its own sake; it is to reduce avoidable mistakes, make decisions visible, and ensure that the final site meets its requirements.
 
 \begin{center}
 \begin{tikzpicture}[node distance=4mm,>=Latex]
-\node[draw=Teal,fill=Pale,rounded corners,minimum width=24mm,minimum height=9mm] (p) {Plan};
-\node[draw=Teal,fill=Pale,rounded corners,minimum width=24mm,minimum height=9mm,right=of p] (d) {Design};
-\node[draw=Teal,fill=Pale,rounded corners,minimum width=24mm,minimum height=9mm,right=of d] (b) {Build};
-\node[draw=Teal,fill=Pale,rounded corners,minimum width=24mm,minimum height=9mm,right=of b] (t) {Test};
-\node[draw=Teal,fill=Pale,rounded corners,minimum width=24mm,minimum height=9mm,right=of t] (l) {Launch};
-\draw[->,thick,Gold] (p)--(d);\draw[->,thick,Gold] (d)--(b);\draw[->,thick,Gold] (b)--(t);\draw[->,thick,Gold] (t)--(l);
-\draw[->,thick,Coral,bend right=35] (l.south) to node[below,font=\small]{maintenance} (p.south);
+\node[draw=Teal,fill=Pale,rounded corners,minimum width=25mm,minimum height=10mm,align=center] (req) {1. Discover\\Requirements};
+\node[draw=Teal,fill=Pale,rounded corners,minimum width=25mm,minimum height=10mm,align=center,right=of req] (plan) {2. Plan\\Scope};
+\node[draw=Teal,fill=Pale,rounded corners,minimum width=25mm,minimum height=10mm,align=center,right=of plan] (design) {3. Design\\Wireframe};
+\node[draw=Teal,fill=Pale,rounded corners,minimum width=25mm,minimum height=10mm,align=center,right=of design] (build) {4. Build\\Code};
+\node[draw=Gold,fill=LightGold,rounded corners,minimum width=25mm,minimum height=10mm,align=center,below=of build] (test) {5. Test\\Correct};
+\node[draw=Gold,fill=LightGold,rounded corners,minimum width=25mm,minimum height=10mm,align=center,left=of test] (publish) {6. Publish\\Deploy};
+\node[draw=Violet,fill=Violet!10,rounded corners,minimum width=25mm,minimum height=10mm,align=center,left=of publish] (maintain) {7. Maintain\\Improve};
+\draw[->,thick,Teal] (req)--(plan);
+\draw[->,thick,Teal] (plan)--(design);
+\draw[->,thick,Teal] (design)--(build);
+\draw[->,thick,Gold] (build)--(test);
+\draw[->,thick,Gold] (test)--(publish);
+\draw[->,thick,Gold] (publish)--(maintain);
+\draw[->,thick,Coral,bend right=24] (maintain.west) to node[below,font=\scriptsize]{feedback and new needs} (req.south);
 \end{tikzpicture}
 \end{center}
-\textit{Figure 2.1.} The iterative cycle of site planning, engineering, and deployment.
+\textit{Figure 1.3.} A practical website life cycle with feedback after release.
 
-\section*{Review Questions}
+\subsection{Stage 1: Discover the Need}
+Identify the problem the website should solve and the people who will use it. Gather information from stakeholders, review existing material, and list the most important user tasks. For a school information site, these tasks may include finding a course, checking an announcement, or contacting the office. Clear goals prevent the project from becoming a collection of unrelated pages.
+
+\subsection{Stage 2: Plan the Work}
+Define the scope, deliverables, schedule, resources, and responsibilities. Decide which features are essential for the first version and which can wait. A page list and a simple task board can be sufficient for a small project. Planning should also consider risks such as missing content, unavailable images, device compatibility, privacy, and limited time.
+
+\subsection{Stage 3: Design the Structure and Appearance}
+Create a sitemap to show how pages relate to one another. Sketch wireframes to decide where headings, navigation, content, forms, and images should appear. Choose a consistent colour palette, type scale, spacing system, and button style. Review the design against the user tasks before investing time in detailed implementation.
+
+\begin{center}
+\begin{tikzpicture}[node distance=5mm and 8mm,>=Latex]
+\node[draw=Navy,fill=Sky,rounded corners,minimum width=31mm,minimum height=10mm,align=center] (home) {Home page};
+\node[draw=Teal,fill=Pale,rounded corners,minimum width=31mm,minimum height=10mm,align=center,below left=of home] (courses) {Courses};
+\node[draw=Teal,fill=Pale,rounded corners,minimum width=31mm,minimum height=10mm,align=center,below=of home] (news) {News};
+\node[draw=Teal,fill=Pale,rounded corners,minimum width=31mm,minimum height=10mm,align=center,below right=of home] (contact) {Contact};
+\draw[thick,Teal] (home)--(courses);
+\draw[thick,Teal] (home)--(news);
+\draw[thick,Teal] (home)--(contact);
+\end{tikzpicture}
+\end{center}
+\textit{Figure 1.4.} Example sitemap for a small educational website.
+
+\subsection{Stage 4: Develop the Website}
+Build the page structure with semantic HTML, apply CSS for layout and responsive behaviour, and add JavaScript where interaction is needed. Keep files organised and use meaningful names. Work in small steps: create a page shell, check it in a browser, add one feature, and test again. This makes it easier to identify which change introduced a problem.
+
+\subsection{Stage 5: Test and Review}
+Testing checks whether the site behaves as intended. Confirm that links work, forms handle missing or invalid values, images load, text is readable, and the layout works on narrow and wide screens. Use keyboard navigation and inspect error messages in the browser's developer tools. Fix serious problems before publishing, then repeat the relevant tests after changes.
+
+\subsection{Stage 6: Publish and Deploy}
+Publishing makes the site available to its intended audience. Deployment may involve uploading static files to a hosting service, connecting a domain name, enabling HTTPS, configuring server settings, and checking that all paths work on the live site. A site that works on a developer's computer can still fail after deployment if file names, capitalisation, paths, permissions, or environment settings differ.
+
+\subsection{Stage 7: Maintain and Improve}
+After release, check for broken links, outdated information, security updates, performance problems, and user feedback. Keep a copy of the source files and a record of important changes. Maintenance is part of development, not an optional activity that begins only when something breaks.
+
+\section{Core Principles of Effective Web Design}
+\subsection{Visual Hierarchy}
+Visual hierarchy helps readers recognise what is most important. Main headings should be more prominent than body text; related items should be grouped; and primary actions should be easy to identify. Use size, weight, spacing, alignment, and colour consistently. Avoid giving every element the same visual emphasis, because this makes it harder to scan a page.
+
+\subsection{Consistency and Simplicity}
+Use the same navigation pattern, heading styles, button shapes, and spacing rules across related pages. Consistency reduces the effort required to learn the site. Simplicity does not mean removing necessary information; it means presenting the information in a clear order and avoiding decoration that competes with the task.
+
+\subsection{Colour and Typography}
+Choose colours that support the site's purpose and provide sufficient contrast between text and its background. Do not communicate important status using colour alone; pair colour with a label or icon where appropriate. Use a small, consistent set of readable fonts and line lengths. Body text should remain comfortable to read on both desktop and mobile displays.
+
+\subsection{Navigation and Content}
+Navigation labels should describe their destination, for example, “Courses” or “Contact”, rather than vague labels such as “Click here”. Put frequently used destinations where people expect them. Write concise headings, divide long material into meaningful sections, and ensure that images have a clear purpose. Content should answer the questions visitors came to resolve.
+
+\section{Responsive Design and Device Support}
+A responsive website adapts its layout to the available screen space. A multi-column desktop layout may become a single column on a phone; navigation may wrap or collapse; images should scale without distortion; and buttons should remain large enough to tap comfortably. Responsive design uses flexible layouts, relative sizing, and CSS media queries rather than building an entirely separate page for every device.
+
+\begin{center}
+\begin{tikzpicture}[node distance=7mm and 12mm,>=Latex]
+\node[draw=Navy,fill=Sky,rounded corners,minimum width=24mm,minimum height=18mm,align=center] (phone) {\textbf{Phone}\\Single column\\Stacked cards};
+\node[draw=Teal,fill=Pale,rounded corners,minimum width=34mm,minimum height=23mm,align=center,right=of phone] (tablet) {\textbf{Tablet}\\Flexible columns\\Larger navigation};
+\node[draw=Gold,fill=LightGold,rounded corners,minimum width=42mm,minimum height=28mm,align=center,right=of tablet] (desktop) {\textbf{Desktop}\\Multiple columns\\Full page layout};
+\draw[->,thick,Teal] (phone)--(tablet);
+\draw[->,thick,Teal] (tablet)--(desktop);
+\end{tikzpicture}
+\end{center}
+\textit{Figure 1.5.} The same content can adapt to different viewport sizes.
+
+\section{Accessibility and Inclusive Design}
+Accessible design allows people with different abilities and ways of interacting to use a website. Provide meaningful headings, labels for form controls, alternative text for informative images, sufficient colour contrast, and visible keyboard focus. Ensure that interactive elements can be reached and operated without a mouse. Plain, direct language also helps users who are new to the subject or reading in a second language.
+
+Accessibility is best considered during planning and design, then checked throughout development. Retrofitting it at the end may require changing page structure and interaction patterns. A practical review includes keyboard-only navigation, zooming text, checking labels, and verifying that the purpose of each link is understandable.
+
+\section{Designing for Quality, Security and Performance}
+Quality includes correctness, usability, reliability, maintainability, accessibility, and performance. Optimise images so that they are not unnecessarily large, avoid loading resources that are not needed, and test pages on a realistic connection. Keep dependencies and source files organised so another developer can understand the project.
+
+Security must also influence design decisions. Collect only the information the site actually needs, explain why it is collected, and avoid placing passwords, private keys, or secret tokens in front-end code. Use HTTPS for deployed sites and apply appropriate validation and access controls when server-side features are involved. A polished interface cannot compensate for unsafe handling of user data.
+
+\section{Example: Planning a Learning Centre Website}
+Consider a learning centre that needs to publish courses, class schedules, announcements, and contact information. Before coding, the team identifies the main visitors: learners, parents, and staff. The essential pages are Home, Courses, Notices, and Contact. The home page introduces the centre and links to the most common tasks; the courses page provides names, descriptions, and eligibility information; the notices page lists dated updates; and the contact page gives verified contact details.
+
+The first version can be a static website if the information is updated manually. If staff later need to sign in and manage notices, the project may require authentication, a server, and a database. This illustrates an important planning rule: begin with the simplest solution that satisfies the confirmed need, then add complexity only when a real requirement justifies it.
+
+\section{Chapter Review}
 \begin{enumerate}
-\item Explain the key operational differences between web design and software development.
-\item Detail why accessibility testing must occur before final deployment.
+\item Distinguish web design from web development and give two examples of work done in each area.
+\item Explain the difference between user interface (UI) and user experience (UX).
+\item Describe the role of HTML, CSS, JavaScript, a server, an API, and a database in a website.
+\item Compare static and dynamic websites and provide one suitable example of each.
+\item List the major stages of the web design and development life cycle.
+\item Explain why requirements and scope should be discussed before coding begins.
+\item What is a wireframe, and how does it help a development team?
+\item Describe four principles of effective web design.
+\item Explain responsive design and name two ways a page can adapt to a phone screen.
+\item Identify four accessibility checks that should be completed before launch.
+\item Why should testing and maintenance continue after a website is published?
+\item For a learning centre website, identify the main users, essential pages, and one feature that could be postponed to a later release.
 \end{enumerate}
 
 \chapter{HTML: Document Architecture}
