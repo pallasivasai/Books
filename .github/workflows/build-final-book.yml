@@ -44,8 +44,8 @@ jobs:
           }
           # Domestic Data Entry Operator IX committed illustrations are already present; generated Class X figures fall back safely when missing.
           # Domestic Data Entry Operator X: real photographs from Wikimedia Commons.
-          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Fire_drill.jpg" "Domestic data entry operator-10th/book_illustrations/emergency_preparedness.jpg" &
-          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/An_emergency_exit_sign.jpg" "Domestic data entry operator-10th/book_illustrations/emergency_route.jpg" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Fire%20Drill.%20Workers%20leaving%20Building%205.%20%28d7f0d5ca616b4597ba62d1c48725a989%29.jpg" "Domestic data entry operator-10th/book_illustrations/emergency_preparedness.jpg" &
+          fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/An%20emergency%20exit%20sign.jpg" "Domestic data entry operator-10th/book_illustrations/emergency_route.jpg" &
           # Web Developer XI images
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Woman_sitting_in_her_workspace_and_typing_on_laptop.jpg" "Web developer-11th/images/web-developer-workspace.jpg" &
           fetch_image "https://commons.wikimedia.org/wiki/Special:Redirect/file/Website%20Coding.jpg" "Web developer-11th/images/html-coding.jpg" &
