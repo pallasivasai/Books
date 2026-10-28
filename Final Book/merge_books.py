@@ -114,12 +114,12 @@ def render_main_tex(tex_path: Path) -> str:
         }
         photo_path, photo_credit = people_photos[index]
         photo_block = (
-            "\\n\\begin{center}\\includegraphics[width=.82\\textwidth,height=48mm,keepaspectratio]{"
+            "\n\\begin{center}\\includegraphics[width=.82\\textwidth,height=48mm,keepaspectratio]{"
             + photo_path + "}\\par{\\footnotesize\\textit{" + photo_credit
-            + "}}\\end{center}\\n"
+            + "}}\\end{center}\n"
         )
         # Place the photograph after the first chapter heading, not on a separate page.
-        body = re.sub(r"(\\\\chapter(?:\\*?)\\s*\\{[^{}]*\\})", r"\\1" + photo_block, body, count=1)
+        body = re.sub(r"(\\chapter(?:\\*?)\\s*\\{[^{}]*\\})", r"\1" + photo_block, body, count=1)
         # Keep the source chapter text and illustrations; only mark transitions between source curricula.
         bodies.append(
             "\n% ============================================================\n"
