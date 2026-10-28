@@ -30,6 +30,9 @@ jobs:
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20Motherboard%20Closeup.jpg" -o "Junior software developer-11th/images/motherboard.jpg"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Python%20code%20example.png" -o "Junior software developer-11th/images/programming-code.png"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ubuntu%2025.04%20default%20desktop%20-%20English.png" -o "Junior software developer-11th/images/ubuntu-desktop.png"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Computer%20abstraction%20layers%20separated%20OS.svg" -o "Junior software developer-11th/images/os-abstraction.svg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Process%20state.svg" -o "Junior software developer-11th/images/process-states.svg"
+          curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Diagram%20of%20a%20security%20descriptor%20for%20a%20file%20on%20Windows.png" -o "Junior software developer-11th/images/file-permissions.png"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Screen-python-code-matplotlib-physics-simulation.jpg" -o "Junior software developer-11th/images/python-simulation.jpg"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/Router%20on%20a%20stick.png" -o "Junior software developer-11th/images/router-vlan.png"
           curl -fL --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/LAN-physicalTopology.png" -o "Junior software developer-11th/images/lan-topology.png"
@@ -51,6 +54,12 @@ jobs:
              https://commons.wikimedia.org/wiki/File:Ubuntu_25.04_default_desktop_-_English.png
           7. stack-queue.png — Choteseeworld, Wikimedia Commons, CC BY-SA 4.0.
              https://commons.wikimedia.org/wiki/File:QUEUE_VS_STACK.png
+          8. os-abstraction.svg — Miko3k, Tene and Fri13, Wikimedia Commons, GFDL.
+             https://commons.wikimedia.org/wiki/File:Computer_abstraction_layers_separated_OS.svg
+          9. process-states.svg — MrDrBob, Wikimedia Commons, CC BY-SA 3.0.
+             https://commons.wikimedia.org/wiki/File:Process_state.svg
+          10. file-permissions.png — Andrew S. Tanenbaum and Herbert Bos, Wikimedia Commons, public domain.
+              https://commons.wikimedia.org/wiki/File:Diagram_of_a_security_descriptor_for_a_file_on_Windows.png
           EOF
 
       - name: Compile textbook with XeLaTeX
