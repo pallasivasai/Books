@@ -95,62 +95,71 @@ def extract_body(path: Path) -> str:
     # The book parts are stitched together without creating separate books or cover pages.
     return text.strip()
 
-def add_section_illustrations(text: str, book_index: int) -> str:
-    """Ensure every section has an illustration, preferring topic-matched downloaded assets."""
-    # Process each section up to the next section/subsection/chapter heading.
-    pattern = re.compile(r"(\\section\*?\{[^{}]*\})(.*?)(?=\\(?:section\*?|chapter\*?|part\*?)\{|\\appendix\b|$)", re.S)
-    topic_assets = (
-        (("database", "query", "sql", "record", "table", "form", "spreadsheet", "formula", "cell", "data", "quality", "scenario"), "human-data-entry.jpg"),
-        (("code", "program", "html", "css", "javascript", "software", "python", "network", "router", "internet", "lan", "server", "cloud"), "human-programmer.jpg"),
-        (("workstation", "ergonomic", "health", "safety", "posture", "office", "artificial intelligence", "machine learning", "model", "robot", "assistant"), "human-workplace.jpg"),
-        (("emergency", "fire", "accident", "evacuation", "exit"), "emergency_preparedness.jpg"),
-        (("image", "picture", "document", "style", "presentation"), "human-data-entry.jpg"),
-    )
-    photo_by_book = {
-        1: "human-data-entry.jpg", 2: "human-data-entry.jpg",
-        3: "human-programmer.jpg", 4: "human-programmer.jpg",
-        5: "human-workplace.jpg", 6: "human-workplace.jpg",
-        7: "human-programmer.jpg", 8: "human-programmer.jpg",
-    }
-    fallback = f"assets/book{book_index}/images/{photo_by_book.get(book_index, 'human-data-entry.jpg')}"
+_USED_SECTION_IMAGES: set[str] = set()
 
+def add_section_illustrations(text: str, book_index: int) -> str:
+    """Add a topic-matched image only when it is not already used elsewhere in the book."""
+    pattern = re.compile(r"(\\section\*?\{[^{}]*\})(.*?)(?=\\(?:section\*?|chapter\*?|part\*?)\{|\\appendix\b|$)", re.S)
+    # Topic-to-filename terms help select an actual image/diagram about the section.
+    topic_terms = {
+        "database": ("database", "mysql", "sql", "entity", "relationship", "query", "table", "form", "report"),
+        "data": ("data", "spreadsheet", "formula", "scenario", "goal", "quality", "record", "entry"),
+        "document": ("document", "style", "format", "writer", "copy", "paste", "image", "workflow"),
+        "web": ("html", "css", "javascript", "website", "web", "responsive", "browser", "php"),
+        "program": ("program", "python", "code", "software", "algorithm", "stack", "queue", "process"),
+        "network": ("network", "router", "lan", "server", "internet", "topology", "vlan"),
+        "system": ("operating", "ubuntu", "system", "motherboard", "permission", "security", "sdlc"),
+        "ai": ("artificial", "intelligence", "machine", "learning", "model", "robot", "assistant", "vision"),
+        "safety": ("emergency", "fire", "exit", "ergonomic", "workstation", "health", "safety", "recycling"),
+    }
+    # Discover all locally downloaded/committed images, not just three shared fallback photos.
+    all_assets: list[Path] = []
+    for folder in sorted(FINAL_BOOK_DIR.glob("assets/book*")):
+        for subdir in ("images", "book_illustrations"):
+            directory = folder / subdir
+            if directory.is_dir():
+                all_assets.extend(p for p in directory.rglob("*") if p.is_file() and p.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"})
+    def image_key(path: Path) -> str:
+        # Repeated generic human-photo filenames are deliberately excluded from section illustrations.
+        return path.name.lower()
     def update(match: re.Match[str]) -> str:
         heading, body = match.group(1), match.group(2)
-        # Skip only when this section already references an image file that is
-        # actually present in the merged asset directory. Missing-image placeholders
-        # do not count as illustrations.
-        existing_images = re.findall(r"\\includegraphics(?:\[[^\]]*\])?\{([^{}]+)\}", body)
-        if any((FINAL_BOOK_DIR / image_path).is_file() for image_path in existing_images):
+        existing = re.findall(r"\\includegraphics(?:\[[^\]]*\])?\{([^{}]+)\}", body)
+        if any((FINAL_BOOK_DIR / p).is_file() for p in existing):
             return heading + body
         title = re.sub(r"\\section\*?\{|\}", "", heading).lower()
-        candidates = []
-        for keywords, filename in topic_assets:
-            if any(word in title for word in keywords):
-                # Prefer the current curriculum's matching downloaded image.
-                candidates.extend((
-                    f"assets/book{book_index}/images/{filename}",
-                    f"assets/book{book_index}/book_illustrations/{filename}",
-                ))
-        # Prefer the authentic photograph selected for this curriculum, then any
-        # matching human photo, then existing committed diagrams.
-        candidates.extend((
-            fallback,
-            f"assets/book{book_index}/images/human-data-entry.jpg",
-            f"assets/book{book_index}/images/human-programmer.jpg",
-            f"assets/book{book_index}/images/human-workplace.jpg",
-            f"assets/book{book_index}/book_illustrations/document_workflow.png",
-            f"assets/book{book_index}/book_illustrations/it_ites_workflow.png",
-            "assets/book1/book_illustrations/document_workflow.png",
-        ))
-        graphic = r"\includegraphics[width=.72\textwidth,height=38mm,keepaspectratio]{"
-        expression = r"\fbox{\parbox{.55\textwidth}{\centering No suitable image was available during build}}"
-        for path in reversed(candidates):
-            expression = r"\IfFileExists{" + path + "}{" + graphic + path + r"}\par{\scriptsize\textit{Photograph: Wikimedia Commons.}}}{" + expression + "}"
-        image = "\n\\begin{center}\\vspace{-2pt}" + expression + "\\end{center}\n"
+        words = set(re.findall(r"[a-z]+", title))
+        terms: set[str] = set()
+        for topic, topic_words in topic_terms.items():
+            if topic in words or any(w in words for w in topic_words):
+                terms.update(topic_words)
+        ranked: list[tuple[int, str, Path]] = []
+        for path in all_assets:
+            name = path.name.lower()
+            if name.startswith("human-") or name == "people-photo.jpg":
+                continue
+            rel = path.relative_to(FINAL_BOOK_DIR).as_posix()
+            if rel in _USED_SECTION_IMAGES or name in _USED_SECTION_IMAGES:
+                continue
+            score = sum(1 for term in terms if term in name)
+            if score:
+                ranked.append((score, rel, path))
+        if not ranked:
+            # Do not recycle a generic photograph just to fill space. The source content remains intact.
+            return heading + body
+        ranked.sort(key=lambda item: (-item[0], item[1]))
+        score, rel, chosen = ranked[0]
+        _USED_SECTION_IMAGES.add(rel)
+        _USED_SECTION_IMAGES.add(chosen.name.lower())
+        image = (
+            "\n\\begin{center}\\vspace{-2pt}"
+            "\\includegraphics[width=.72\\textwidth,height=38mm,keepaspectratio]{"
+            + rel + "}"
+            "\\par{\\scriptsize\\textit{Image source and licence: see the original Wikimedia Commons file.}}"
+            "\\end{center}\n"
+        )
         return heading + image + body
-
     return pattern.sub(update, text)
-
 
 def render_main_tex(tex_path: Path) -> str:
     bodies = []
