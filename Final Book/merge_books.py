@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import re
 import json
+import io
 import urllib.parse
 import urllib.request
 from dataclasses import dataclass
@@ -11,6 +12,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 FINAL_BOOK_DIR = ROOT / "Final Book"
 DEFAULT_OUTPUT = FINAL_BOOK_DIR / "main.tex"
+
+def _save_latex_compatible_image(data: bytes, destination: Path) -> Path:
+    """Decode fetched web images and save as JPEG, which XeLaTeX reliably supports."""
+    from PIL import Image
+    destination = destination.with_suffix(".jpg")
+    try:
+        with Image.open(io.BytesIO(data)) as image:
+            image = image.convert("RGB")
+            image.save(destination, format="JPEG", quality=90, optimize=True)
+    except Exception as exc:
+        raise ValueError(f"Downloaded image is not a supported, decodable image: {exc}") from exc
+    return destination
+
 
 @dataclass(frozen=True)
 class SourceBook:
@@ -159,7 +173,7 @@ def _fetch_web_image(title: str, book_index: int, context: str = "") -> str | No
                 ext = ".png" if "png" in content_type else ".webp" if "webp" in content_type else ".jpg"
                 filename = f"openverse-{slug}-{len(_USED_SECTION_IMAGES)+1}{ext}"
                 destination = destination_dir / filename
-                destination.write_bytes(data)
+                destination = _save_latex_compatible_image(data, destination)
                 rel = destination.relative_to(FINAL_BOOK_DIR).as_posix()
                 _USED_SECTION_IMAGES.add(rel)
                 _USED_SECTION_IMAGES.add(destination.name.lower())
