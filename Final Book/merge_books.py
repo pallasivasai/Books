@@ -4,6 +4,7 @@ import argparse
 import re
 import json
 import io
+import hashlib
 import urllib.parse
 import urllib.request
 from dataclasses import dataclass
@@ -12,10 +13,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 FINAL_BOOK_DIR = ROOT / "Final Book"
 DEFAULT_OUTPUT = FINAL_BOOK_DIR / "main.tex"
+_USED_IMAGE_HASHES: set[str] = set()
 
 def _save_latex_compatible_image(data: bytes, destination: Path) -> Path:
     """Decode fetched web images and save as JPEG, which XeLaTeX reliably supports."""
     from PIL import Image
+    digest = hashlib.sha256(data).hexdigest()
+    if digest in _USED_IMAGE_HASHES:
+        return None
     destination = destination.with_suffix(".jpg")
     try:
         with Image.open(io.BytesIO(data)) as image:
@@ -23,6 +28,7 @@ def _save_latex_compatible_image(data: bytes, destination: Path) -> Path:
             image.save(destination, format="JPEG", quality=90, optimize=True)
     except Exception as exc:
         raise ValueError(f"Downloaded image is not a supported, decodable image: {exc}") from exc
+    _USED_IMAGE_HASHES.add(digest)
     return destination
 
 
@@ -116,7 +122,7 @@ _USED_SECTION_IMAGES: set[str] = set()
 _USED_COMMONS_TITLES: set[str] = set()
 
 def _fetch_web_image(title: str, book_index: int, context: str = "") -> str | None:
-    """Find a unique, topic-matched image via Openverse, then Bing Images."""
+    """Find a unique, context-matched human photograph via Openverse, then Bing Images."""
     title_clean = re.sub(r"[^A-Za-z0-9 ]+", " ", title).strip()
     if not title_clean:
         return None
@@ -174,6 +180,8 @@ def _fetch_web_image(title: str, book_index: int, context: str = "") -> str | No
                 filename = f"openverse-{slug}-{len(_USED_SECTION_IMAGES)+1}{ext}"
                 destination = destination_dir / filename
                 destination = _save_latex_compatible_image(data, destination)
+                if destination is None:
+                    continue
                 rel = destination.relative_to(FINAL_BOOK_DIR).as_posix()
                 _USED_SECTION_IMAGES.add(rel)
                 _USED_SECTION_IMAGES.add(destination.name.lower())
@@ -186,7 +194,7 @@ def _fetch_web_image(title: str, book_index: int, context: str = "") -> str | No
         print(f"Openverse image search skipped for {title!r}: {exc}")
 
     # Secondary web search: use the detailed query rather than the heading alone.
-    search_url = "https://www.bing.com/images/search?" + urllib.parse.urlencode({"q": query + " educational"})
+    search_url = "https://www.bing.com/images/search?" + urllib.parse.urlencode({"q": query + " real people working photograph educational"})
     try:
         req = urllib.request.Request(search_url, headers={"User-Agent": "Mozilla/5.0 (compatible; SAITextbookBuilder/1.0)"})
         with urllib.request.urlopen(req, timeout=12) as response:
@@ -206,7 +214,9 @@ def _fetch_web_image(title: str, book_index: int, context: str = "") -> str | No
                     continue
                 ext = ".png" if "png" in content_type else ".webp" if "webp" in content_type else ".jpg"
                 destination = destination_dir / f"bing-{slug}-{len(_USED_SECTION_IMAGES)+1}{ext}"
-                destination.write_bytes(data)
+                destination = _save_latex_compatible_image(data, destination)
+                if destination is None:
+                    continue
                 rel = destination.relative_to(FINAL_BOOK_DIR).as_posix()
                 _USED_SECTION_IMAGES.add(rel)
                 _USED_SECTION_IMAGES.add(destination.name.lower())
@@ -264,7 +274,9 @@ def _fetch_unique_commons_image(title: str, book_index: int) -> str | None:
                 data = response.read()
             if len(data) < 5000:
                 continue
-            destination.write_bytes(data)
+            destination = _save_latex_compatible_image(data, destination)
+            if destination is None:
+                continue
             _USED_COMMONS_TITLES.add(file_title)
             _USED_SECTION_IMAGES.add(destination.relative_to(FINAL_BOOK_DIR).as_posix())
             _USED_SECTION_IMAGES.add(file_title)
